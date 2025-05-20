@@ -1,4 +1,7 @@
 import type { Metadata } from 'next'
+import { ReactNode } from 'react'
+
+import ProgressProvider from '@/providers/progress-provider'
 
 import '@/styles/globals.css'
 
@@ -9,11 +12,13 @@ export const metadata: Metadata = {
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode
+  children: ReactNode
 }>) {
   return (
     <html lang='en'>
-      <body className='antialiased'>{children}</body>
+      <body className='antialiased'>
+        <ProgressProvider>{children}</ProgressProvider>
+      </body>
     </html>
   )
 }
