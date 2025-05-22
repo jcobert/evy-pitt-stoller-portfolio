@@ -3,6 +3,8 @@ import { ReactNode } from 'react'
 
 import ProgressProvider from '@/providers/progress-provider'
 
+import Header from '@/components/layout/header/header'
+
 import '@/styles/globals.css'
 
 export const metadata: Metadata = {
@@ -17,7 +19,14 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body className='antialiased'>
-        <ProgressProvider>{children}</ProgressProvider>
+        <ProgressProvider>
+          <div className='flex flex-col h-full min-h-dvh'>
+            <Header />
+            <div className='grow'>{children}</div>
+            {/** @todo add footer. */}
+            <div />
+          </div>
+        </ProgressProvider>
       </body>
     </html>
   )

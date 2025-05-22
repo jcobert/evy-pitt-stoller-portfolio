@@ -14,12 +14,12 @@ export const NAVIGATION_ITEMS: NavItem[] = [
       links: [
         {
           id: 'works.production',
-          name: 'production',
+          name: 'Production',
           url: '/works/production',
         },
         {
           id: 'works.writing',
-          name: 'writing',
+          name: 'Writing',
           url: '/works/writing',
         },
       ],
