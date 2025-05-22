@@ -7,7 +7,6 @@ const Page: FC = () => {
   return (
     <PageLayout>
       <Button className=''>Hello!</Button>
-      <img src='images/eps-headshot.png' alt='' />
     </PageLayout>
   )
 }
