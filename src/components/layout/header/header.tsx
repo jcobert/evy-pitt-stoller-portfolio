@@ -1,4 +1,5 @@
 import DesktopNav from './desktop-nav'
+import MobileNav from './mobile-nav'
 import Link from 'next/link'
 import { FC } from 'react'
 
@@ -17,7 +18,10 @@ const Header: FC = () => {
           <Logo />
           <span className='sr-only w-0'>Home</span>
         </Link>
+
         <DesktopNav className='col-start-5 col-span-4 mx-auto max-md:hidden' />
+
+        <MobileNav className='col-start-11 col-span-2 justify-self-end md:hidden' />
       </div>
     </header>
   )
