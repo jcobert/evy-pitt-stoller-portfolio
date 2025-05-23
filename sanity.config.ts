@@ -8,11 +8,12 @@ import { apiVersion, dataset, projectId } from './src/sanity/env'
 import { schema } from './src/sanity/schema-types'
 import { structure } from './src/sanity/structure'
 import { visionTool } from '@sanity/vision'
-import { defineConfig } from 'sanity'
+import { DocumentActionComponent, defineConfig } from 'sanity'
 import { structureTool } from 'sanity/structure'
 
 import StudioLogo from '@/sanity/components/studio-logo'
 import StudioNavbar from '@/sanity/components/studio-navbar'
+import { DocumentType } from '@/sanity/types/general'
 
 export default defineConfig({
   basePath: '/peach',
@@ -24,8 +25,29 @@ export default defineConfig({
   icon: StudioLogo,
   plugins: [
     structureTool({ structure }),
-    // Vision is for querying with GROQ from inside the Studio
-    // https://www.sanity.io/docs/the-vision-plugin
     visionTool({ defaultApiVersion: apiVersion }),
   ],
+  // document: {
+  //   actions: (prev, context) => {
+  //     switch (context.schemaType as DocumentType) {
+  //       case '':
+  //         return prev?.filter(
+  //           (action) =>
+  //             !(
+  //               [
+  //                 'delete',
+  //                 'unpublish',
+  //                 'duplicate',
+  //               ] as DocumentActionComponent['action'][]
+  //             )?.includes(action?.action),
+  //         )
+  //       // case 'project':
+  //       //   return prev?.map((action) =>
+  //       //     action?.action === 'publish' ? slugOnPublish(action) : action,
+  //       //   )
+  //       default:
+  //         return prev
+  //     }
+  //   },
+  // },
 })

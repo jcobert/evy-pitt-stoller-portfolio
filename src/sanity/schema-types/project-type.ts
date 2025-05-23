@@ -45,7 +45,7 @@ export const projectType = defineType({
     }),
     // body
     defineField({
-      name: 'body',
+      name: 'description',
       type: 'blockContent',
     }),
     // tags
