@@ -15,6 +15,7 @@
   /* theme colors */
   --color-purple: var(--purple);
   --color-light-purple: var(--light-purple);
+  --color-pale-purple: var(--pale-purple);
   --color-dark-green: var(--dark-green);
   --color-light-green: var(--light-green);
   --color-pale-yellow: var(--pale-yellow);
@@ -90,6 +91,7 @@
   /* theme colors */
   --purple: #81559b;
   --light-purple: #a97cc4;
+  --pale-purple: #d8d8f6;
   --dark-green: #143109;
   --light-green: #b8d6c0;
   --pale-yellow: #e0e3c5;

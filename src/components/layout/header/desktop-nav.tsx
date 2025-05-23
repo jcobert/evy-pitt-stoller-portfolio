@@ -32,7 +32,7 @@ const DesktopNav: FC<Props> = ({ className }) => {
                 <NavigationMenuTrigger
                   className={cn(
                     'font-medium',
-                    'transition-colors bg-transparent hover:bg-white/20',
+                    'transition-colors bg-transparent hover:bg-white/20 focus:bg-white/20',
                     'data-[state=open]:bg-white/60 data-[state=open]:hover:bg-white/60',
                   )}
                 >

@@ -14,7 +14,7 @@ const Header: FC = () => {
       <div className='layout grid grid-cols-12 mx-auto items-center'>
         <Link
           href={homeUrl()}
-          className='w-fit max-md:col-start-5 max-md:col-span-4 max-md:mx-auto'
+          className='w-fit max-md:col-start-5 max-md:col-span-4 max-md:mx-auto hover:opacity-90 transition'
         >
           <Logo />
           <span className='sr-only w-0'>Home</span>
