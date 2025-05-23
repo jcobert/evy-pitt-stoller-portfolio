@@ -11,6 +11,7 @@ import { visionTool } from '@sanity/vision'
 import { defineConfig } from 'sanity'
 import { structureTool } from 'sanity/structure'
 
+import StudioLogo from '@/sanity/components/studio-logo'
 import StudioNavbar from '@/sanity/components/studio-navbar'
 
 export default defineConfig({
@@ -20,6 +21,7 @@ export default defineConfig({
   // Add and edit the content schema in the './sanity/schemaTypes' folder
   schema,
   studio: { components: { navbar: StudioNavbar } },
+  icon: StudioLogo,
   plugins: [
     structureTool({ structure }),
     // Vision is for querying with GROQ from inside the Studio
