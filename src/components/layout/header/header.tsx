@@ -10,7 +10,7 @@ import { Button } from '@/components/ui/button'
 
 const Header: FC = () => {
   return (
-    <header className='bg-light-green border-b border-b-border shadow-sm h-16 flex'>
+    <header className='sticky top-0 z-[99] bg-light-green/50 backdrop-blur-lg border-b border-b-border shadow-sm h-16 flex'>
       <div className='layout grid grid-cols-12 mx-auto items-center'>
         <Link
           href={homeUrl()}

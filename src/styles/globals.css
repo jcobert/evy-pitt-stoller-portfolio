@@ -157,7 +157,7 @@
   }
 
   body {
-    @apply bg-light-green text-foreground font-body;
+    @apply bg-light-green/90 text-foreground font-body;
   }
 
   button {
