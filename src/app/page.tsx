@@ -50,10 +50,12 @@ const Page: FC = () => {
 
             <CardStack
               className={cn(
-                'max-sm:w-full sm:right-8 sm:max-md:top-8 md:right-8',
+                'max-sm:w-full max-sm:overflow-x-clip max-sm:bottom-16 max-sm:-mb-12',
+                'sm:max-md:top-8 sm:right-8',
+                'md:right-8',
               )}
             >
-              <div className='p-4 md:p-6 text-pretty flex flex-col gap-6'>
+              <div className='p-4 md:p-6 text-pretty flex flex-col gap-6 justify-between'>
                 <p>{blurb}</p>
                 <ContactLinks
                   links={{ linkedIn: '', twitter: '', email: 'asdf' }}
