@@ -6,10 +6,11 @@ import { FC } from 'react'
 import { homeUrl } from '@/utils/nav'
 
 import Logo from '@/components/general/logo'
+import { Button } from '@/components/ui/button'
 
 const Header: FC = () => {
   return (
-    <header className='bg-primary border-b border-b-border shadow-sm h-16 flex'>
+    <header className='bg-light-green border-b border-b-border shadow-sm h-16 flex'>
       <div className='layout grid grid-cols-12 mx-auto items-center'>
         <Link
           href={homeUrl()}
@@ -22,6 +23,10 @@ const Header: FC = () => {
         <DesktopNav className='col-start-5 col-span-4 mx-auto max-md:hidden' />
 
         <MobileNav className='col-start-11 col-span-2 justify-self-end md:hidden' />
+
+        <Button className='max-md:hidden col-start-11 col-span-2 w-fit justify-self-end'>
+          {"Let's talk"}
+        </Button>
       </div>
     </header>
   )

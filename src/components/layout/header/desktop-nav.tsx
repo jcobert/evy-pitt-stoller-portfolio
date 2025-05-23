@@ -29,7 +29,15 @@ const DesktopNav: FC<Props> = ({ className }) => {
           if (hasMenu)
             return (
               <NavigationMenuItem key={item?.id}>
-                <NavigationMenuTrigger>{item?.name}</NavigationMenuTrigger>
+                <NavigationMenuTrigger
+                  className={cn(
+                    'font-medium',
+                    'transition-colors bg-transparent hover:bg-white/20',
+                    'data-[state=open]:bg-white/60 data-[state=open]:hover:bg-white/60',
+                  )}
+                >
+                  {item?.name}
+                </NavigationMenuTrigger>
                 <NavigationMenuContent>
                   <ul className='grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]'>
                     {item?.menu?.img?.src ? (
@@ -75,7 +83,10 @@ const DesktopNav: FC<Props> = ({ className }) => {
             <NavigationMenuItem key={item?.id}>
               <NavigationMenuLink
                 asChild
-                className={navigationMenuTriggerStyle()}
+                className={navigationMenuTriggerStyle({
+                  className:
+                    'bg-transparent hover:bg-white/20 focus:bg-white/20 transition font-medium',
+                })}
               >
                 <Link href={item?.url}>{item?.name}</Link>
               </NavigationMenuLink>

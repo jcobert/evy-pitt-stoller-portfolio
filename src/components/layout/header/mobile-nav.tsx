@@ -1,6 +1,5 @@
 import Link from 'next/link'
 import { FC, forwardRef } from 'react'
-import { GoDot } from 'react-icons/go'
 import { HiOutlineMenu } from 'react-icons/hi'
 
 import { NavItem } from '@/utils/nav'
@@ -39,11 +38,11 @@ const MenuItem = forwardRef<
         <Link
           href={item?.url}
           className={cn(
-            inner && 'flex flex-row justify-start !items-center gap-2',
+            inner && 'flex flex-row justify-start !items-center gap-2 pl-10',
             linkClassName,
           )}
         >
-          {inner ? <GoDot aria-hidden className='flex-none size-3' /> : null}
+          {/* {inner ? <GoDotFill aria-hidden className='flex-none size-3' /> : null} */}
           {item?.name}
         </Link>
       </NavigationMenuLink>
@@ -81,7 +80,11 @@ const MobileNav: FC<Props> = ({ className }) => {
                       className='flex flex-col gap-4 items-end w-full'
                     >
                       <div className='flex flex-col gap-2 items-end w-full'>
-                        <MenuItem item={item} />
+                        {/* <MenuItem item={item} /> */}
+                        <div className='w-full font-medium text-sm text-balance px-6 text-muted-foreground'>
+                          <span className='w-full'>{item?.name}</span>
+                        </div>
+
                         <ul className='flex flex-col gap-4 items-end w-full'>
                           {item?.menu?.links?.map((menuItem) => (
                             <MenuItem
@@ -93,7 +96,7 @@ const MobileNav: FC<Props> = ({ className }) => {
                         </ul>
                       </div>
 
-                      <div className='border-b w-full h-px' />
+                      <div className='border-b border-border/50 w-full h-px' />
                     </div>
                   )
                 return (
@@ -102,7 +105,7 @@ const MobileNav: FC<Props> = ({ className }) => {
                     className='flex flex-col gap-4 items-end w-full'
                   >
                     <MenuItem item={item} />
-                    <div className='border-b w-full h-px' />
+                    <div className='border-b border-border/50 w-full h-px' />
                   </div>
                 )
               })}

@@ -6,8 +6,17 @@ type Props = HTMLProps<HTMLDivElement>
 
 const Logo: FC<Props> = ({ className, ...props }) => {
   return (
-    <div className={cn('size-12 bg-white', className)} {...props}>
-      logo
+    <div
+      className={cn(
+        'size-12 bg-pale-yellow',
+        'flex items-center justify-center',
+        className,
+      )}
+      {...props}
+    >
+      <div className='flex-auto pb-px -mx-1 bg-light-purple text-center text-white font-display'>
+        Evy.
+      </div>
     </div>
   )
 }
