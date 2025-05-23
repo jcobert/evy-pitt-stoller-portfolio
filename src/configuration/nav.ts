@@ -1,6 +1,6 @@
 import { NavItem } from '@/utils/nav'
 
-export const NAVIGATION_ITEMS = [
+export const NAVIGATION_ITEMS: NavItem[] = [
   {
     id: 'about',
     name: 'About',
@@ -30,4 +30,4 @@ export const NAVIGATION_ITEMS = [
     name: 'Contact',
     url: '/contact',
   },
-] as const satisfies NavItem[]
+]

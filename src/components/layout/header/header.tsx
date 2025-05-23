@@ -8,8 +8,6 @@ import { homeUrl } from '@/utils/nav'
 import Logo from '@/components/general/logo'
 import { Button } from '@/components/ui/button'
 
-import { NAVIGATION_ITEMS } from '@/configuration/nav'
-
 const Header: FC = () => {
   return (
     <header className='sticky top-0 z-[99] bg-light-green/50 backdrop-blur-lg border-b border-b-border shadow-sm h-16 flex'>
@@ -30,7 +28,7 @@ const Header: FC = () => {
           asChild
           className='max-md:hidden col-start-11 col-span-2 w-fit justify-self-end'
         >
-          <Link href={NAVIGATION_ITEMS[2]?.url}>{"Let's talk"}</Link>
+          <Link href='/contact'>{"Let's talk"}</Link>
         </Button>
       </div>
     </header>
