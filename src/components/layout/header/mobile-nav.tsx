@@ -5,6 +5,7 @@ import { HiOutlineMenu } from 'react-icons/hi'
 import { NavItem } from '@/utils/nav'
 import { cn } from '@/utils/style'
 
+import ContactCta from '@/components/general/contact-cta'
 import {
   NavigationMenu,
   NavigationMenuItem,
@@ -32,17 +33,16 @@ const MenuItem = forwardRef<
       <NavigationMenuLink
         asChild
         className={navigationMenuTriggerStyle({
-          className: 'w-full items-start p-6 text-balance',
+          className: 'w-full items-start p-6 text-balance bg-transparent',
         })}
       >
         <Link
           href={item?.url}
           className={cn(
-            inner && 'flex flex-row justify-start !items-center gap-2 pl-10',
+            inner && 'flex flex-row justify-start !items-center gap-2 pl-8',
             linkClassName,
           )}
         >
-          {/* {inner ? <GoDotFill aria-hidden className='flex-none size-3' /> : null} */}
           {item?.name}
         </Link>
       </NavigationMenuLink>
@@ -61,7 +61,7 @@ const MobileNav: FC<Props> = ({ className }) => {
         <SheetTrigger className='w-fit'>
           <HiOutlineMenu className='text-4xl text-white' />
         </SheetTrigger>
-        <SheetContent>
+        <SheetContent className='backdrop-blur-lg bg-background/90'>
           <SheetHeader className='border-b-2'>
             <SheetTitle>Menu</SheetTitle>
             <SheetDescription className='sr-only'>
@@ -111,6 +111,10 @@ const MobileNav: FC<Props> = ({ className }) => {
               })}
             </NavigationMenuList>
           </NavigationMenu>
+
+          <div className='flex justify-center items-center w-full py-6 bg-accent'>
+            <ContactCta className='self-center' size='lg' />
+          </div>
         </SheetContent>
       </Sheet>
     </div>

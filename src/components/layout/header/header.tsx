@@ -5,8 +5,8 @@ import { FC } from 'react'
 
 import { homeUrl } from '@/utils/nav'
 
+import ContactCta from '@/components/general/contact-cta'
 import Logo from '@/components/general/logo'
-import { Button } from '@/components/ui/button'
 
 const Header: FC = () => {
   return (
@@ -22,14 +22,9 @@ const Header: FC = () => {
 
         <DesktopNav className='col-start-5 col-span-4 mx-auto max-md:hidden' />
 
-        <MobileNav className='col-start-11 col-span-2 justify-self-end md:hidden' />
+        <MobileNav className='col-start-11 col-span-2 justify-self-end md:hidden pr-2' />
 
-        <Button
-          asChild
-          className='max-md:hidden col-start-11 col-span-2 w-fit justify-self-end'
-        >
-          <Link href='/contact'>{"Let's talk"}</Link>
-        </Button>
+        <ContactCta className='max-md:hidden col-start-11 col-span-2 justify-self-end' />
       </div>
     </header>
   )
