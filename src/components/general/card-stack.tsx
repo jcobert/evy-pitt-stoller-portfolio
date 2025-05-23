@@ -9,33 +9,42 @@ type Props = {
 
 const CardStack: FC<Props> = ({ children, className }) => {
   return (
-    <div className={className}>
+    <div
+      className={cn(
+        'relative max-sm:overflow-x-clip max-sm:bottom-4',
+        'flex justify-center',
+        className,
+      )}
+    >
       <div
         className={cn(
-          'w-80 min-h-44 right-8 bottom-12',
-          'md:w-96 md:min-h-54 rounded-md absolute md:right-12 md:bottom-12 z-20',
-          'bg-pale-yellow',
-          'shadow-md',
+          'absolute z-30',
+          'bg-pale-yellow rounded-md shadow-md',
+          'w-[96%] w-full__ min-h-44 bottom-0',
+          'sm:w-80 sm:min-h-44 sm:right-8 sm:bottom-12',
+          'md:w-96 md:min-h-54 md:right-12 md:bottom-12',
         )}
       >
         {children}
       </div>
       <div
         className={cn(
-          'w-84 h-42 right-4 bottom-8',
-          'md:w-[26rem] md:h-56 rounded-md absolute md:right-0 md:bottom-4 z-10',
-          'bg-light-green',
-          'shadow-md',
+          'absolute z-20',
+          'bg-light-green rounded-md shadow-md',
           '-rotate-3',
+          'w-full h-42',
+          'sm:w-84 sm:h-42 sm:right-2 sm:bottom-8',
+          'md:w-[26rem] md:h-56 md:right-0 md:bottom-4',
         )}
       />
       <div
         className={cn(
-          'w-80 h-42',
-          'md:w-96 md:h-64 rounded-md md:-mb-4',
-          'bg-purple',
-          'shadow-2xl',
-          'rotate-3',
+          'relative z-10',
+          'bg-purple rounded-md shadow-2xl',
+          'rotate-1 sm:rotate-3',
+          'w-full h-42 -bottom-4',
+          'sm:w-80 sm:h-42 sm:bottom-4',
+          'md:w-96 md:h-64 md:top-2',
         )}
       />
     </div>

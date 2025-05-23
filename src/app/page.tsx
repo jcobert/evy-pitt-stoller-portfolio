@@ -8,10 +8,13 @@ import Main from '@/components/layout/main'
 import PageLayout from '@/components/layout/page-layout'
 
 const Page: FC = () => {
+  const blurb =
+    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec quis libero et enim dignissim venenatis a facilisis eros. Donec commodo nec dolor quis lacinia.'
+
   return (
     <Main className='bg-gradient-to-br from-20% to-dark-green/15'>
       <PageLayout wrapperClassName='max-sm:w-full' className='max-md:px-0'>
-        <section className='flex flex-col justify-between min-h-screen__ gap-16'>
+        <section className='flex flex-col justify-between gap-16'>
           <div className='flex flex-col gap-6 mt-8 md:mt-20 max-md:px-4'>
             <h1
               className={cn(
@@ -30,11 +33,11 @@ const Page: FC = () => {
             </h2>
           </div>
 
-          <div className='flex items-end max-md:self-center__ max-sm:flex-col shrink-0'>
+          <div className='flex items-end max-sm:flex-col shrink-0'>
             <div
               className={cn(
                 'shrink-0 w-full sm:max-w-80 max-sm:self-center',
-                'relative md:right-12 xl:right-24__ md:-ml-16',
+                'relative md:right-12 md:-ml-16',
               )}
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -45,13 +48,13 @@ const Page: FC = () => {
               />
             </div>
 
-            <CardStack className='relative sm:right-8 max-md:top-8 md:right-8 max-sm:hidden'>
+            <CardStack
+              className={cn(
+                'max-sm:w-full sm:right-8 sm:max-md:top-8 md:right-8',
+              )}
+            >
               <div className='p-4 md:p-6 text-pretty flex flex-col gap-6'>
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
-                  quis libero et enim dignissim venenatis a facilisis eros.
-                  Donec commodo nec dolor quis lacinia.
-                </p>
+                <p>{blurb}</p>
                 <ContactLinks
                   links={{ linkedIn: '', twitter: '', email: 'asdf' }}
                 />
@@ -61,7 +64,7 @@ const Page: FC = () => {
         </section>
       </PageLayout>
 
-      <section className='bg-pale-purple relative z-50'>
+      <section className='bg-pale-purple relative max-sm:z-50__'>
         <div className='h-96'></div>
       </section>
     </Main>
