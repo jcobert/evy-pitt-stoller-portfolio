@@ -4,10 +4,13 @@ import { FaRegCirclePlay } from 'react-icons/fa6'
 import { formatDate } from '@/utils/date'
 import { cn } from '@/utils/style'
 
-import { PROJECTS_QUERYResult, Project } from '@/sanity/types/generated/types'
+import {
+  PROJECTS_BY_TYPE_QUERYResult,
+  Project,
+} from '@/sanity/types/generated/types'
 
 type Props = {
-  production: Project | PROJECTS_QUERYResult[number]
+  production: Project | PROJECTS_BY_TYPE_QUERYResult[number]
   className?: string
 }
 
@@ -24,7 +27,7 @@ const ProductionCard: FC<Props> = ({ production, className }) => {
         className={cn(
           'w-11/12 sm:w-72 max-w-full aspect-video bg-accent object-cover rounded-sm p-px',
           'relative flex items-center justify-center',
-          'group-hover:shadow-sm transition'
+          'group-hover:shadow-sm transition',
         )}
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
