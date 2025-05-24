@@ -5,31 +5,20 @@ export const videoType = defineType({
   name: 'video',
   type: 'object',
   title: 'Video',
-  description: 'Add a link to the video or upload a file.',
   icon: PlayIcon,
   fields: [
-    defineField({
-      name: 'youtube',
-      type: 'string',
-      title: 'Youtube Link',
-      placeholder: 'E.g. https://youtube.com/watch?v=abc123',
-    }),
-    defineField({
-      name: 'vimeo',
-      type: 'string',
-      title: 'Vimeo Link',
-      placeholder: 'E.g. https://viemo.com/abc123',
-    }),
     defineField({
       name: 'file',
       type: 'file',
       title: 'File',
+      description: 'Make sure to also add a description below.',
     }),
-    // defineField({
-    //   name: 'alt',
-    //   title: 'Video Description (alt text)',
-    //   type: 'videoAltText',
-    // }),
+    defineField({
+      name: 'alt',
+      title: 'Video Description',
+      type: 'videoAltText',
+      // validation: (rules) => rules.required(),
+    }),
   ],
   preview: {
     select: { title: 'alt', file: 'file' },

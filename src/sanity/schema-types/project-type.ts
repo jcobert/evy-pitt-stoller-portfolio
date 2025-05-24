@@ -1,4 +1,4 @@
-import { ProjectsIcon } from '@sanity/icons'
+import { ProjectsIcon, VideoIcon } from '@sanity/icons'
 import { defineField, defineType } from 'sanity'
 
 export const projectType = defineType({
@@ -6,11 +6,32 @@ export const projectType = defineType({
   title: 'Project',
   type: 'document',
   icon: ProjectsIcon,
+  fieldsets: [
+    {
+      name: 'media',
+      description: '',
+      // 'The main image or video for the project. If both are added, only the video will be used.',
+      options: { collapsible: true },
+    },
+  ],
+  groups: [{ name: 'info' }, { name: 'media', icon: VideoIcon }],
   fields: [
     // title
     defineField({ name: 'title', type: 'string' }),
     // slug
-    defineField({ name: 'slug', type: 'slug', options: { source: 'title' } }),
+    // defineField({ name: 'slug', type: 'slug', options: { source: 'title' } }),
+    defineField({
+      name: 'slug',
+      title: 'URL-friendly Name (required)',
+      type: 'slug',
+      hidden: true,
+      options: {
+        source: 'title',
+        maxLength: 96,
+      },
+      description:
+        'Just click "Generate" after entering something in the Title field above, to automatically fill this in.',
+    }),
     // date published
     defineField({ name: 'datePublished', type: 'date' }),
     // project type
@@ -25,6 +46,14 @@ export const projectType = defineType({
         layout: 'dropdown',
       },
       initialValue: 'production',
+    }),
+    // video
+    defineField({
+      name: 'mainVideo',
+      title: 'Video',
+      type: 'videoGroup',
+      group: 'media',
+      hidden: (props) => props?.parent?.projectType === 'writing',
     }),
     // image
     defineField({
@@ -41,14 +70,8 @@ export const projectType = defineType({
           type: 'imageAltText',
         }),
       ],
-      hidden: (props) => props?.parent?.projectType === 'production',
-    }),
-    // video
-    defineField({
-      name: 'mainVideo',
-      title: 'Video',
-      type: 'video',
-      hidden: (props) => props?.parent?.projectType === 'writing',
+      group: 'media',
+      // hidden: (props) => props?.parent?.projectType === 'production',
     }),
     // body
     defineField({

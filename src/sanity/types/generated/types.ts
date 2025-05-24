@@ -59,6 +59,7 @@ export type Project = {
   slug?: Slug
   datePublished?: string
   projectType?: 'production' | 'writing'
+  mainVideo?: VideoGroup
   mainImage?: {
     asset?: {
       _ref: string
@@ -72,7 +73,6 @@ export type Project = {
     alt?: string
     _type: 'image'
   }
-  mainVideo?: Video
   description?: Array<
     | {
         children?: Array<{
@@ -244,10 +244,15 @@ export type Slug = {
   source?: string
 }
 
-export type Video = {
-  _type: 'video'
+export type VideoGroup = {
+  _type: 'videoGroup'
   youtube?: string
   vimeo?: string
+  videoUpload?: Video
+}
+
+export type Video = {
+  _type: 'video'
   file?: {
     asset?: {
       _ref: string
@@ -258,6 +263,7 @@ export type Video = {
     media?: unknown
     _type: 'file'
   }
+  alt?: string
 }
 
 export type VideoAltText = string
@@ -391,6 +397,7 @@ export type AllSanitySchemaTypes =
   | Author
   | Category
   | Slug
+  | VideoGroup
   | Video
   | VideoAltText
   | ImageAltText
@@ -402,17 +409,21 @@ export type AllSanitySchemaTypes =
   | SanityAssetSourceData
   | SanityImageMetadata
 export declare const internalGroqTypeReferenceTo: unique symbol
-// Source: ./src/sanity/lib/queries/fragments.ts
+// Source: ./src/sanity/lib/fragments.ts
 // Variable: image
 // Query: { ..., asset-> }
 export type ImageResult = never
 // Variable: video
 // Query: { ..., file{ ..., asset-> } }
 export type VideoResult = never
+// Variable: videoGroup
+// Query: { ..., videoUpload{ ..., file{ ..., asset-> } } }
+export type VideoGroupResult = never
 
 declare module '@sanity/client' {
   interface SanityQueries {
     '{ ..., asset-> }': ImageResult
     '{ ..., file{ ..., asset-> } }': VideoResult
+    '{ ..., videoUpload{ ..., file{ ..., asset-> } } }': VideoGroupResult
   }
 }

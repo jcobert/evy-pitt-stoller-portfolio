@@ -263,6 +263,14 @@
         },
         "optional": true
       },
+      "mainVideo": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "videoGroup"
+        },
+        "optional": true
+      },
       "mainImage": {
         "type": "objectAttribute",
         "value": {
@@ -336,14 +344,6 @@
               }
             }
           }
-        },
-        "optional": true
-      },
-      "mainVideo": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "inline",
-          "name": "video"
         },
         "optional": true
       },
@@ -1469,7 +1469,7 @@
     }
   },
   {
-    "name": "video",
+    "name": "videoGroup",
     "type": "type",
     "value": {
       "type": "object",
@@ -1478,7 +1478,7 @@
           "type": "objectAttribute",
           "value": {
             "type": "string",
-            "value": "video"
+            "value": "videoGroup"
           }
         },
         "youtube": {
@@ -1494,6 +1494,30 @@
             "type": "string"
           },
           "optional": true
+        },
+        "videoUpload": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "inline",
+            "name": "video"
+          },
+          "optional": true
+        }
+      }
+    }
+  },
+  {
+    "name": "video",
+    "type": "type",
+    "value": {
+      "type": "object",
+      "attributes": {
+        "_type": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string",
+            "value": "video"
+          }
         },
         "file": {
           "type": "objectAttribute",
@@ -1545,6 +1569,13 @@
                 }
               }
             }
+          },
+          "optional": true
+        },
+        "alt": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
           },
           "optional": true
         }
