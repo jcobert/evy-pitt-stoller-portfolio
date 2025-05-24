@@ -1,5 +1,5 @@
 import { ImageIcon } from '@sanity/icons'
-import { defineArrayMember, defineType } from 'sanity'
+import { defineArrayMember, defineField, defineType } from 'sanity'
 
 /**
  * This is the schema type for block content used in the post document type
@@ -31,7 +31,10 @@ export const blockContentType = defineType({
         { title: 'H4', value: 'h4' },
         { title: 'Quote', value: 'blockquote' },
       ],
-      lists: [{ title: 'Bullet', value: 'bullet' }],
+      lists: [
+        { title: 'Bulletted List', value: 'bullet' },
+        { title: 'Numbered List', value: 'number' },
+      ],
       // Marks let you mark up inline text in the Portable Text Editor
       marks: {
         // Decorators usually describe a single property – e.g. a typographic
@@ -39,6 +42,8 @@ export const blockContentType = defineType({
         decorators: [
           { title: 'Strong', value: 'strong' },
           { title: 'Emphasis', value: 'em' },
+          { title: 'Underline', value: 'underline' },
+          { title: 'Strike', value: 'strike-through' },
         ],
         // Annotations can be any object structure – e.g. a link or a footnote.
         annotations: [
@@ -65,12 +70,15 @@ export const blockContentType = defineType({
       icon: ImageIcon,
       options: { hotspot: true },
       fields: [
-        {
+        defineField({
           name: 'alt',
-          type: 'string',
-          title: 'Alternative Text',
-        },
+          type: 'imageAltText',
+        }),
       ],
+    }),
+    defineArrayMember({
+      type: 'video',
+      name: 'videoEmbed',
     }),
   ],
 })
