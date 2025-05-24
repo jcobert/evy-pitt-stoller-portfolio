@@ -8,7 +8,7 @@ const Logo: FC<Props> = ({ className, ...props }) => {
   return (
     <div
       className={cn(
-        'size-12 bg-pale-yellow',
+        'size-12 bg-pale-yellow border border-light-green/50',
         'flex items-center justify-center',
         className,
       )}

@@ -61,7 +61,7 @@ const MobileNav: FC<Props> = ({ className }) => {
         <SheetTrigger className='w-fit'>
           <HiOutlineMenu className='text-4xl text-white' />
         </SheetTrigger>
-        <SheetContent className='backdrop-blur-lg bg-background/90'>
+        <SheetContent className='backdrop-blur-lg bg-background/90 pb-safe'>
           <SheetHeader className='border-b-2'>
             <SheetTitle>Menu</SheetTitle>
             <SheetDescription className='sr-only'>

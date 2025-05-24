@@ -16,10 +16,10 @@ const Heading: FC<HeadingProps> = ({
   alignment = 'dynamic',
 }) => {
   return (
-    <div className='flex flex-col gap-4'>
+    <div className='flex flex-col gap-4 py-6 md:py-10'>
       <h1
         className={cn([
-          'text-3xl sm:text-4xl md:text-5xl font-semibold font-heading text-balance text-primary',
+          'text-3xl sm:text-4xl md:text-5xl font-semibold font-display text-balance text-light-purple',
           {
             'text-left': alignment === 'left',
             'text-center': alignment === 'center',
@@ -32,7 +32,7 @@ const Heading: FC<HeadingProps> = ({
         {text}
       </h1>
       {description ? (
-        <p className='max-w-prose text-pretty text-lg font-medium text-accent-foreground'>
+        <p className='md:max-w-[40ch] text-balance text-lg sm:text-xl font-medium text-muted-foreground'>
           {description}
         </p>
       ) : null}

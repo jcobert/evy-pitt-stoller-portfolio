@@ -39,9 +39,9 @@ export default function RootLayout({
         <ProgressProvider>
           <div className='flex flex-col h-full min-h-dvh'>
             <Header />
-            <div className='grow'>{children}</div>
+            {children}
             {/** @todo add footer. */}
-            <div />
+            {/* <Footer /> */}
           </div>
         </ProgressProvider>
       </body>
