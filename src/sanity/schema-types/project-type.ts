@@ -29,6 +29,7 @@ export const projectType = defineType({
     // image
     defineField({
       name: 'mainImage',
+      title: 'Image',
       type: 'image',
       options: {
         hotspot: true,
@@ -36,12 +37,18 @@ export const projectType = defineType({
       fields: [
         defineField({
           name: 'alt',
-          type: 'string',
           title: 'Image Description (alt text)',
-          description:
-            'Used for people who cannot see the image. E.g. "A woman gardening"',
+          type: 'imageAltText',
         }),
       ],
+      hidden: (props) => props?.parent?.projectType === 'production',
+    }),
+    // video
+    defineField({
+      name: 'mainVideo',
+      title: 'Video',
+      type: 'video',
+      hidden: (props) => props?.parent?.projectType === 'writing',
     }),
     // body
     defineField({

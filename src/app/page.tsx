@@ -7,7 +7,7 @@ import ContactLinks from '@/components/general/contact-links'
 import Main from '@/components/layout/main'
 import PageLayout from '@/components/layout/page-layout'
 
-const Page: FC = () => {
+const Page: FC = async () => {
   const blurb =
     'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec quis libero et enim dignissim venenatis a facilisis eros. Donec commodo nec dolor quis lacinia.'
 
