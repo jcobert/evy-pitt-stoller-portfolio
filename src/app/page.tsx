@@ -1,3 +1,4 @@
+import { Metadata } from 'next'
 import { FC } from 'react'
 
 import { cn } from '@/utils/style'
@@ -7,12 +8,20 @@ import ContactLinks from '@/components/general/contact-links'
 import Main from '@/components/layout/main'
 import PageLayout from '@/components/layout/page-layout'
 
+import { generatePageMeta } from '@/configuration/seo'
+
+export const metadata: Metadata = generatePageMeta({
+  title: 'Home',
+  description: '',
+  url: '/',
+})
+
 const Page: FC = async () => {
   const blurb =
     'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec quis libero et enim dignissim venenatis a facilisis eros. Donec commodo nec dolor quis lacinia.'
 
   return (
-    <Main className='bg-gradient-to-br from-20% to-dark-green/15'>
+    <Main className='bg-gradient-to-br from-light-green/90 from-20% to-dark-green/15'>
       <PageLayout wrapperClassName='max-sm:w-full' className='max-md:px-0'>
         <section className='flex flex-col justify-between gap-16'>
           <div className='flex flex-col gap-6 mt-8 md:mt-20 max-md:px-4'>

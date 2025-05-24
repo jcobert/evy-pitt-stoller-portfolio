@@ -1,7 +1,7 @@
 import { Metadata } from 'next'
 import { OpenGraph } from 'next/dist/lib/metadata/types/opengraph-types'
 
-import { siteConfig } from '@/configuration/site'
+import { canonicalUrl, siteConfig } from '@/configuration/site'
 
 /** Appends site name to provided page title. */
 export const buildPageTitle = (title?: string, separator = ' | ') =>
@@ -55,7 +55,7 @@ export const generatePageMeta = ({
     openGraph: openGraphMeta({
       title: buildPageTitle(title),
       description,
-      url,
+      url: canonicalUrl(url),
       images: images ?? [buildOgImage({ title })],
       ...openGraph,
     }),
