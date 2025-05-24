@@ -17,7 +17,11 @@ export const projectType = defineType({
   groups: [{ name: 'info' }, { name: 'media', icon: VideoIcon }],
   fields: [
     // title
-    defineField({ name: 'title', type: 'string' }),
+    defineField({
+      name: 'title',
+      type: 'string',
+      validation: (rules) => rules?.required(),
+    }),
     // slug
     // defineField({ name: 'slug', type: 'slug', options: { source: 'title' } }),
     defineField({
@@ -43,9 +47,11 @@ export const projectType = defineType({
           { title: 'Production', value: 'production' },
           { title: 'Writing', value: 'writing' },
         ],
-        layout: 'dropdown',
+        layout: 'radio',
+        direction: 'vertical',
       },
       initialValue: 'production',
+      validation: (rules) => rules?.required(),
     }),
     // video
     defineField({

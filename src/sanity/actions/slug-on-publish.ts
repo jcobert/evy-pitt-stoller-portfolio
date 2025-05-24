@@ -1,3 +1,4 @@
+import { DocumentType } from '../types/general'
 import { SlugValue } from '@sanity/types'
 import {
   DocumentActionComponent,
@@ -11,6 +12,8 @@ const defaultSlugify = (value: string) => {
   const slugifyOpts = { truncate: 200, symbols: true }
   return value ? speakingurl(value, slugifyOpts) : ''
 }
+
+const documentsToSlugify: string[] = ['project'] satisfies DocumentType[]
 
 export const slugOnPublish = (
   originalPublishAction: DocumentActionComponent,
@@ -34,7 +37,7 @@ export const slugOnPublish = (
       ...originalResult,
       label: originalResult?.label || '',
       onHandle: async () => {
-        if (!props?.draft || !['project']?.includes(props?.type)) {
+        if (!props?.draft || !documentsToSlugify?.includes(props?.type)) {
           return originalResult?.onHandle?.()
         }
         // check for a title and existing slug
