@@ -168,3 +168,9 @@
     @apply max-w-layout mx-auto w-[96%] sm:w-11/12;
   }
 }
+
+@layer utilities {
+  .pb-safe {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+}
