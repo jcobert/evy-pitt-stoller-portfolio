@@ -409,21 +409,141 @@ export type AllSanitySchemaTypes =
   | SanityAssetSourceData
   | SanityImageMetadata
 export declare const internalGroqTypeReferenceTo: unique symbol
-// Source: ./src/sanity/lib/fragments.ts
+// Source: ./src/sanity/lib/queries/fragments.ts
 // Variable: image
 // Query: { ..., asset-> }
 export type ImageResult = never
-// Variable: video
+// Variable: file
 // Query: { ..., file{ ..., asset-> } }
-export type VideoResult = never
+export type FileResult = never
 // Variable: videoGroup
-// Query: { ..., videoUpload{ ..., file{ ..., asset-> } } }
-export type VideoGroupResult = never
+// Query: { "youtube": coalesce(youtube, ''), "vimeo": coalesce(vimeo, ''), videoUpload{ ..., file{ ..., asset-> } } }
+export type VideoGroupResult = {
+  youtube: ''
+  vimeo: ''
+  videoUpload: never
+}
+
+// Source: ./src/sanity/lib/queries/projects-query.ts
+// Variable: PROJECTS_QUERY
+// Query: *[_type=='project' && defined(slug)]{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ "youtube": coalesce(youtube, ''), "vimeo": coalesce(vimeo, ''), videoUpload{ ..., file{ ..., asset-> } } } }
+export type PROJECTS_QUERYResult = Array<{
+  _id: string
+  _type: 'project'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  title?: string
+  slug?: Slug
+  datePublished?: string
+  projectType?: 'production' | 'writing'
+  mainVideo: {
+    youtube: string | ''
+    vimeo: string | ''
+    videoUpload: {
+      _type: 'video'
+      file: {
+        asset: {
+          _id: string
+          _type: 'sanity.fileAsset'
+          _createdAt: string
+          _updatedAt: string
+          _rev: string
+          originalFilename?: string
+          label?: string
+          title?: string
+          description?: string
+          altText?: string
+          sha1hash?: string
+          extension?: string
+          mimeType?: string
+          size?: number
+          assetId?: string
+          uploadId?: string
+          path?: string
+          url?: string
+          source?: SanityAssetSourceData
+        } | null
+        media?: unknown
+        _type: 'file'
+      } | null
+      alt?: string
+    } | null
+  } | null
+  mainImage: {
+    asset: {
+      _id: string
+      _type: 'sanity.imageAsset'
+      _createdAt: string
+      _updatedAt: string
+      _rev: string
+      originalFilename?: string
+      label?: string
+      title?: string
+      description?: string
+      altText?: string
+      sha1hash?: string
+      extension?: string
+      mimeType?: string
+      size?: number
+      assetId?: string
+      uploadId?: string
+      path?: string
+      url?: string
+      metadata?: SanityImageMetadata
+      source?: SanityAssetSourceData
+    } | null
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: string
+    _type: 'image'
+  } | null
+  description?: Array<
+    | ({
+        _key: string
+      } & Video)
+    | {
+        children?: Array<{
+          marks?: Array<string>
+          text?: string
+          _type: 'span'
+          _key: string
+        }>
+        style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'normal'
+        listItem?: 'bullet' | 'number'
+        markDefs?: Array<{
+          href?: string
+          _type: 'link'
+          _key: string
+        }>
+        level?: number
+        _type: 'block'
+        _key: string
+      }
+    | {
+        asset?: {
+          _ref: string
+          _type: 'reference'
+          _weak?: boolean
+          [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+        }
+        media?: unknown
+        hotspot?: SanityImageHotspot
+        crop?: SanityImageCrop
+        alt?: string
+        _type: 'image'
+        _key: string
+      }
+  >
+  tags: Array<string> | Array<never>
+}>
 
 declare module '@sanity/client' {
   interface SanityQueries {
     '{ ..., asset-> }': ImageResult
-    '{ ..., file{ ..., asset-> } }': VideoResult
-    '{ ..., videoUpload{ ..., file{ ..., asset-> } } }': VideoGroupResult
+    '{ ..., file{ ..., asset-> } }': FileResult
+    '{ "youtube": coalesce(youtube, \'\'), "vimeo": coalesce(vimeo, \'\'), videoUpload{ ..., file{ ..., asset-> } } }': VideoGroupResult
+    '*[_type==\'project\' && defined(slug)]{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ "youtube": coalesce(youtube, \'\'), "vimeo": coalesce(vimeo, \'\'), videoUpload{ ..., file{ ..., asset-> } } } }': PROJECTS_QUERYResult
   }
 }
