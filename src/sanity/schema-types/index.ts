@@ -10,14 +10,17 @@ import { type SchemaTypeDefinition } from 'sanity'
 
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [
+    // General
     blockContentType,
     imageAltText,
     videoAltText,
     videoType,
     videoGroupType,
-    categoryType,
+    // Blog
     postType,
     authorType,
+    categoryType,
+    // Projects
     projectType,
   ],
 }
