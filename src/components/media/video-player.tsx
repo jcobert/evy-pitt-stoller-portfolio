@@ -25,7 +25,7 @@ const Fallback: FC = () => (
     className={cn(
       'w-full max-w-full aspect-video bg-primary/50 object-cover rounded-sm p-px',
       'relative flex items-center justify-center',
-      'group-hover:shadow-sm transition animate-pulse',
+      'animate-pulse',
     )}
   >
     <FaRegCirclePlay className='absolute text-5xl text-black/20' />
