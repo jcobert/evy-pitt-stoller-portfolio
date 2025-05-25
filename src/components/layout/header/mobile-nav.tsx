@@ -1,14 +1,13 @@
 'use client'
 
 import Link, { LinkProps } from 'next/link'
-import { FC, forwardRef, useCallback } from 'react'
+import { FC, forwardRef } from 'react'
 import { HiOutlineMenu } from 'react-icons/hi'
 
 import { NavItem } from '@/utils/nav'
 import { cn } from '@/utils/style'
 
 import ContactCta, { CONTACT_CTA_LINK } from '@/components/general/contact-cta'
-import { ButtonProps } from '@/components/ui/button'
 import {
   NavigationMenu,
   NavigationMenuItem,
@@ -71,21 +70,8 @@ type Props = {
 }
 
 const MobileNav: FC<Props> = ({ className }) => {
-  const { isMenuOpen, setIsMenuOpen, isActivePath } = useNavigationMenu()
-
-  const handleLinkClick = useCallback(
-    (
-      e: Parameters<NonNullable<(LinkProps | ButtonProps)['onClick']>>['0'],
-      path: Parameters<typeof isActivePath>['0'],
-      options: { preventDefault?: boolean } = { preventDefault: true },
-    ) => {
-      if (isActivePath(path, { exact: true })) {
-        if (options?.preventDefault) e.preventDefault()
-        setIsMenuOpen(false)
-      }
-    },
-    [isActivePath, setIsMenuOpen],
-  )
+  const { isMenuOpen, setIsMenuOpen, isActivePath, handleLinkClick } =
+    useNavigationMenu()
 
   return (
     <div className={cn('flex w-fit', className)}>

@@ -1,11 +1,10 @@
 'use client'
 
-import Link, { LinkProps } from 'next/link'
-import { FC, useCallback } from 'react'
+import Link from 'next/link'
+import { FC } from 'react'
 
 import { cn } from '@/utils/style'
 
-import { ButtonProps } from '@/components/ui/button'
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -28,20 +27,7 @@ type Props = {
 const NAV_ITEMS = NAVIGATION_ITEMS?.slice(1)
 
 const DesktopNav: FC<Props> = ({ className }) => {
-  const { isActiveItem, isActivePath } = useNavigationMenu()
-
-  const handleLinkClick = useCallback(
-    (
-      e: Parameters<NonNullable<(LinkProps | ButtonProps)['onClick']>>['0'],
-      path: Parameters<typeof isActivePath>['0'],
-      options: { preventDefault?: boolean } = { preventDefault: true },
-    ) => {
-      if (isActivePath(path, { exact: true })) {
-        if (options?.preventDefault) e.preventDefault()
-      }
-    },
-    [isActivePath],
-  )
+  const { isActiveItem, isActivePath, handleLinkClick } = useNavigationMenu()
 
   return (
     <NavigationMenu className={className}>
