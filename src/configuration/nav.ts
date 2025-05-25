@@ -2,6 +2,11 @@ import { NavItem } from '@/utils/nav'
 
 export const NAVIGATION_ITEMS: NavItem[] = [
   {
+    id: 'home',
+    name: 'Home',
+    url: '/',
+  },
+  {
     id: 'about',
     name: 'About',
     url: '/about',

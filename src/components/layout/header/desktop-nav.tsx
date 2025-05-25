@@ -1,3 +1,5 @@
+'use client'
+
 import Link from 'next/link'
 import { FC } from 'react'
 
@@ -13,18 +15,26 @@ import {
   navigationMenuTriggerStyle,
 } from '@/components/ui/navigation-menu'
 
+import { useNavigationMenu } from '@/hooks/use-navigation-menu'
+
 import { NAVIGATION_ITEMS } from '@/configuration/nav'
 
 type Props = {
   className?: string
 }
 
+// Exclude home link
+const NAV_ITEMS = NAVIGATION_ITEMS?.slice(1)
+
 const DesktopNav: FC<Props> = ({ className }) => {
+  const { isActiveItem, isActivePath, handleLinkClick } = useNavigationMenu()
+
   return (
     <NavigationMenu className={className}>
       <NavigationMenuList className='gap-6'>
-        {NAVIGATION_ITEMS?.map((item) => {
+        {NAV_ITEMS?.map((item) => {
           const hasMenu = !!item?.menu?.links?.length
+          const isActive = isActiveItem(item)
 
           if (hasMenu)
             return (
@@ -34,6 +44,7 @@ const DesktopNav: FC<Props> = ({ className }) => {
                     'font-medium',
                     'transition-colors bg-transparent hover:bg-white/20 focus:bg-white/20',
                     'data-[state=open]:bg-white/60 data-[state=open]:hover:bg-white/60',
+                    isActive && 'font-semibold text-purple focus:text-purple',
                   )}
                 >
                   {item?.name}
@@ -42,7 +53,10 @@ const DesktopNav: FC<Props> = ({ className }) => {
                   <ul className='grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]'>
                     {item?.menu?.img?.src ? (
                       <li className='row-span-3'>
-                        <NavigationMenuLink asChild>
+                        <NavigationMenuLink
+                          asChild
+                          onClick={(e) => handleLinkClick(e, item?.url)}
+                        >
                           <Link
                             href={item?.url}
                             className='flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md'
@@ -53,27 +67,39 @@ const DesktopNav: FC<Props> = ({ className }) => {
                         </NavigationMenuLink>
                       </li>
                     ) : null}
-                    {item?.menu?.links?.map((menuItem) => (
-                      <li key={menuItem?.id}>
-                        <NavigationMenuLink asChild>
-                          <Link
-                            href={menuItem?.url}
-                            className={cn(
-                              'block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground',
-                            )}
+                    {item?.menu?.links?.map((menuItem) => {
+                      const isActiveMenuItem = isActivePath(menuItem?.url)
+                      return (
+                        <li key={menuItem?.id}>
+                          <NavigationMenuLink
+                            asChild
+                            onClick={(e) => handleLinkClick(e, menuItem?.url)}
                           >
-                            <div className='text-sm font-medium leading-none'>
-                              {menuItem?.name}
-                            </div>
-                            {menuItem?.description ? (
-                              <p className='line-clamp-2 text-sm leading-snug text-muted-foreground'>
-                                {menuItem?.description}
-                              </p>
-                            ) : null}
-                          </Link>
-                        </NavigationMenuLink>
-                      </li>
-                    ))}
+                            <Link
+                              href={menuItem?.url}
+                              className={cn(
+                                'block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground',
+                              )}
+                            >
+                              <div
+                                className={cn(
+                                  'text-sm font-medium leading-none',
+                                  isActiveMenuItem &&
+                                    'font-semibold text-purple',
+                                )}
+                              >
+                                {menuItem?.name}
+                              </div>
+                              {menuItem?.description ? (
+                                <p className='line-clamp-2 text-sm leading-snug text-muted-foreground'>
+                                  {menuItem?.description}
+                                </p>
+                              ) : null}
+                            </Link>
+                          </NavigationMenuLink>
+                        </li>
+                      )
+                    })}
                   </ul>
                 </NavigationMenuContent>
               </NavigationMenuItem>
@@ -84,9 +110,12 @@ const DesktopNav: FC<Props> = ({ className }) => {
               <NavigationMenuLink
                 asChild
                 className={navigationMenuTriggerStyle({
-                  className:
+                  className: cn(
                     'bg-transparent hover:bg-white/20 focus:bg-white/20 transition font-medium',
+                    isActive && 'font-semibold text-purple focus:text-purple',
+                  ),
                 })}
+                onClick={(e) => handleLinkClick(e, item?.url)}
               >
                 <Link href={item?.url}>{item?.name}</Link>
               </NavigationMenuLink>
