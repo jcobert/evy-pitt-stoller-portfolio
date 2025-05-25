@@ -47,7 +47,7 @@ const MenuItem = forwardRef<
           className: cn(
             'w-full items-start p-6 text-balance bg-transparent rounded-none',
             active &&
-              'font-semibold bg-primary/50 hover:bg-primary/50 focus:bg-primary',
+              'font-semibold bg-primary/25 hover:bg-primary/25 focus:bg-primary/50 text-purple',
           ),
         })}
       >
@@ -79,7 +79,7 @@ const MobileNav: FC<Props> = ({ className }) => {
       path: Parameters<typeof isActivePath>['0'],
       options: { preventDefault?: boolean } = { preventDefault: true },
     ) => {
-      if (isActivePath(path)) {
+      if (isActivePath(path, { exact: true })) {
         if (options?.preventDefault) e.preventDefault()
         setIsMenuOpen(false)
       }

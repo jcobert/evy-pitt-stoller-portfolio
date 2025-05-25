@@ -17,10 +17,13 @@ export const useNavigationMenu = () => {
    * Returns whether provided path is the active path.
    * Dynamic routes are treated as a match.
    *
+   * If you don't want to match dynamic routes, set `exact` option to `false`,
+   * which will only return `true` for a strict match.
+   *
    * E.g. `"/shop/pants"` (provided path) will match `"/shop/[item]"` (router pathname)
    */
-  const isActivePath = (path?: string) => {
-    if (path === '/') return path === pathname
+  const isActivePath = (path?: string, options?: { exact?: boolean }) => {
+    if (path === '/' || options?.exact) return path === pathname
 
     const activePath = pathname
 

@@ -1,10 +1,11 @@
 'use client'
 
-import Link from 'next/link'
-import { FC } from 'react'
+import Link, { LinkProps } from 'next/link'
+import { FC, useCallback } from 'react'
 
 import { cn } from '@/utils/style'
 
+import { ButtonProps } from '@/components/ui/button'
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -28,6 +29,19 @@ const NAV_ITEMS = NAVIGATION_ITEMS?.slice(1)
 
 const DesktopNav: FC<Props> = ({ className }) => {
   const { isActiveItem, isActivePath } = useNavigationMenu()
+
+  const handleLinkClick = useCallback(
+    (
+      e: Parameters<NonNullable<(LinkProps | ButtonProps)['onClick']>>['0'],
+      path: Parameters<typeof isActivePath>['0'],
+      options: { preventDefault?: boolean } = { preventDefault: true },
+    ) => {
+      if (isActivePath(path, { exact: true })) {
+        if (options?.preventDefault) e.preventDefault()
+      }
+    },
+    [isActivePath],
+  )
 
   return (
     <NavigationMenu className={className}>
@@ -55,9 +69,7 @@ const DesktopNav: FC<Props> = ({ className }) => {
                       <li className='row-span-3'>
                         <NavigationMenuLink
                           asChild
-                          onClick={(e) => {
-                            if (isActivePath(item?.url)) e.preventDefault()
-                          }}
+                          onClick={(e) => handleLinkClick(e, item?.url)}
                         >
                           <Link
                             href={item?.url}
@@ -75,9 +87,7 @@ const DesktopNav: FC<Props> = ({ className }) => {
                         <li key={menuItem?.id}>
                           <NavigationMenuLink
                             asChild
-                            onClick={(e) => {
-                              if (isActivePath(item?.url)) e.preventDefault()
-                            }}
+                            onClick={(e) => handleLinkClick(e, menuItem?.url)}
                           >
                             <Link
                               href={menuItem?.url}
@@ -119,9 +129,7 @@ const DesktopNav: FC<Props> = ({ className }) => {
                     isActive && 'font-semibold text-purple focus:text-purple',
                   ),
                 })}
-                onClick={(e) => {
-                  if (isActivePath(item?.url)) e.preventDefault()
-                }}
+                onClick={(e) => handleLinkClick(e, item?.url)}
               >
                 <Link href={item?.url}>{item?.name}</Link>
               </NavigationMenuLink>
