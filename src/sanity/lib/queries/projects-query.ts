@@ -6,3 +6,5 @@ import { groq } from 'next-sanity'
 export const PROJECTS_QUERY = groq`*[_type=='project' && defined(slug)]{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ "youtube": coalesce(youtube, ''), "vimeo": coalesce(vimeo, ''), videoUpload{ ..., file{ ..., asset-> } } } }`
 
 export const PROJECTS_BY_TYPE_QUERY = groq`*[_type=='project' && projectType==$projectType && defined(slug)]{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ "youtube": coalesce(youtube, ''), "vimeo": coalesce(vimeo, ''), videoUpload{ ..., file{ ..., asset-> } } } }`
+
+export const PROJECT_BY_SLUG_QUERY = groq`*[_type=='project' && slug.current==$slug]{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ "youtube": coalesce(youtube, ''), "vimeo": coalesce(vimeo, ''), videoUpload{ ..., file{ ..., asset-> } } } }[0]`

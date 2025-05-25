@@ -1,4 +1,5 @@
 import { getSanityVideo } from './utils'
+import Link from 'next/link'
 import { FC } from 'react'
 
 import { formatDate } from '@/utils/date'
@@ -14,18 +15,21 @@ type Props = {
 }
 
 const ProductionCard: FC<Props> = ({ production, className }) => {
-  const { title, datePublished, mainVideo } = production || {}
+  const { title, datePublished, mainVideo, slug } = production || {}
 
   const video = getSanityVideo(mainVideo)
 
+  const videoPageUrl = `/works/production/${slug?.current}`
+
   return (
     <div
-      // type='button'
-      // disabled
-      className={cn('group w-full flex flex-col items-center gap-2', className)}
+      className={cn('group w-full flex flex-col items-center gap-3', className)}
     >
       <VideoPlayer url={video?.url} />
-      <div className='flex flex-col gap-2 items-center text-pretty'>
+      <Link
+        href={videoPageUrl}
+        className='flex flex-col gap-2 items-center text-pretty'
+      >
         <span className='group-hover:text-foreground/80 transition'>
           {title}
         </span>
@@ -34,7 +38,7 @@ const ProductionCard: FC<Props> = ({ production, className }) => {
             {formatDate(datePublished)}
           </span>
         ) : null}
-      </div>
+      </Link>
     </div>
   )
 }
