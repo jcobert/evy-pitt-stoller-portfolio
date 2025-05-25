@@ -9,16 +9,25 @@ import PageLayout from '@/components/layout/page-layout'
 import { PageParams } from '@/types/general'
 
 import { generatePageMeta } from '@/configuration/seo'
-import { getProject } from '@/sanity/lib/fetch'
-
-/** @todo Update. */
-export const metadata: Metadata = generatePageMeta({
-  title: 'Production',
-  description: "A collection of media projects that I've worked on.",
-  url: '/works/productions',
-})
+import { getProject, getProjects } from '@/sanity/lib/fetch'
 
 type Props = PageParams<{ slug: string }>
+
+export const generateMetadata = async ({
+  params,
+}: Props): Promise<Metadata> => {
+  const { slug } = await params
+  const production = await getProject({ slug })
+  return generatePageMeta({
+    title: `Production - ${production?.title}`,
+    url: `/works/productions/${slug}`,
+  })
+}
+
+export const generateStaticParams = async () => {
+  const productions = await getProjects({ projectType: 'production' })
+  return (productions || [])?.map(({ slug }) => ({ slug: slug?.current }))
+}
 
 const Page: FC<Props> = async ({ params }) => {
   const slug = (await params)?.slug
