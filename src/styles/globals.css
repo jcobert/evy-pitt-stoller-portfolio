@@ -173,4 +173,30 @@
   .pb-safe {
     padding-bottom: env(safe-area-inset-bottom);
   }
+
+  .top-shadow {
+    box-shadow: 0px -8px 20px rgba(50, 50, 50, 0.25);
+  }
+
+  .vignette {
+    /* mask-mode: luminance; */
+    mask-image: radial-gradient(circle, white, white 25%, transparent 98%);
+  }
+
+  .fade-out-t {
+    mask-mode: luminance;
+    mask-image: linear-gradient(to top, white 40%, transparent);
+  }
+  .fade-out-b {
+    mask-mode: luminance;
+    mask-image: linear-gradient(to bottom, white 40%, transparent);
+  }
+  .fade-out-l {
+    mask-mode: luminance;
+    mask-image: linear-gradient(to left, white 95%, transparent);
+  }
+  .fade-out-r {
+    mask-mode: luminance;
+    mask-image: linear-gradient(to right, white 95%, transparent);
+  }
 }

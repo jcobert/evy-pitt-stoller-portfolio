@@ -1,4 +1,5 @@
 import { ProjectsIcon, VideoIcon } from '@sanity/icons'
+import { upperFirst } from 'lodash'
 import { defineField, defineType } from 'sanity'
 
 export const projectType = defineType({
@@ -93,4 +94,10 @@ export const projectType = defineType({
       options: { layout: 'tags' },
     }),
   ],
+  preview: {
+    select: { title: 'title', projectType: 'projectType' },
+    prepare: ({ title, projectType }) => {
+      return { title, subtitle: upperFirst((projectType as string) || '') }
+    },
+  },
 })
