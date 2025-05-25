@@ -6,10 +6,12 @@ import { cn } from '@/utils/style'
 
 type Props = ButtonProps
 
+export const CONTACT_CTA_LINK = '/contact'
+
 const ContactCta: FC<Props> = ({ className, ...props }) => {
   return (
     <Button asChild className={cn('w-fit', className)} {...props}>
-      <Link href='/contact'>{"Let's talk"}</Link>
+      <Link href={CONTACT_CTA_LINK}>{"Let's talk"}</Link>
     </Button>
   )
 }

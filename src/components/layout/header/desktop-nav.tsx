@@ -19,11 +19,14 @@ type Props = {
   className?: string
 }
 
+// Exclude home link
+const NAV_ITEMS = NAVIGATION_ITEMS?.slice(1)
+
 const DesktopNav: FC<Props> = ({ className }) => {
   return (
     <NavigationMenu className={className}>
       <NavigationMenuList className='gap-6'>
-        {NAVIGATION_ITEMS?.map((item) => {
+        {NAV_ITEMS?.map((item) => {
           const hasMenu = !!item?.menu?.links?.length
 
           if (hasMenu)

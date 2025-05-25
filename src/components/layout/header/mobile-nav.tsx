@@ -1,11 +1,14 @@
-import Link from 'next/link'
-import { FC, forwardRef } from 'react'
+'use client'
+
+import Link, { LinkProps } from 'next/link'
+import { FC, forwardRef, useCallback } from 'react'
 import { HiOutlineMenu } from 'react-icons/hi'
 
 import { NavItem } from '@/utils/nav'
 import { cn } from '@/utils/style'
 
-import ContactCta from '@/components/general/contact-cta'
+import ContactCta, { CONTACT_CTA_LINK } from '@/components/general/contact-cta'
+import { ButtonProps } from '@/components/ui/button'
 import {
   NavigationMenu,
   NavigationMenuItem,
@@ -22,18 +25,30 @@ import {
   SheetTrigger,
 } from '@/components/ui/sheet'
 
+import { useNavigationMenu } from '@/hooks/use-navigation-menu'
+
 import { NAVIGATION_ITEMS } from '@/configuration/nav'
 
 const MenuItem = forwardRef<
   HTMLLIElement,
-  { item: NavItem; className?: string; linkClassName?: string; inner?: boolean }
->(({ item, className, linkClassName, inner }, ref) => {
+  {
+    item: NavItem
+    className?: string
+    linkClassName?: string
+    inner?: boolean
+    active?: boolean
+  } & Partial<Omit<LinkProps, 'className'>>
+>(({ item, className, linkClassName, inner, active, ...linkProps }, ref) => {
   return (
     <NavigationMenuItem ref={ref} className={cn('w-full', className)}>
       <NavigationMenuLink
         asChild
         className={navigationMenuTriggerStyle({
-          className: 'w-full items-start p-6 text-balance bg-transparent',
+          className: cn(
+            'w-full items-start p-6 text-balance bg-transparent rounded-none',
+            active &&
+              'font-semibold bg-primary/50 hover:bg-primary/50 focus:bg-primary',
+          ),
         })}
       >
         <Link
@@ -42,6 +57,7 @@ const MenuItem = forwardRef<
             inner && 'flex flex-row justify-start !items-center gap-2 pl-8',
             linkClassName,
           )}
+          {...linkProps}
         >
           {item?.name}
         </Link>
@@ -55,10 +71,31 @@ type Props = {
 }
 
 const MobileNav: FC<Props> = ({ className }) => {
+  const { isMenuOpen, setIsMenuOpen, isActivePath } = useNavigationMenu()
+
+  const handleLinkClick = useCallback(
+    (
+      e: Parameters<NonNullable<(LinkProps | ButtonProps)['onClick']>>['0'],
+      path: Parameters<typeof isActivePath>['0'],
+      options: { preventDefault?: boolean } = { preventDefault: true },
+    ) => {
+      if (isActivePath(path)) {
+        if (options?.preventDefault) e.preventDefault()
+        setIsMenuOpen(false)
+      }
+    },
+    [isActivePath, setIsMenuOpen],
+  )
+
   return (
     <div className={cn('flex w-fit', className)}>
-      <Sheet>
-        <SheetTrigger className='w-fit'>
+      <Sheet open={isMenuOpen} onOpenChange={setIsMenuOpen}>
+        <SheetTrigger
+          className='w-fit'
+          onClick={() => {
+            setIsMenuOpen(true)
+          }}
+        >
           <HiOutlineMenu className='text-4xl text-white' />
         </SheetTrigger>
         <SheetContent className='backdrop-blur-lg bg-background/90 pb-safe'>
@@ -91,6 +128,8 @@ const MobileNav: FC<Props> = ({ className }) => {
                               key={menuItem?.id}
                               item={menuItem}
                               inner
+                              active={isActivePath(menuItem?.url)}
+                              onClick={(e) => handleLinkClick(e, menuItem?.url)}
                             />
                           ))}
                         </ul>
@@ -104,7 +143,11 @@ const MobileNav: FC<Props> = ({ className }) => {
                     key={item?.id}
                     className='flex flex-col gap-4 items-end w-full'
                   >
-                    <MenuItem item={item} />
+                    <MenuItem
+                      item={item}
+                      active={isActivePath(item?.url)}
+                      onClick={(e) => handleLinkClick(e, item?.url)}
+                    />
                     <div className='border-b border-border/50 w-full h-px' />
                   </div>
                 )
@@ -113,7 +156,13 @@ const MobileNav: FC<Props> = ({ className }) => {
           </NavigationMenu>
 
           <div className='flex justify-center items-center w-full py-6 bg-accent'>
-            <ContactCta className='self-center' size='lg' />
+            <ContactCta
+              className='self-center'
+              size='lg'
+              onClick={(e) =>
+                handleLinkClick(e, CONTACT_CTA_LINK, { preventDefault: false })
+              }
+            />
           </div>
         </SheetContent>
       </Sheet>
