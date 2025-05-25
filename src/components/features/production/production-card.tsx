@@ -5,7 +5,9 @@ import { FC } from 'react'
 import { formatDate } from '@/utils/date'
 import { cn } from '@/utils/style'
 
+import PortableBlockContent from '@/components/general/portable-block-content'
 import VideoPlayer from '@/components/media/video-player'
+import { Button } from '@/components/ui/button'
 
 import { PROJECTS_BY_TYPE_QUERYResult } from '@/sanity/types/generated/types'
 
@@ -15,7 +17,8 @@ type Props = {
 }
 
 const ProductionCard: FC<Props> = ({ production, className }) => {
-  const { title, datePublished, mainVideo, slug } = production || {}
+  const { title, datePublished, mainVideo, slug, description } =
+    production || {}
 
   const video = getSanityVideo(mainVideo)
 
@@ -25,19 +28,27 @@ const ProductionCard: FC<Props> = ({ production, className }) => {
     <div
       className={cn('group w-full flex flex-col items-center gap-3', className)}
     >
+      {/** @todo Replace video with preview image. */}
       <VideoPlayer url={video?.url} />
       <Link
         href={videoPageUrl}
-        className='flex flex-col gap-2 items-center text-pretty'
+        className='flex flex-col gap-1__ items-center text-pretty'
       >
-        <span className='group-hover:text-foreground/80 transition'>
-          {title}
-        </span>
-        {datePublished ? (
-          <span className='text-sm text-muted-foreground group-hover:text-muted-foreground/80 transition'>
-            {formatDate(datePublished)}
+        <div className='flex flex-col gap-2 items-center text-pretty'>
+          <span className='group-hover:text-foreground/80 transition text-lg font-medium leading-snug'>
+            {title}
           </span>
-        ) : null}
+          {datePublished ? (
+            <span className='text-xs leading-none text-muted-foreground group-hover:text-muted-foreground/80 transition'>
+              {formatDate(datePublished)}
+            </span>
+          ) : null}
+          <div className='text-sm fade-out-b max-h-16 group-hover:text-foreground/80 transition'>
+            <PortableBlockContent value={description} />
+          </div>
+        </div>
+
+        {description ? <Button variant='ghost'>Read more</Button> : null}
       </Link>
     </div>
   )

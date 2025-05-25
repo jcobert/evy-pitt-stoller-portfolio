@@ -23,7 +23,7 @@ const Wrapper: FC<HTMLProps<HTMLDivElement>> = ({ className, ...props }) => {
 const Fallback: FC = () => (
   <div
     className={cn(
-      'w-full max-w-full aspect-video bg-primary/50 object-cover rounded-sm p-px',
+      'w-full max-w-full aspect-video bg-black/10 object-cover rounded-sm p-px',
       'relative flex items-center justify-center',
       'animate-pulse',
     )}
@@ -47,6 +47,7 @@ const VideoPlayer: FC<Props> = ({ className, ...props }) => {
       width='100%'
       height='auto'
       wrapper={(p) => <Wrapper {...p} className={className} />}
+      fallback={<Fallback />}
       {...props}
     />
   )

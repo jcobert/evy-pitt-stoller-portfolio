@@ -32,7 +32,7 @@ export const getProjects = async <
       : PROJECTS_BY_TYPE_QUERYResult
   >(query, withoutBlanks(queryParams))
 
-  return sortBy(projects, (proj) => proj?.datePublished)
+  return sortBy(projects, (proj) => proj?.datePublished)?.reverse()
 }
 
 /** Gets a single project by slug. */

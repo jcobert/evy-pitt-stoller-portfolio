@@ -18,11 +18,17 @@ const ProductionPost: FC<Props> = ({ production }) => {
   const video = getSanityVideo(mainVideo)
 
   return (
-    <div className='flex flex-col gap-4 sm:gap-8 items-center'>
-      <VideoPlayer url={video?.url} className='max-w-3xl mx-auto' />
-      <span className='text-sm text-muted-foreground'>
-        {formatDate(datePublished)}
-      </span>
+    <div className='flex flex-col gap-4 sm:gap-8 items-center pb-16'>
+      {video?.url ? (
+        <div className='w-full max-w-3xl mx-auto py-2'>
+          <VideoPlayer url={video?.url} />
+        </div>
+      ) : null}
+      {datePublished ? (
+        <span className='text-sm text-muted-foreground'>
+          {formatDate(datePublished)}
+        </span>
+      ) : null}
       <div className='max-w-prose'>
         <PortableBlockContent value={production?.description} />
       </div>
