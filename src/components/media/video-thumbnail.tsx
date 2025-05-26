@@ -12,8 +12,7 @@ type Props = {
 const VideoThumbnail: FC<Props> = ({ video, className }) => {
   const { thumbnailUrl, title } = video || {}
 
-  if (!thumbnailUrl)
-    return <VideoSkeleton className={cn('animate-none', className)} />
+  if (!thumbnailUrl) return <VideoSkeleton className={cn(className)} />
 
   return (
     <div

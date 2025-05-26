@@ -20,7 +20,14 @@ const ProductionPost: FC<Props> = ({ production }) => {
   return (
     <div className='flex flex-col gap-4 sm:gap-8 items-center pb-16'>
       {video?.url ? (
-        <div className='w-full max-w-3xl mx-auto py-2'>
+        <div
+          className='w-full flex items-center max-w-3xl mx-auto py-2 bg-no-repeat bg-cover h-full bg-center aspect-video rounded-sm'
+          style={
+            video?.thumbnailUrl
+              ? { backgroundImage: `url(${video?.thumbnailUrl})` }
+              : {}
+          }
+        >
           <VideoPlayer video={video} />
         </div>
       ) : null}
