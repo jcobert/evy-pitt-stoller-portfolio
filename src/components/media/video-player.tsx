@@ -1,12 +1,16 @@
 'use client'
 
+import VideoThumbnail from './video-thumbnail'
 import { FC, HTMLProps, useEffect, useState } from 'react'
-import { FaRegCirclePlay } from 'react-icons/fa6'
 import ReactPlayer, { type ReactPlayerProps } from 'react-player/lazy'
 
+import { SanityVideo } from '@/utils/media'
 import { cn } from '@/utils/style'
 
-type Props = ReactPlayerProps & { className?: string }
+type Props = Partial<ReactPlayerProps> & {
+  video: SanityVideo | undefined
+  className?: string
+}
 
 const Wrapper: FC<HTMLProps<HTMLDivElement>> = ({ className, ...props }) => {
   return (
@@ -20,26 +24,14 @@ const Wrapper: FC<HTMLProps<HTMLDivElement>> = ({ className, ...props }) => {
   )
 }
 
-const Fallback: FC = () => (
-  <div
-    className={cn(
-      'w-full max-w-full aspect-video bg-black/10 object-cover rounded-sm p-px',
-      'relative flex items-center justify-center',
-      'animate-pulse',
-    )}
-  >
-    <FaRegCirclePlay className='absolute text-5xl text-black/20' />
-  </div>
-)
-
-const VideoPlayer: FC<Props> = ({ className, ...props }) => {
+const VideoPlayer: FC<Props> = ({ video, className, ...props }) => {
   const [isMounted, setIsMounted] = useState(false)
 
   useEffect(() => {
     setIsMounted(true)
   }, [])
 
-  if (!isMounted) return <Fallback />
+  if (!isMounted) return <VideoThumbnail video={video} />
 
   return (
     <ReactPlayer
@@ -47,7 +39,8 @@ const VideoPlayer: FC<Props> = ({ className, ...props }) => {
       width='100%'
       height='auto'
       wrapper={(p) => <Wrapper {...p} className={className} />}
-      fallback={<Fallback />}
+      fallback={<VideoThumbnail video={video} />}
+      url={video?.url}
       {...props}
     />
   )

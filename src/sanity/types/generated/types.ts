@@ -246,7 +246,7 @@ export type Slug = {
 
 export type VideoGroup = {
   _type: 'videoGroup'
-  youtube?: string
+  youtube?: YoutubeVideo
   vimeo?: string
   videoUpload?: Video
 }
@@ -387,6 +387,15 @@ export type SanityImageMetadata = {
   isOpaque?: boolean
 }
 
+export type YoutubeVideo = {
+  _type: 'youtubeVideo'
+  id?: string
+  title?: string
+  description?: string
+  publishedAt?: string
+  thumbnails?: Array<string>
+}
+
 export type AllSanitySchemaTypes =
   | SanityImagePaletteSwatch
   | SanityImagePalette
@@ -408,6 +417,7 @@ export type AllSanitySchemaTypes =
   | SanityImageAsset
   | SanityAssetSourceData
   | SanityImageMetadata
+  | YoutubeVideo
 export declare const internalGroqTypeReferenceTo: unique symbol
 // Source: ./src/sanity/lib/queries/fragments.ts
 // Variable: image
@@ -426,7 +436,7 @@ export type VideoGroupResult = {
 
 // Source: ./src/sanity/lib/queries/projects-query.ts
 // Variable: PROJECTS_QUERY
-// Query: *[_type=='project' && defined(slug)]{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ "youtube": coalesce(youtube, ''), "vimeo": coalesce(vimeo, ''), videoUpload{ ..., file{ ..., asset-> } } } }
+// Query: *[_type=='project' && defined(slug)]{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ ..., videoUpload{ ..., file{ ..., asset-> } } } }
 export type PROJECTS_QUERYResult = Array<{
   _id: string
   _type: 'project'
@@ -438,8 +448,9 @@ export type PROJECTS_QUERYResult = Array<{
   datePublished?: string
   projectType?: 'production' | 'writing'
   mainVideo: {
-    youtube: string | ''
-    vimeo: string | ''
+    _type: 'videoGroup'
+    youtube?: YoutubeVideo
+    vimeo?: string
     videoUpload: {
       _type: 'video'
       file: {
@@ -539,7 +550,7 @@ export type PROJECTS_QUERYResult = Array<{
   tags: Array<string> | Array<never>
 }>
 // Variable: PROJECTS_BY_TYPE_QUERY
-// Query: *[_type=='project' && projectType==$projectType && defined(slug)]{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ "youtube": coalesce(youtube, ''), "vimeo": coalesce(vimeo, ''), videoUpload{ ..., file{ ..., asset-> } } } }
+// Query: *[_type=='project' && projectType==$projectType && defined(slug)]{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ ..., videoUpload{ ..., file{ ..., asset-> } } } }
 export type PROJECTS_BY_TYPE_QUERYResult = Array<{
   _id: string
   _type: 'project'
@@ -551,8 +562,9 @@ export type PROJECTS_BY_TYPE_QUERYResult = Array<{
   datePublished?: string
   projectType?: 'production' | 'writing'
   mainVideo: {
-    youtube: string | ''
-    vimeo: string | ''
+    _type: 'videoGroup'
+    youtube?: YoutubeVideo
+    vimeo?: string
     videoUpload: {
       _type: 'video'
       file: {
@@ -652,7 +664,7 @@ export type PROJECTS_BY_TYPE_QUERYResult = Array<{
   tags: Array<string> | Array<never>
 }>
 // Variable: PROJECT_BY_SLUG_QUERY
-// Query: *[_type=='project' && slug.current==$slug]{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ "youtube": coalesce(youtube, ''), "vimeo": coalesce(vimeo, ''), videoUpload{ ..., file{ ..., asset-> } } } }[0]
+// Query: *[_type=='project' && slug.current==$slug]{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ ..., videoUpload{ ..., file{ ..., asset-> } } } }[0]
 export type PROJECT_BY_SLUG_QUERYResult = {
   _id: string
   _type: 'project'
@@ -664,8 +676,9 @@ export type PROJECT_BY_SLUG_QUERYResult = {
   datePublished?: string
   projectType?: 'production' | 'writing'
   mainVideo: {
-    youtube: string | ''
-    vimeo: string | ''
+    _type: 'videoGroup'
+    youtube?: YoutubeVideo
+    vimeo?: string
     videoUpload: {
       _type: 'video'
       file: {
@@ -770,8 +783,8 @@ declare module '@sanity/client' {
     '{ ..., asset-> }': ImageResult
     '{ ..., file{ ..., asset-> } }': FileResult
     '{ "youtube": coalesce(youtube, \'\'), "vimeo": coalesce(vimeo, \'\'), videoUpload{ ..., file{ ..., asset-> } } }': VideoGroupResult
-    '*[_type==\'project\' && defined(slug)]{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ "youtube": coalesce(youtube, \'\'), "vimeo": coalesce(vimeo, \'\'), videoUpload{ ..., file{ ..., asset-> } } } }': PROJECTS_QUERYResult
-    '*[_type==\'project\' && projectType==$projectType && defined(slug)]{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ "youtube": coalesce(youtube, \'\'), "vimeo": coalesce(vimeo, \'\'), videoUpload{ ..., file{ ..., asset-> } } } }': PROJECTS_BY_TYPE_QUERYResult
-    '*[_type==\'project\' && slug.current==$slug]{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ "youtube": coalesce(youtube, \'\'), "vimeo": coalesce(vimeo, \'\'), videoUpload{ ..., file{ ..., asset-> } } } }[0]': PROJECT_BY_SLUG_QUERYResult
+    '*[_type==\'project\' && defined(slug)]{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ ..., videoUpload{ ..., file{ ..., asset-> } } } }': PROJECTS_QUERYResult
+    '*[_type==\'project\' && projectType==$projectType && defined(slug)]{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ ..., videoUpload{ ..., file{ ..., asset-> } } } }': PROJECTS_BY_TYPE_QUERYResult
+    '*[_type==\'project\' && slug.current==$slug]{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ ..., videoUpload{ ..., file{ ..., asset-> } } } }[0]': PROJECT_BY_SLUG_QUERYResult
   }
 }

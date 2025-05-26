@@ -8,11 +8,16 @@ export const videoGroupType = defineType({
   description: 'Add a link to the video or upload a file.',
   icon: PlayIcon,
   fields: [
+    // defineField({
+    //   name: 'youtube',
+    //   type: 'string',
+    //   title: 'Youtube Link',
+    //   placeholder: 'e.g. https://youtube.com/watch?v=abc123',
+    // }),
     defineField({
       name: 'youtube',
-      type: 'string',
-      title: 'Youtube Link',
-      placeholder: 'e.g. https://youtube.com/watch?v=abc123',
+      type: 'youtubeVideo',
+      title: 'Youtube',
     }),
     defineField({
       name: 'vimeo',
