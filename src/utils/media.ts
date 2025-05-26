@@ -41,7 +41,7 @@ export const getYoutubeVideo = (
   video: YoutubeVideo | undefined,
   options?: { thumbnail?: YoutubeThumbnailQuality },
 ) => {
-  const { thumbnail = 'default' } = options || {}
+  const { thumbnail = 'high' } = options || {}
   const {
     id,
     title = '',

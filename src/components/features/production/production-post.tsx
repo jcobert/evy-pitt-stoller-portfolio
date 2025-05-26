@@ -15,13 +15,13 @@ type Props = {
 const ProductionPost: FC<Props> = ({ production }) => {
   const { datePublished, mainVideo } = production || {}
 
-  const video = getSanityVideo(mainVideo)
+  const video = getSanityVideo(mainVideo, { thumbnail: 'high' })
 
   return (
     <div className='flex flex-col gap-4 sm:gap-8 items-center pb-16'>
       {video?.url ? (
         <div className='w-full max-w-3xl mx-auto py-2'>
-          <VideoPlayer url={video?.url} />
+          <VideoPlayer video={video} />
         </div>
       ) : null}
       {datePublished ? (
