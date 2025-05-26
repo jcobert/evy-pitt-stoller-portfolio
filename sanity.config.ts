@@ -9,6 +9,7 @@ import { schema } from './src/sanity/schema-types'
 import { structure } from './src/sanity/structure'
 import { visionTool } from '@sanity/vision'
 import { defineConfig } from 'sanity'
+import { youtubeInput } from 'sanity-plugin-youtube-input'
 import { structureTool } from 'sanity/structure'
 
 import { slugOnPublish } from '@/sanity/actions/slug-on-publish'
@@ -27,6 +28,9 @@ export default defineConfig({
   plugins: [
     structureTool({ structure }),
     visionTool({ defaultApiVersion: apiVersion }),
+    youtubeInput({
+      apiKey: process.env.NEXT_PUBLIC_SANITY_STUDIO_YOUTUBE_DATA_API_KEY || '',
+    }),
   ],
   document: {
     actions: (prev, context) => {

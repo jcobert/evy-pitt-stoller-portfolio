@@ -1,7 +1,7 @@
-import { getSanityVideo } from './utils'
 import { FC } from 'react'
 
 import { formatDate } from '@/utils/date'
+import { getSanityVideo } from '@/utils/media'
 
 import PortableBlockContent from '@/components/general/portable-block-content'
 import VideoPlayer from '@/components/media/video-player'

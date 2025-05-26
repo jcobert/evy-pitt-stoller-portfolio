@@ -1,12 +1,12 @@
-import { getSanityVideo } from './utils'
 import Link from 'next/link'
 import { FC } from 'react'
 
 import { formatDate } from '@/utils/date'
+import { getSanityVideo } from '@/utils/media'
 import { cn } from '@/utils/style'
 
 import PortableBlockContent from '@/components/general/portable-block-content'
-import VideoPlayer from '@/components/media/video-player'
+import VideoThumbnail from '@/components/media/video-thumbnail'
 import { Button } from '@/components/ui/button'
 
 import { PROJECTS_BY_TYPE_QUERYResult } from '@/sanity/types/generated/types'
@@ -20,20 +20,20 @@ const ProductionCard: FC<Props> = ({ production, className }) => {
   const { title, datePublished, mainVideo, slug, description } =
     production || {}
 
-  const video = getSanityVideo(mainVideo)
+  const video = getSanityVideo(mainVideo, { thumbnail: 'high' })
 
   const videoPageUrl = `/works/production/${slug?.current}`
 
   return (
-    <div
+    <Link
+      href={videoPageUrl}
       className={cn('group w-full flex flex-col items-center gap-3', className)}
     >
-      {/** @todo Replace video with preview image. */}
-      <VideoPlayer url={video?.url} />
-      <Link
-        href={videoPageUrl}
-        className='flex flex-col gap-1__ items-center text-pretty'
-      >
+      <VideoThumbnail
+        video={video}
+        className='group-hover:shadow-md transition'
+      />
+      <div className='flex flex-col items-center text-pretty'>
         <div className='flex flex-col gap-2 items-center text-pretty'>
           <span className='group-hover:text-foreground/80 transition text-lg font-medium leading-snug'>
             {title}
@@ -49,8 +49,8 @@ const ProductionCard: FC<Props> = ({ production, className }) => {
         </div>
 
         {description ? <Button variant='ghost'>Read more</Button> : null}
-      </Link>
-    </div>
+      </div>
+    </Link>
   )
 }
 
