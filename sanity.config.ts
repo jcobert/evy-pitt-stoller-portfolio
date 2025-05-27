@@ -9,6 +9,7 @@ import { schema } from './src/sanity/schema-types'
 import { structure } from './src/sanity/structure'
 import { visionTool } from '@sanity/vision'
 import { defineConfig } from 'sanity'
+import { vimeoField } from 'sanity-plugin-vimeo-field'
 import { youtubeInput } from 'sanity-plugin-youtube-input'
 import { structureTool } from 'sanity/structure'
 
@@ -30,6 +31,9 @@ export default defineConfig({
     visionTool({ defaultApiVersion: apiVersion }),
     youtubeInput({
       apiKey: process.env.NEXT_PUBLIC_SANITY_STUDIO_YOUTUBE_DATA_API_KEY || '',
+    }),
+    vimeoField({
+      accessToken: process.env.NEXT_PUBLIC_SANITY_STUDIO_VIMEO_API_KEY,
     }),
   ],
   document: {

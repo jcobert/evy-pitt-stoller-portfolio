@@ -5,3 +5,35 @@ export type DocumentSchema = Project | Author | Post | Category
 
 /** Union of all document type schema names. */
 export type DocumentType = DocumentSchema['_type']
+
+export enum VimeoThumbnailSize {
+  xl = 1080,
+  lg = 720,
+  md = 540,
+  sm = 360,
+  xs = 166,
+}
+
+export type VimeoPictures = {
+  active?: boolean
+  base_link?: string
+  default_picture?: boolean
+  resource_key?: string
+  sizes?: {
+    height?: number
+    link?: string
+    link_with_play_button?: string
+    width?: number
+    _key?: string
+  }[]
+  type?: string
+  uri?: string
+}
+
+export type VimeoData = {
+  id?: string
+  link?: string
+  name?: string
+  description?: string
+  pictures?: VimeoPictures
+}

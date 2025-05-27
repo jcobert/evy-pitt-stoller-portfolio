@@ -1,3 +1,4 @@
+import { VimeoData, VimeoThumbnailSize } from '@/sanity/types/general'
 import {
   type PROJECTS_BY_TYPE_QUERYResult,
   type YoutubeVideo,
@@ -37,7 +38,7 @@ const findYoutubeThumbnail = (
   return YoutubeThumbnail?.[thumb] || ''
 }
 
-export const getYoutubeVideo = (
+export const getYoutubeData = (
   video: YoutubeVideo | undefined,
   options?: { thumbnail?: YoutubeThumbnailQuality },
 ) => {
@@ -60,16 +61,46 @@ export const getYoutubeVideo = (
   return { id, title, description, publishedAt, url, thumbnailUrl }
 }
 
+const findVimeoThumbnail = (
+  thumbnails: VimeoData['pictures'],
+  size: keyof typeof VimeoThumbnailSize,
+) => {
+  const { sizes } = thumbnails || {}
+
+  if (!sizes?.length) return {}
+  const thumb =
+    sizes?.find((s) => s?.height === VimeoThumbnailSize[size]) ||
+    sizes?.find((s) => s?.height === VimeoThumbnailSize.sm) ||
+    sizes?.find((s) => s?.height === VimeoThumbnailSize.md) ||
+    sizes?.find((s) => s?.height === VimeoThumbnailSize.lg) ||
+    sizes?.[sizes.length - 1]
+  return thumb
+}
+
+export const getVimeoData = (
+  video: VimeoData | undefined,
+  options?: { thumbnail?: keyof typeof VimeoThumbnailSize },
+) => {
+  const { thumbnail = 'sm' } = options || {}
+  const { id, name = '', description = '', link = '', pictures } = video || {}
+  const thumbnailUrl = findVimeoThumbnail(pictures, thumbnail)?.link
+  return { id, title: name, description, url: link, thumbnailUrl }
+}
+
 export const getSanityVideo = (
   video: PROJECTS_BY_TYPE_QUERYResult[number]['mainVideo'] | undefined,
-  options?: Parameters<typeof getYoutubeVideo>['1'],
+  options?: {
+    youtube?: Parameters<typeof getYoutubeData>['1']
+    vimeo?: Parameters<typeof getVimeoData>['1']
+  },
 ): SanityVideo => {
-  const { videoUpload, youtube, vimeo } = video || {}
+  const { videoUpload, youtube } = video || {}
+
+  const vimeo = video?.vimeo as VimeoData
 
   const fileData = videoUpload?.file?.asset
-  const youtubeData = getYoutubeVideo(youtube, options)
-  /** @todo update when viemo api integrated. */
-  const vimeoData = { url: vimeo, thumbnailUrl: '', title: '', description: '' }
+  const youtubeData = getYoutubeData(youtube, options?.youtube)
+  const vimeoData = getVimeoData(vimeo, options?.vimeo)
 
   const url = fileData?.url || youtubeData?.url || vimeoData?.url || ''
   const thumbnailUrl =

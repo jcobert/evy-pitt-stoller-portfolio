@@ -24,6 +24,7 @@ const eslintConfig = [
         },
       ],
       'react/display-name': 'off',
+      'no-console': 'warn',
     },
   }),
 ]
