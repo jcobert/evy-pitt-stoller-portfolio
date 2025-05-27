@@ -2,11 +2,11 @@ import Link from 'next/link'
 import { FC } from 'react'
 
 import { formatDate } from '@/utils/date'
+import { getSanityImageUrl } from '@/utils/media'
 import { cn } from '@/utils/style'
 
 import { Button } from '@/components/ui/button'
 
-import { urlFor } from '@/sanity/lib/image'
 import { PROJECTS_BY_TYPE_QUERYResult } from '@/sanity/types/generated/types'
 
 type Props = {
@@ -19,14 +19,7 @@ const WritingCard: FC<Props> = ({ writing, className }) => {
 
   const pageUrl = `/portfolio/writing/${slug?.current}`
 
-  const image = mainImage
-    ? urlFor(mainImage!)
-        .fit('crop')
-        .crop('entropy')
-        .width(400)
-        .height(400)
-        .url()
-    : null
+  const image = getSanityImageUrl(mainImage, { ratio: 'square', width: 400 })
 
   return (
     <Link
@@ -39,7 +32,7 @@ const WritingCard: FC<Props> = ({ writing, className }) => {
       )}
     >
       {image ? (
-        <div className='aspect-square max-w-36 flex-auto rounded-sm'>
+        <div className='aspect-square max-w-36 flex-auto rounded-l-sm border-4 border-white/80'>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={image}
@@ -49,9 +42,7 @@ const WritingCard: FC<Props> = ({ writing, className }) => {
         </div>
       ) : null}
 
-      <div
-        className={cn('w-full flex flex-col items-start gap-3 p-4 flex-1')}
-      >
+      <div className={cn('w-full flex flex-col items-start gap-3 p-4 flex-1')}>
         <div className='group flex flex-col gap-6 items-start text-pretty flex-1'>
           <div className='flex flex-col gap-4 items-start text-pretty flex-1'>
             <span className='group-hover:text-foreground/80 transition md:text-lg font-medium leading-snug'>

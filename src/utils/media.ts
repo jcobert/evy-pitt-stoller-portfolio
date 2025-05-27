@@ -1,6 +1,8 @@
+import { urlFor } from '@/sanity/lib/image'
 import { VimeoData, VimeoThumbnailSize } from '@/sanity/types/general'
 import {
   type PROJECTS_BY_TYPE_QUERYResult,
+  PROJECT_BY_SLUG_QUERYResult,
   type YoutubeVideo,
 } from '@/sanity/types/generated/types'
 
@@ -113,4 +115,46 @@ export const getSanityVideo = (
     ''
 
   return { url: url, thumbnailUrl, title, description }
+}
+
+type ImageRatio = '16/9' | '4/3' | 'square' | 'original'
+
+const buildDimensions = (ratio: ImageRatio, width: number) => {
+  let rat = 1
+  switch (ratio) {
+    case '16/9':
+      rat = 16 / 9
+      break
+    case '4/3':
+      rat = 4 / 3
+      break
+    default:
+      rat = 1
+      break
+  }
+  const height = width / rat
+  return { width, height, ratio: rat }
+}
+
+export const getSanityImageUrl = (
+  image: NonNullable<PROJECT_BY_SLUG_QUERYResult>['mainImage'] | undefined,
+  options?: { ratio?: ImageRatio; width?: number },
+) => {
+  if (!image?.asset) return ''
+  const { ratio = 'original', width = 800 } = options || {}
+
+  const size = buildDimensions(ratio, width)
+
+  const hotspot = image?.hotspot
+  let img = urlFor(image)
+    .fit('crop')
+    .crop(hotspot ? 'focalpoint' : 'entropy')
+    .width(size.width)
+    .height(size.height)
+  // .width(960)
+  // .height(720)
+  if (hotspot) {
+    img = img.focalPoint(hotspot?.x || 0, hotspot?.y || 0)
+  }
+  return img.url()
 }
