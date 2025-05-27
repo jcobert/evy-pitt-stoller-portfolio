@@ -12,20 +12,20 @@ export const NAVIGATION_ITEMS: NavItem[] = [
     url: '/about',
   },
   {
-    id: 'works',
-    name: 'Works',
-    url: '/works',
+    id: 'portfolio',
+    name: 'Portfolio',
+    url: '/portfolio',
     menu: {
       links: [
         {
-          id: 'works.production',
+          id: 'portfolio.production',
           name: 'Production',
-          url: '/works/production',
+          url: '/portfolio/production',
         },
         {
-          id: 'works.writing',
+          id: 'portfolio.writing',
           name: 'Writing',
-          url: '/works/writing',
+          url: '/portfolio/writing',
         },
       ],
     },

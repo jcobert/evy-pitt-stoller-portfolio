@@ -22,7 +22,7 @@ const ProductionCard: FC<Props> = ({ production, className }) => {
 
   const video = getSanityVideo(mainVideo)
 
-  const videoPageUrl = `/works/production/${slug?.current}`
+  const videoPageUrl = `/portfolio/production/${slug?.current}`
 
   return (
     <Link
