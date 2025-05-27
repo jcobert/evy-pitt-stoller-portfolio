@@ -21,9 +21,11 @@ export const videoGroupType = defineType({
     }),
     defineField({
       name: 'vimeo',
-      type: 'string',
-      title: 'Vimeo Link',
-      placeholder: 'e.g. https://viemo.com/abc123',
+      type: 'vimeo',
+      title: 'Vimeo',
+      options: {
+        fields: ['link', 'description', 'description_rich'],
+      },
     }),
     defineField({ name: 'videoUpload', type: 'video', title: 'Upload' }),
   ],

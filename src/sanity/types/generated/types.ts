@@ -247,7 +247,7 @@ export type Slug = {
 export type VideoGroup = {
   _type: 'videoGroup'
   youtube?: YoutubeVideo
-  vimeo?: string
+  vimeo?: Vimeo
   videoUpload?: Video
 }
 
@@ -387,6 +387,13 @@ export type SanityImageMetadata = {
   isOpaque?: boolean
 }
 
+export type Vimeo = {
+  _type: 'vimeo'
+  vimeoData?: {
+    id?: string
+  }
+}
+
 export type YoutubeVideo = {
   _type: 'youtubeVideo'
   id?: string
@@ -417,6 +424,7 @@ export type AllSanitySchemaTypes =
   | SanityImageAsset
   | SanityAssetSourceData
   | SanityImageMetadata
+  | Vimeo
   | YoutubeVideo
 export declare const internalGroqTypeReferenceTo: unique symbol
 // Source: ./src/sanity/lib/queries/fragments.ts
@@ -450,7 +458,7 @@ export type PROJECTS_QUERYResult = Array<{
   mainVideo: {
     _type: 'videoGroup'
     youtube?: YoutubeVideo
-    vimeo?: string
+    vimeo?: Vimeo
     videoUpload: {
       _type: 'video'
       file: {
@@ -564,7 +572,7 @@ export type PROJECTS_BY_TYPE_QUERYResult = Array<{
   mainVideo: {
     _type: 'videoGroup'
     youtube?: YoutubeVideo
-    vimeo?: string
+    vimeo?: Vimeo
     videoUpload: {
       _type: 'video'
       file: {
@@ -678,7 +686,7 @@ export type PROJECT_BY_SLUG_QUERYResult = {
   mainVideo: {
     _type: 'videoGroup'
     youtube?: YoutubeVideo
-    vimeo?: string
+    vimeo?: Vimeo
     videoUpload: {
       _type: 'video'
       file: {
