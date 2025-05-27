@@ -45,7 +45,7 @@ const VideoPlayer: FC<Props> = ({ video, className, ...props }) => {
     return (
       <>
         <Spinner />
-        <VideoThumbnail video={video} />
+        <VideoThumbnail video={video} icon={false} />
       </>
     )
 

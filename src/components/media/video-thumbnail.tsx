@@ -1,4 +1,4 @@
-import VideoSkeleton from './video-skeleton'
+import VideoSkeleton, { VideoSkeletonProps } from './video-skeleton'
 import { FC } from 'react'
 
 import { SanityVideo } from '@/utils/media'
@@ -7,12 +7,13 @@ import { cn } from '@/utils/style'
 type Props = {
   video: SanityVideo | undefined
   className?: string
-}
+} & Pick<VideoSkeletonProps, 'icon'>
 
-const VideoThumbnail: FC<Props> = ({ video, className }) => {
+const VideoThumbnail: FC<Props> = ({ video, className, icon }) => {
   const { thumbnailUrl, title } = video || {}
 
-  if (!thumbnailUrl) return <VideoSkeleton className={cn(className)} />
+  if (!thumbnailUrl)
+    return <VideoSkeleton className={cn(className)} icon={icon} />
 
   return (
     <div
