@@ -15,7 +15,7 @@ import { getProjects } from '@/sanity/lib/fetch'
 export const metadata: Metadata = generatePageMeta({
   title: 'Production',
   description: "A collection of media projects that I've worked on.",
-  url: '/works/productions',
+  url: '/portfolio/production',
 })
 
 type Props = PageParams

@@ -20,7 +20,7 @@ export const generateMetadata = async ({
   const production = await getProject({ slug })
   return generatePageMeta({
     title: `Production - ${production?.title}`,
-    url: `/works/productions/${slug}`,
+    url: `/portfolio/production/${slug}`,
   })
 }
 
@@ -36,7 +36,7 @@ const Page: FC<Props> = async ({ params }) => {
 
   return (
     <Main className='bg-background'>
-      <PageLayout>
+      <PageLayout back={{ href: '/portfolio/production', text: 'Back' }}>
         <Heading text={production?.title} />
         <section>
           <ProductionPost production={production} />
