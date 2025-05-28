@@ -43,7 +43,7 @@ const ProductionCard: FC<Props> = ({ production, className }) => {
               {formatDate(datePublished)}
             </span>
           ) : null}
-          <div className='text-sm fade-out-b max-h-16 overflow-hidden group-hover:text-foreground/80 transition'>
+          <div className='text-sm text-pretty fade-out-b max-h-16 overflow-hidden group-hover:text-foreground/80 transition'>
             <PortableBlockContent value={description} />
           </div>
         </div>

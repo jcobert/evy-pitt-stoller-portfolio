@@ -44,7 +44,7 @@ const ProductionPost: FC<Props> = ({ production }) => {
           {formatDate(datePublished)}
         </span>
       ) : null}
-      <div className='max-w-prose'>
+      <div className='max-w-prose text-pretty'>
         <PortableBlockContent value={production?.description} />
       </div>
     </div>

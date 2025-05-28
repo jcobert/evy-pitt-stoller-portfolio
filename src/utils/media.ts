@@ -119,7 +119,7 @@ export const getSanityVideo = (
 
 type ImageRatio = '16/9' | '4/3' | 'square' | 'original'
 
-const buildDimensions = (ratio: ImageRatio, width: number) => {
+const buildDimensions = (ratio: ImageRatio, width: number = 800) => {
   let rat = 1
   switch (ratio) {
     case '16/9':
@@ -128,11 +128,12 @@ const buildDimensions = (ratio: ImageRatio, width: number) => {
     case '4/3':
       rat = 4 / 3
       break
+    case 'square':
     default:
       rat = 1
       break
   }
-  const height = width / rat
+  const height = ratio !== 'original' ? width / rat : null
   return { width, height, ratio: rat }
 }
 
@@ -141,18 +142,20 @@ export const getSanityImageUrl = (
   options?: { ratio?: ImageRatio; width?: number },
 ) => {
   if (!image?.asset) return ''
-  const { ratio = 'original', width = 800 } = options || {}
-
-  const size = buildDimensions(ratio, width)
-
+  const { ratio = 'original', width } = options || {}
   const hotspot = image?.hotspot
+
+  const size = typeof width === 'number' ? buildDimensions(ratio, width) : null
+
   let img = urlFor(image)
     .fit('crop')
     .crop(hotspot ? 'focalpoint' : 'entropy')
-    .width(size.width)
-    .height(size.height)
-  // .width(960)
-  // .height(720)
+  if (size) {
+    img = img.width(size?.width)
+    if (size?.height) {
+      img = img.height(size.height)
+    }
+  }
   if (hotspot) {
     img = img.focalPoint(hotspot?.x || 0, hotspot?.y || 0)
   }

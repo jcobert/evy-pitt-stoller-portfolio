@@ -527,6 +527,85 @@ export type VideoGroupResult = {
   videoUpload: never
 }
 
+// Source: ./src/sanity/lib/queries/profile-query.ts
+// Variable: PROFILE_QUERY
+// Query: *[_type=='profile' && _id=="profile"]{ ..., photo{ ..., asset-> } }[0]
+export type PROFILE_QUERYResult = {
+  _id: string
+  _type: 'profile'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  id?: string
+  name?: string
+  photo: {
+    asset: {
+      _id: string
+      _type: 'sanity.imageAsset'
+      _createdAt: string
+      _updatedAt: string
+      _rev: string
+      originalFilename?: string
+      label?: string
+      title?: string
+      description?: string
+      altText?: string
+      sha1hash?: string
+      extension?: string
+      mimeType?: string
+      size?: number
+      assetId?: string
+      uploadId?: string
+      path?: string
+      url?: string
+      metadata?: SanityImageMetadata
+      source?: SanityAssetSourceData
+    } | null
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    _type: 'image'
+  } | null
+  contactInfo?: ContactInfo
+  bio?: Array<
+    | ({
+        _key: string
+      } & Video)
+    | {
+        children?: Array<{
+          marks?: Array<string>
+          text?: string
+          _type: 'span'
+          _key: string
+        }>
+        style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'normal'
+        listItem?: 'bullet' | 'number'
+        markDefs?: Array<{
+          href?: string
+          _type: 'link'
+          _key: string
+        }>
+        level?: number
+        _type: 'block'
+        _key: string
+      }
+    | {
+        asset?: {
+          _ref: string
+          _type: 'reference'
+          _weak?: boolean
+          [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+        }
+        media?: unknown
+        hotspot?: SanityImageHotspot
+        crop?: SanityImageCrop
+        alt?: string
+        _type: 'image'
+        _key: string
+      }
+  >
+} | null
+
 // Source: ./src/sanity/lib/queries/projects-query.ts
 // Variable: PROJECTS_QUERY
 // Query: *[_type=='project' && defined(slug)]{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ ..., videoUpload{ ..., file{ ..., asset-> } } } }
@@ -876,6 +955,7 @@ declare module '@sanity/client' {
     '{ ..., asset-> }': ImageResult
     '{ ..., file{ ..., asset-> } }': FileResult
     '{ "youtube": coalesce(youtube, \'\'), "vimeo": coalesce(vimeo, \'\'), videoUpload{ ..., file{ ..., asset-> } } }': VideoGroupResult
+    '*[_type==\'profile\' && _id=="profile"]{ ..., photo{ ..., asset-> } }[0]': PROFILE_QUERYResult
     '*[_type==\'project\' && defined(slug)]{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ ..., videoUpload{ ..., file{ ..., asset-> } } } }': PROJECTS_QUERYResult
     '*[_type==\'project\' && projectType==$projectType && defined(slug)]{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ ..., videoUpload{ ..., file{ ..., asset-> } } } }': PROJECTS_BY_TYPE_QUERYResult
     '*[_type==\'project\' && slug.current==$slug]{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ ..., videoUpload{ ..., file{ ..., asset-> } } } }[0]': PROJECT_BY_SLUG_QUERYResult
