@@ -19,7 +19,7 @@ const ProductionsSection: FC<Props> = ({ productions }) => {
   const noProjects = !projects?.length
 
   return (
-    <section className='bg-pale-purple relative max-sm:z-50__ py-16'>
+    <section className='bg-gradient-to-br from-pale-purple to-[#CECEF5] relative max-sm:z-50__ py-16'>
       <div className='layout px-4 md:px-12 flex flex-col gap-12'>
         <div className='max-w-prose flex flex-col gap-2'>
           <h3 className='text-3xl sm:text-4xl font-medium font-display text-balance text-dark-green'>
