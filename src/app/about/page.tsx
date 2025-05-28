@@ -45,7 +45,7 @@ const Page: FC<Props> = async () => {
 
   return (
     <Main className='bg-pale-yellow'>
-      <PageLayout className='pb-12'>
+      <PageLayout className='pb-12__'>
         <Heading text='About Me' className='max-lg:mx-auto' />
 
         <section className='flex max-lg:flex-col-reverse max-lg:items-center gap-8 md:gap-y-10 gap-y-6'>
