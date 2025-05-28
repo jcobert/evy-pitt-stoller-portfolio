@@ -10,9 +10,7 @@ import Main from '@/components/layout/main'
 import PageLayout from '@/components/layout/page-layout'
 
 import { generatePageMeta } from '@/configuration/seo'
-import { client } from '@/sanity/lib/client'
-import { PROFILE_QUERY } from '@/sanity/lib/queries/profile-query'
-import { PROFILE_QUERYResult } from '@/sanity/types/generated/types'
+import { getProfile } from '@/sanity/lib/fetch'
 
 export const metadata: Metadata = generatePageMeta({
   title: 'Home',
@@ -21,7 +19,7 @@ export const metadata: Metadata = generatePageMeta({
 })
 
 const Page: FC = async () => {
-  const profile = await client.fetch<PROFILE_QUERYResult>(PROFILE_QUERY)
+  const profile = await getProfile()
 
   const firstName = profile?.firstName || 'Evy'
   const lastName = profile?.lastName || 'Pitt-Stoller'

@@ -1,4 +1,5 @@
 import {
+  PROFILE_QUERYResult,
   PROJECTS_BY_TYPE_QUERYResult,
   PROJECTS_QUERYResult,
   PROJECT_BY_SLUG_QUERYResult,
@@ -6,6 +7,7 @@ import {
   Slug,
 } from '../types/generated/types'
 import { client } from './client'
+import { PROFILE_QUERY } from './queries/profile-query'
 import {
   PROJECTS_BY_TYPE_QUERY,
   PROJECTS_QUERY,
@@ -47,4 +49,9 @@ export const getProject = async (params: { slug: Slug['current'] }) => {
   )
 
   return project
+}
+/** Gets profile. */
+export const getProfile = async () => {
+  const profile = await client.fetch<PROFILE_QUERYResult>(PROFILE_QUERY)
+  return profile
 }

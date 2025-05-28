@@ -6,6 +6,7 @@ export type HeadingProps = {
   text?: string
   description?: string
   className?: string
+  descriptionClassName?: string
   alignment?: 'left' | 'center' | 'right' | 'dynamic'
 }
 
@@ -13,6 +14,7 @@ const Heading: FC<HeadingProps> = ({
   text = '',
   description,
   className,
+  descriptionClassName,
   alignment = 'dynamic',
 }) => {
   return (
@@ -32,7 +34,12 @@ const Heading: FC<HeadingProps> = ({
         {text}
       </h1>
       {description ? (
-        <p className='md:max-w-[40ch] text-balance text-lg sm:text-xl font-medium text-muted-foreground'>
+        <p
+          className={cn(
+            'md:max-w-[40ch] text-balance text-lg sm:text-xl font-medium text-muted-foreground',
+            descriptionClassName,
+          )}
+        >
           {description}
         </p>
       ) : null}
