@@ -244,6 +244,88 @@ export type Slug = {
   source?: string
 }
 
+export type Profile = {
+  _id: string
+  _type: 'profile'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  id?: string
+  name?: string
+  photo?: {
+    asset?: {
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+    }
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    _type: 'image'
+  }
+  contactInfo?: ContactInfo
+  bio?: Array<
+    | {
+        children?: Array<{
+          marks?: Array<string>
+          text?: string
+          _type: 'span'
+          _key: string
+        }>
+        style?: 'normal' | 'h1' | 'h2' | 'h3' | 'h4' | 'blockquote'
+        listItem?: 'bullet' | 'number'
+        markDefs?: Array<{
+          href?: string
+          _type: 'link'
+          _key: string
+        }>
+        level?: number
+        _type: 'block'
+        _key: string
+      }
+    | {
+        asset?: {
+          _ref: string
+          _type: 'reference'
+          _weak?: boolean
+          [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+        }
+        media?: unknown
+        hotspot?: SanityImageHotspot
+        crop?: SanityImageCrop
+        alt?: string
+        _type: 'image'
+        _key: string
+      }
+    | ({
+        _key: string
+      } & Video)
+  >
+}
+
+export type SocialLinks = {
+  _type: 'socialLinks'
+  linkedIn?: string
+  twitter?: string
+  facebook?: string
+  instagram?: string
+  tiktok?: string
+  pinterest?: string
+}
+
+export type ContactInfo = {
+  _type: 'contactInfo'
+  email?: string
+  phone?: string
+  linkedIn?: string
+  twitter?: string
+  facebook?: string
+  instagram?: string
+  tiktok?: string
+  pinterest?: string
+}
+
 export type VideoGroup = {
   _type: 'videoGroup'
   youtube?: YoutubeVideo
@@ -413,6 +495,9 @@ export type AllSanitySchemaTypes =
   | Post
   | Author
   | Slug
+  | Profile
+  | SocialLinks
+  | ContactInfo
   | VideoGroup
   | Video
   | VideoAltText
