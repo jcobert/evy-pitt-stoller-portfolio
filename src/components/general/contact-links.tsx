@@ -54,7 +54,7 @@ const ContactLinks: FC<Props> = ({ links = {}, className }) => {
       {contactLinks?.map(([name, url]) => {
         const Icon = contactIcons?.[name]
         return (
-          <a key={name} href={url}>
+          <a key={name} href={url} className='flex'>
             <div className='rounded-full bg-purple inline-block p-2'>
               <Icon className='text-white text-2xl' />
             </div>

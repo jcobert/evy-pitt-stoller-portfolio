@@ -1,6 +1,8 @@
+import { omit } from 'lodash'
 import { Metadata } from 'next'
 import { FC } from 'react'
 
+import { getSanityImageUrl } from '@/utils/media'
 import { cn } from '@/utils/style'
 
 import CardStack from '@/components/general/card-stack'
@@ -9,6 +11,9 @@ import Main from '@/components/layout/main'
 import PageLayout from '@/components/layout/page-layout'
 
 import { generatePageMeta } from '@/configuration/seo'
+import { client } from '@/sanity/lib/client'
+import { PROFILE_QUERY } from '@/sanity/lib/queries/profile-query'
+import { PROFILE_QUERYResult } from '@/sanity/types/generated/types'
 
 export const metadata: Metadata = generatePageMeta({
   title: 'Home',
@@ -17,6 +22,12 @@ export const metadata: Metadata = generatePageMeta({
 })
 
 const Page: FC = async () => {
+  const profile = await client.fetch<PROFILE_QUERYResult>(PROFILE_QUERY)
+
+  const photo = getSanityImageUrl(profile?.photo, {
+    ratio: 'original',
+  })
+
   const blurb =
     'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec quis libero et enim dignissim venenatis a facilisis eros. Donec commodo nec dolor quis lacinia.'
 
@@ -51,7 +62,7 @@ const Page: FC = async () => {
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src={'/images/eps-headshot.png'}
+                src={photo}
                 alt='Evy smiling'
                 className={cn('w-full h-auto')}
               />
@@ -64,10 +75,10 @@ const Page: FC = async () => {
                 'md:right-8',
               )}
             >
-              <div className='p-4 md:p-6 text-pretty flex flex-col gap-6 justify-between'>
+              <div className='p-4 md:p-6 text-pretty flex flex-col gap-8 justify-between pb-8'>
                 <p>{blurb}</p>
                 <ContactLinks
-                  links={{ linkedIn: '', twitter: '', email: 'asdf' }}
+                  links={{ ...omit(profile?.contactInfo, ['_type']) }}
                 />
               </div>
             </CardStack>
