@@ -104,10 +104,10 @@
   /* theme colors */
   --purple: #81559b;
   --light-purple: #a97cc4;
-  --pale-purple: #d8d8f6;
+  --pale-purple: #E7E7F9;
   --dark-green: #143109;
   --light-green: #b8d6c0;
-  --pale-yellow: #e0e3c5;
+  --pale-yellow: #f1f2d6;
 
   --destructive: oklch(0.577 0.245 27.325);
   --input: oklch(0.922 0 0);

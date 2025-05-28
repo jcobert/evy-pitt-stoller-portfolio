@@ -1,7 +1,7 @@
 import { Metadata } from 'next'
 import { FC } from 'react'
 
-import ProductionCard from '@/components/features/production/production-card'
+import ProductionCard from '@/components/features/portfolio/production/production-card'
 import NoResults from '@/components/general/no-results'
 import Heading from '@/components/layout/heading'
 import Main from '@/components/layout/main'
@@ -30,7 +30,7 @@ const Page: FC<Props> = async () => {
           text='Production'
           description="Check out some of the awesome projects I've worked on!"
         />
-        <section className='my-4 pb-8'>
+        <section className='my-4 pb-8__'>
           {!projects?.length ? (
             <NoResults item='productions' />
           ) : (

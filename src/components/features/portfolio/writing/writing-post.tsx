@@ -18,7 +18,7 @@ const WritingPost: FC<Props> = ({ writing }) => {
   const image = getSanityImageUrl(mainImage, { ratio: '4/3', width: 800 })
 
   return (
-    <div className='flex flex-col gap-6 sm:gap-8 items-center pb-16'>
+    <div className='flex flex-col gap-6 sm:gap-8 items-center pb-16__'>
       {image ? (
         <div
           className={cn(

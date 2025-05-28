@@ -20,7 +20,7 @@ const ProductionPost: FC<Props> = ({ production }) => {
   const video = getSanityVideo(mainVideo)
 
   return (
-    <div className='flex flex-col gap-4 sm:gap-8 items-center pb-16'>
+    <div className='flex flex-col gap-4 sm:gap-8 items-center pb-16__'>
       {video?.url ? (
         <div
           className={cn(

@@ -45,7 +45,7 @@ const Page: FC<Props> = async () => {
 
   return (
     <Main className='bg-pale-yellow'>
-      <PageLayout className='pb-12'>
+      <PageLayout className='pb-12__'>
         <Heading text='About Me' className='max-lg:mx-auto' />
 
         <section className='flex max-lg:flex-col-reverse max-lg:items-center gap-8 md:gap-y-10 gap-y-6'>
@@ -53,7 +53,7 @@ const Page: FC<Props> = async () => {
             <PortableBlockContent value={bio} />
           </div>
 
-          <div className='w-3/5 sm:w-1/2 h-fit max-w-2xs md:min-w-60 max-lg:aspect-square mx-auto border-3 border-white/90 rounded-md bg-light-purple'>
+          <div className='w-3/5 sm:w-1/2 h-fit max-w-2xs md:min-w-60 max-lg:aspect-square mx-auto border-4 border-white/80 rounded-md bg-light-purple'>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={image}
