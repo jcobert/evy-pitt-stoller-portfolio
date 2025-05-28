@@ -1,6 +1,8 @@
 import { Metadata } from 'next'
 import { FC } from 'react'
 
+import { fullName } from '@/utils/string'
+
 import ContactLinks, {
   ContactIcon,
   getContactLinksArray,
@@ -21,8 +23,7 @@ const loadContent = async () => {
 
 export const metadata: Metadata = generatePageMeta({
   title: 'Contact',
-  description:
-    "Let's talk! Please feel free to contact me with any questions or opportunities",
+  description: "Let's talk! I'd love to hear about opportunities you may have.",
   url: '/contact',
 })
 
@@ -32,22 +33,30 @@ const Page: FC<Props> = async () => {
   const { profile } = await loadContent()
 
   return (
-    <Main className='bg-purple'>
+    <Main className='bg-purple text-white'>
       <PageLayout>
         <Heading
           className='text-white'
-          descriptionClassName='text-pale-yellow'
+          descriptionClassName='text-white/75'
           text='Contact Me'
-          description="Let's talk! Please feel free to contact me with any questions or opportunities"
+          description="Let's talk! I'd love to hear about opportunities you may have."
         />
 
-        <section className='mt-8'>
+        <section className='mt-8 flex flex-col gap-8'>
+          <div>
+            <h3 className='text-2xl md:text-3xl font-medium'>
+              {fullName(profile?.firstName, profile?.lastName)}
+            </h3>
+            <span className='text-lg text-white/75'>
+              {profile?.locations?.join(' | ')}
+            </span>
+          </div>
           {profile?.contactInfo ? (
             <div className='flex flex-col gap-8 border-2 border-light-purple p-4 pb-6 sm:p-6 sm:pb-12 rounded-sm bg-light-purple/30'>
               <div className='flex flex-col gap-4 w-fit'>
-                <h3 className='text-pale-yellow font-medium text-lg'>
+                {/* <h3 className='text-white/75 font-medium text-lg'>
                   Reach Out
-                </h3>
+                </h3> */}
                 <div className='flex flex-col gap-12 sm:pl-2'>
                   {getContactLinksArray(profile?.contactInfo, {
                     include: ['email', 'phone'],
@@ -68,10 +77,10 @@ const Page: FC<Props> = async () => {
                 </div>
               </div>
 
-              <div className='h-px sm:w-2/3__ bg-gradient-to-r to-white/5 from-white/40 from-70%' />
+              <div className='h-px bg-gradient-to-r to-white/5 from-white/40 from-70%' />
 
               <div className='flex flex-col gap-6 sm:w-fit'>
-                <h3 className='text-pale-yellow font-medium text-lg'>
+                <h3 className='text-white/75 font-medium text-lg'>
                   Connect with Me
                 </h3>
                 <ContactLinks
