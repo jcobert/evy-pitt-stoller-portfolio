@@ -1,7 +1,7 @@
 import { Metadata } from 'next'
 import { FC } from 'react'
 
-import WritingPost from '@/components/features/writing/writing-post'
+import WritingPost from '@/components/features/portfolio/writing/writing-post'
 import Heading from '@/components/layout/heading'
 import Main from '@/components/layout/main'
 import PageLayout from '@/components/layout/page-layout'

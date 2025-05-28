@@ -1,7 +1,7 @@
 import { Metadata } from 'next'
 import { FC } from 'react'
 
-import WritingCard from '@/components/features/writing/writing-card'
+import WritingCard from '@/components/features/portfolio/writing/writing-card'
 import NoResults from '@/components/general/no-results'
 import Heading from '@/components/layout/heading'
 import Main from '@/components/layout/main'

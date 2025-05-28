@@ -14,15 +14,25 @@ import { PROJECTS_BY_TYPE_QUERYResult } from '@/sanity/types/generated/types'
 type Props = {
   production: PROJECTS_BY_TYPE_QUERYResult[number]
   className?: string
+  showDescription?: boolean
+  showDate?: boolean
 }
 
-const ProductionCard: FC<Props> = ({ production, className }) => {
+const ProductionCard: FC<Props> = ({
+  production,
+  className,
+  showDescription = true,
+  showDate = true,
+}) => {
   const { title, datePublished, mainVideo, slug, description } =
     production || {}
 
   const video = getSanityVideo(mainVideo)
 
   const videoPageUrl = `/portfolio/production/${slug?.current}`
+
+  const canShowdescription = !!description && showDescription
+  const canShowDate = !!datePublished && showDate
 
   return (
     <Link
@@ -38,17 +48,21 @@ const ProductionCard: FC<Props> = ({ production, className }) => {
           <span className='group-hover:text-foreground/80 transition text-lg font-medium leading-snug'>
             {title}
           </span>
-          {datePublished ? (
+
+          {canShowDate ? (
             <span className='text-xs leading-none text-muted-foreground group-hover:text-muted-foreground/80 transition'>
               {formatDate(datePublished)}
             </span>
           ) : null}
-          <div className='text-sm text-pretty fade-out-b max-h-16 overflow-hidden group-hover:text-foreground/80 transition'>
-            <PortableBlockContent value={description} />
-          </div>
+
+          {canShowdescription ? (
+            <div className='text-sm text-pretty fade-out-b max-h-16 overflow-hidden group-hover:text-foreground/80 transition'>
+              <PortableBlockContent value={description} />
+            </div>
+          ) : null}
         </div>
 
-        {description ? <Button variant='ghost'>Read more</Button> : null}
+        {canShowdescription ? <Button variant='ghost'>Read more</Button> : null}
       </div>
     </Link>
   )

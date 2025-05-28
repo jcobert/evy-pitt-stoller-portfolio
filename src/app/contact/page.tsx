@@ -86,7 +86,7 @@ const Page: FC<Props> = async () => {
                 <ContactLinks
                   links={profile?.contactInfo}
                   exclude={['email', 'phone']}
-                  className='gap-12 sm:pl-3'
+                  className='gap-12 pl-1 sm:pl-3'
                   iconProps={{
                     className: 'bg-white',
                     iconClassName: 'text-purple',

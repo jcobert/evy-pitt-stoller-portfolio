@@ -1,7 +1,7 @@
 import { Metadata } from 'next'
 import { FC } from 'react'
 
-import ProductionPost from '@/components/features/production/production-post'
+import ProductionPost from '@/components/features/portfolio/production/production-post'
 import Heading from '@/components/layout/heading'
 import Main from '@/components/layout/main'
 import PageLayout from '@/components/layout/page-layout'
