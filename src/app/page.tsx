@@ -95,6 +95,7 @@ const Page: FC = async () => {
                     linkedIn: profile?.contactInfo?.linkedIn,
                     twitter: profile?.contactInfo?.twitter,
                     email: profile?.contactInfo?.email,
+                    phone: profile?.contactInfo?.phone,
                   }}
                 />
               </div>
