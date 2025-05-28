@@ -12,20 +12,34 @@ export const structure: StructureResolver = (S) =>
       ),
       S.divider(),
 
-      // Blog
-      // S.documentTypeListItem('post' satisfies DocumentType).title('Posts'),
-      // S.documentTypeListItem('category' satisfies DocumentType).title(
-      //   'Categories',
-      // ),
-      // S.documentTypeListItem('author' satisfies DocumentType).title('Authors'),
-      // S.divider(),
+      // S.listItem()
+      //   .title('Profile')
+      //   .id('profile')
+      //   .child(
+      //     S.document()
+      //       .schemaType('profile' satisfies DocumentType)
+      //       .documentId('profile'),
+      //   ),
+      S.documentTypeListItem('profile' satisfies DocumentType).child(
+        S.document()
+          .schemaType('profile' satisfies DocumentType)
+          .documentId('profile')
+          .title('Profile'),
+      ),
+      S.divider(),
 
       // Rest
       ...S.documentTypeListItems().filter(
         (item) =>
           item.getId() &&
           !(
-            ['post', 'category', 'author', 'project'] as DocumentType[]
+            [
+              'post',
+              'category',
+              'author',
+              'project',
+              'profile',
+            ] as DocumentType[]
           ).includes(item.getId() as DocumentType),
       ),
     ])

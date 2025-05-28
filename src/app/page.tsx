@@ -1,6 +1,7 @@
 import { Metadata } from 'next'
 import { FC } from 'react'
 
+import { getSanityImageUrl } from '@/utils/media'
 import { cn } from '@/utils/style'
 
 import CardStack from '@/components/general/card-stack'
@@ -9,6 +10,9 @@ import Main from '@/components/layout/main'
 import PageLayout from '@/components/layout/page-layout'
 
 import { generatePageMeta } from '@/configuration/seo'
+import { client } from '@/sanity/lib/client'
+import { PROFILE_QUERY } from '@/sanity/lib/queries/profile-query'
+import { PROFILE_QUERYResult } from '@/sanity/types/generated/types'
 
 export const metadata: Metadata = generatePageMeta({
   title: 'Home',
@@ -17,6 +21,19 @@ export const metadata: Metadata = generatePageMeta({
 })
 
 const Page: FC = async () => {
+  const profile = await client.fetch<PROFILE_QUERYResult>(PROFILE_QUERY)
+
+  const firstName = profile?.firstName || 'Evy'
+  const lastName = profile?.lastName || 'Pitt-Stoller'
+
+  const titles = profile?.titles?.length
+    ? profile?.titles
+    : ['Writer', 'Creative Producer']
+
+  const photo = getSanityImageUrl(profile?.photo, {
+    ratio: 'original',
+  })
+
   const blurb =
     'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec quis libero et enim dignissim venenatis a facilisis eros. Donec commodo nec dolor quis lacinia.'
 
@@ -32,13 +49,20 @@ const Page: FC = async () => {
                 'flex flex-col gap-3',
               )}
             >
-              <span>Evy</span>
-              <span>Pitt-Stoller.</span>
+              <span>{firstName}</span>
+              <span>{`${lastName}.`}</span>
             </h1>
-            <h2 className='flex items-center gap-2 text-xl sm:text-2xl font-medium text-balance text-purple flex-wrap'>
-              <span>Writer</span>
-              <span className='opacity-25'>|</span>
-              <span>Creative Producer</span>
+            <h2 className='flex items-start gap-2 text-xl sm:text-2xl font-medium text-balance text-purple flex-wrap overflow-hidden fade-out-r'>
+              {titles?.map((title, i) => (
+                <div key={title} className='flex items-center gap-2'>
+                  <span>{title}</span>
+                  {i < titles?.length - 1 ? (
+                    <span aria-hidden className='opacity-25'>
+                      |
+                    </span>
+                  ) : null}
+                </div>
+              ))}
             </h2>
           </div>
 
@@ -51,7 +75,7 @@ const Page: FC = async () => {
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src={'/images/eps-headshot.png'}
+                src={photo}
                 alt='Evy smiling'
                 className={cn('w-full h-auto')}
               />
@@ -64,10 +88,15 @@ const Page: FC = async () => {
                 'md:right-8',
               )}
             >
-              <div className='p-4 md:p-6 text-pretty flex flex-col gap-6 justify-between'>
+              <div className='p-4 md:p-6 text-pretty flex flex-col gap-8 justify-between pb-8'>
                 <p>{blurb}</p>
                 <ContactLinks
-                  links={{ linkedIn: '', twitter: '', email: 'asdf' }}
+                  links={{
+                    linkedIn: profile?.contactInfo?.linkedIn,
+                    twitter: profile?.contactInfo?.twitter,
+                    email: profile?.contactInfo?.email,
+                    phone: profile?.contactInfo?.phone,
+                  }}
                 />
               </div>
             </CardStack>

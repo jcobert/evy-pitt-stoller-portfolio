@@ -15,7 +15,7 @@ type Props = {
 const WritingPost: FC<Props> = ({ writing }) => {
   const { datePublished, mainImage } = writing || {}
 
-  const image = getSanityImageUrl(mainImage, { ratio: '4/3' })
+  const image = getSanityImageUrl(mainImage, { ratio: '4/3', width: 800 })
 
   return (
     <div className='flex flex-col gap-6 sm:gap-8 items-center pb-16'>
@@ -40,7 +40,7 @@ const WritingPost: FC<Props> = ({ writing }) => {
         </span>
       ) : null}
 
-      <div className='max-w-prose'>
+      <div className='max-w-prose text-pretty'>
         <PortableBlockContent value={writing?.description} />
       </div>
     </div>
