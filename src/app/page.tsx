@@ -50,9 +50,9 @@ const Page: FC = async () => {
               )}
             >
               <span>{firstName}</span>
-              <span>{lastName}.</span>
+              <span>{`${lastName}.`}</span>
             </h1>
-            <h2 className='flex items-center gap-2 text-xl sm:text-2xl font-medium text-balance text-purple flex-wrap'>
+            <h2 className='flex items-start gap-2 text-xl sm:text-2xl font-medium text-balance text-purple flex-wrap overflow-hidden fade-out-r'>
               {titles?.map((title, i) => (
                 <div key={title} className='flex items-center gap-2'>
                   <span>{title}</span>
