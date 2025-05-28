@@ -1,4 +1,3 @@
-import { omit } from 'lodash'
 import { Metadata } from 'next'
 import { FC } from 'react'
 
@@ -78,7 +77,11 @@ const Page: FC = async () => {
               <div className='p-4 md:p-6 text-pretty flex flex-col gap-8 justify-between pb-8'>
                 <p>{blurb}</p>
                 <ContactLinks
-                  links={{ ...omit(profile?.contactInfo, ['_type']) }}
+                  links={{
+                    linkedIn: profile?.contactInfo?.linkedIn,
+                    twitter: profile?.contactInfo?.twitter,
+                    email: profile?.contactInfo?.email,
+                  }}
                 />
               </div>
             </CardStack>

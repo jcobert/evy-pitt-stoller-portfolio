@@ -13,17 +13,19 @@ import { IconType } from 'react-icons/lib'
 
 import { cn } from '@/utils/style'
 
-export enum SocialNetworks {
+export enum Contacts {
+  linkedIn = 'LinkedIn',
+  twitter = 'Twitter',
+  email = 'Email',
+  phone = 'Phone',
   instagram = 'Instagram',
   facebook = 'Facebook',
-  twitter = 'Twitter',
-  linkedIn = 'LinkedIn',
-  pinterest = 'Pinterest',
   tiktok = 'TikTok',
+  pinterest = 'Pinterest',
 }
 
 export type ContactLinkMap = {
-  [x in keyof typeof SocialNetworks | 'email' | 'phone']?: string
+  [x in keyof typeof Contacts]?: string
 }
 
 export const contactIcons = {
@@ -52,6 +54,7 @@ const ContactLinks: FC<Props> = ({ links = {}, className }) => {
   return (
     <div className={cn('flex items-center gap-10', className)}>
       {contactLinks?.map(([name, url]) => {
+        if (!Object.keys(Contacts)?.includes(name)) return null
         const Icon = contactIcons?.[name]
         return (
           <a key={name} href={url} className='flex'>
