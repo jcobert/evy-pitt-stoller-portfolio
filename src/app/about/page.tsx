@@ -53,7 +53,7 @@ const Page: FC<Props> = async () => {
             <PortableBlockContent value={bio} />
           </div>
 
-          <div className='w-3/5 sm:w-1/2 h-fit max-w-2xs md:min-w-60 max-lg:aspect-square mx-auto border-3 border-white/90 rounded-md bg-light-purple'>
+          <div className='w-3/5 sm:w-1/2 h-fit max-w-2xs md:min-w-60 max-lg:aspect-square mx-auto border-4 border-white/80 rounded-md bg-light-purple'>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={image}

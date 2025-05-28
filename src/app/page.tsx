@@ -3,6 +3,7 @@ import { FC } from 'react'
 
 import HereoSection from '@/components/features/home/hero-section'
 import ProductionsSection from '@/components/features/home/productions-section'
+import WritingSection from '@/components/features/home/writing-section'
 import Main from '@/components/layout/main'
 import PageLayout from '@/components/layout/page-layout'
 
@@ -31,8 +32,8 @@ const Page: FC = async () => {
       <PageLayout wrapperClassName='max-sm:w-full' className='max-md:px-0'>
         <HereoSection profile={profile} />
       </PageLayout>
-
       <ProductionsSection productions={productions} />
+      <WritingSection writing={writing} />
     </Main>
   )
 }

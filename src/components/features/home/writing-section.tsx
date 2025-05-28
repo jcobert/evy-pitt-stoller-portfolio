@@ -1,4 +1,4 @@
-import ProductionCard from '../portfolio/production/production-card'
+import WritingCard from '../portfolio/writing/writing-card'
 import Link from 'next/link'
 import { FC } from 'react'
 
@@ -10,23 +10,23 @@ import { Button } from '@/components/ui/button'
 import { PROJECTS_BY_TYPE_QUERYResult } from '@/sanity/types/generated/types'
 
 type Props = {
-  productions: PROJECTS_BY_TYPE_QUERYResult
+  writing: PROJECTS_BY_TYPE_QUERYResult
 }
 
-const ProductionsSection: FC<Props> = ({ productions }) => {
-  const projects = (productions || [])?.slice(0, 4)
+const WritingSection: FC<Props> = ({ writing }) => {
+  const projects = (writing || [])?.slice(0, 4)
 
   const noProjects = !projects?.length
 
   return (
-    <section className='bg-pale-purple relative max-sm:z-50__ py-16'>
+    <section className='bg-gradient-to-br from-[#FFFDF9] to-[#FFFAEC] relative py-16'>
       <div className='layout px-4 md:px-12 flex flex-col gap-12'>
         <div className='max-w-prose flex flex-col gap-2'>
-          <h3 className='text-3xl sm:text-4xl font-medium font-display text-balance text-dark-green'>
-            Production
+          <h3 className='text-3xl sm:text-4xl font-medium font-display text-balance text-purple'>
+            Writing
           </h3>
           <p className='text-balance text-lg text-muted-foreground md:max-w-xs'>
-            {"Check out some of the awesome projects I've worked on!"}
+            {"Look, mom, I'm a published writer!"}
           </p>
         </div>
 
@@ -36,27 +36,21 @@ const ProductionsSection: FC<Props> = ({ productions }) => {
             className='bg-white/50 border-light-purple/40'
           />
         ) : (
-          <div className='flex flex-col gap-12 items-center'>
+          <div className='flex flex-col gap-16 items-center'>
             <div
               className={cn(
-                'grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 grid-flow-row',
+                'grid grid-cols-1 lg:grid-cols-2 grid-flow-row',
                 'gap-x-6 lg:gap-x-10 xl:gap-x-16 gap-y-10',
-                'px-4 sm:px-16',
+                'sm:px-16',
               )}
             >
               {projects?.map((prod) => (
-                <ProductionCard
-                  key={prod?._id}
-                  production={prod}
-                  className=''
-                  showDescription={false}
-                  showDate={false}
-                />
+                <WritingCard key={prod?._id} writing={prod} className='' />
               ))}
             </div>
 
             <Button asChild className='w-fit' variant='outline'>
-              <Link href='/portfolio/production'>More projects</Link>
+              <Link href='/portfolio/writing'>More projects</Link>
             </Button>
           </div>
         )}
@@ -65,4 +59,4 @@ const ProductionsSection: FC<Props> = ({ productions }) => {
   )
 }
 
-export default ProductionsSection
+export default WritingSection
