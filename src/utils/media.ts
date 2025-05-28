@@ -1,3 +1,5 @@
+import { ImageUrlBuilder } from 'sanity'
+
 import { urlFor } from '@/sanity/lib/image'
 import { VimeoData, VimeoThumbnailSize } from '@/sanity/types/general'
 import {
@@ -134,27 +136,41 @@ const buildDimensions = (ratio: ImageRatio, width: number = 800) => {
       break
   }
   const height = ratio !== 'original' ? width / rat : null
-  return { width, height, ratio: rat }
+  return { width, height }
 }
 
 export const getSanityImageUrl = (
   image: NonNullable<PROJECT_BY_SLUG_QUERYResult>['mainImage'] | undefined,
-  options?: { ratio?: ImageRatio; width?: number },
+  options?: {
+    ratio?: ImageRatio
+    width?: number
+    crop?: Parameters<ImageUrlBuilder['crop']>['0']
+  },
 ) => {
   if (!image?.asset) return ''
-  const { ratio = 'original', width } = options || {}
+  const originalDimensions = image?.asset?.metadata?.dimensions
+  const {
+    ratio = 'original',
+    width = originalDimensions?.width,
+    crop = 'entropy',
+  } = options || {}
   const hotspot = image?.hotspot
 
   const size = typeof width === 'number' ? buildDimensions(ratio, width) : null
 
   let img = urlFor(image)
     .fit('crop')
-    .crop(hotspot ? 'focalpoint' : 'entropy')
-  if (size) {
+    .crop(hotspot ? 'focalpoint' : crop)
+    .format('webp')
+
+  if (
+    size?.width &&
+    (ratio !== 'original' || size?.width !== originalDimensions?.width)
+  ) {
     img = img.width(size?.width)
-    if (size?.height) {
-      img = img.height(size.height)
-    }
+  }
+  if (size?.height) {
+    img = img.height(size.height)
   }
   if (hotspot) {
     img = img.focalPoint(hotspot?.x || 0, hotspot?.y || 0)

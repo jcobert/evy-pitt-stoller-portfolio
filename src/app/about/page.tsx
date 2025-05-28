@@ -16,16 +16,31 @@ import { client } from '@/sanity/lib/client'
 import { PROFILE_QUERY } from '@/sanity/lib/queries/profile-query'
 import { PROFILE_QUERYResult } from '@/sanity/types/generated/types'
 
-export const metadata: Metadata = generatePageMeta({
-  title: 'About Me',
-  description: 'About Me',
-  url: '/about',
-})
+const fetchContent = async () => {
+  const profile = await client.fetch<PROFILE_QUERYResult>(PROFILE_QUERY)
+  return { profile }
+}
+
+export const generateMetadata = async (): Promise<Metadata> => {
+  const { profile } = await fetchContent()
+
+  return generatePageMeta({
+    title: 'About Me',
+    description: 'Learn more about my background, skills, and achievements.',
+    url: '/about',
+    images: [
+      getSanityImageUrl(profile?.photo, {
+        ratio: 'square',
+        crop: 'top',
+      }),
+    ],
+  })
+}
 
 type Props = PageParams
 
 const Page: FC<Props> = async () => {
-  const profile = await client.fetch<PROFILE_QUERYResult>(PROFILE_QUERY)
+  const { profile } = await fetchContent()
   const { bio, photo, firstName, lastName } = profile || {}
 
   const image = getSanityImageUrl(photo, { ratio: 'original', width: 400 })
