@@ -2,6 +2,7 @@ import { Metadata } from 'next'
 import { FC } from 'react'
 
 import { getSanityImageUrl } from '@/utils/media'
+import { fullName } from '@/utils/string'
 
 import PortableBlockContent from '@/components/general/portable-block-content'
 import Heading from '@/components/layout/heading'
@@ -25,7 +26,7 @@ type Props = PageParams
 
 const Page: FC<Props> = async () => {
   const profile = await client.fetch<PROFILE_QUERYResult>(PROFILE_QUERY)
-  const { bio, photo, name } = profile || {}
+  const { bio, photo, firstName, lastName } = profile || {}
 
   const image = getSanityImageUrl(photo, { ratio: 'original', width: 400 })
 
@@ -39,12 +40,12 @@ const Page: FC<Props> = async () => {
             <PortableBlockContent value={bio} />
           </div>
 
-          <div className='w-1/2 h-fit max-w-2xs md:min-w-60 mx-auto border-3 border-white/90 rounded-md bg-light-purple'>
+          <div className='w-3/5 sm:w-1/2 h-fit max-w-2xs md:min-w-60 max-lg:aspect-square mx-auto border-3 border-white/90 rounded-md bg-light-purple'>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={image}
-              alt={name}
-              className='size-full rounded-sm object-cover'
+              alt={fullName(firstName, lastName)}
+              className='size-full rounded-sm object-cover object-top max-lg:aspect-square'
             />
           </div>
         </div>

@@ -23,6 +23,13 @@ export const metadata: Metadata = generatePageMeta({
 const Page: FC = async () => {
   const profile = await client.fetch<PROFILE_QUERYResult>(PROFILE_QUERY)
 
+  const firstName = profile?.firstName || 'Evy'
+  const lastName = profile?.lastName || 'Pitt-Stoller'
+
+  const titles = profile?.titles?.length
+    ? profile?.titles
+    : ['Writer', 'Creative Producer']
+
   const photo = getSanityImageUrl(profile?.photo, {
     ratio: 'original',
   })
@@ -42,13 +49,20 @@ const Page: FC = async () => {
                 'flex flex-col gap-3',
               )}
             >
-              <span>Evy</span>
-              <span>Pitt-Stoller.</span>
+              <span>{firstName}</span>
+              <span>{lastName}.</span>
             </h1>
             <h2 className='flex items-center gap-2 text-xl sm:text-2xl font-medium text-balance text-purple flex-wrap'>
-              <span>Writer</span>
-              <span className='opacity-25'>|</span>
-              <span>Creative Producer</span>
+              {titles?.map((title, i) => (
+                <div key={title} className='flex items-center gap-2'>
+                  <span>{title}</span>
+                  {i < titles?.length - 1 ? (
+                    <span aria-hidden className='opacity-25'>
+                      |
+                    </span>
+                  ) : null}
+                </div>
+              ))}
             </h2>
           </div>
 

@@ -58,8 +58,11 @@ const ContactLinks: FC<Props> = ({ links = {}, className }) => {
         const Icon = contactIcons?.[name]
         return (
           <a key={name} href={url} className='flex'>
-            <div className='rounded-full bg-purple inline-block p-2'>
-              <Icon className='text-white text-2xl' />
+            <div
+              aria-label={name}
+              className='rounded-full bg-purple inline-block p-2'
+            >
+              <Icon aria-hidden className='text-white text-2xl' />
             </div>
           </a>
         )

@@ -251,7 +251,10 @@ export type Profile = {
   _updatedAt: string
   _rev: string
   id?: string
-  name?: string
+  firstName?: string
+  lastName?: string
+  titles?: Array<string>
+  locations?: Array<string>
   photo?: {
     asset?: {
       _ref: string
@@ -537,7 +540,10 @@ export type PROFILE_QUERYResult = {
   _updatedAt: string
   _rev: string
   id?: string
-  name?: string
+  firstName?: string
+  lastName?: string
+  titles?: Array<string>
+  locations?: Array<string>
   photo: {
     asset: {
       _id: string

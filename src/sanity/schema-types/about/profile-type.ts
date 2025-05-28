@@ -1,5 +1,5 @@
 import { BsPersonFill } from 'react-icons/bs'
-import { defineField, defineType } from 'sanity'
+import { defineArrayMember, defineField, defineType } from 'sanity'
 
 export const profileType = defineType({
   name: 'profile',
@@ -16,9 +16,40 @@ export const profileType = defineType({
       hidden: true,
     }),
     defineField({
-      name: 'name',
-      title: 'Name',
+      name: 'firstName',
+      title: 'First Name',
       type: 'string',
+    }),
+    defineField({
+      name: 'lastName',
+      title: 'Last Name',
+      type: 'string',
+    }),
+    defineField({
+      name: 'titles',
+      type: 'array',
+      title: 'Titles',
+      description:
+        'Job role or professional identity. Add multiple items separately.',
+      of: [
+        defineArrayMember({
+          type: 'string',
+          placeholder: 'e.g. Licensed Electrician',
+        }),
+      ],
+    }),
+    defineField({
+      name: 'locations',
+      type: 'array',
+      title: 'Locations',
+      description:
+        'Where you are based/located. Add multiple items separately.',
+      of: [
+        defineArrayMember({
+          type: 'string',
+          placeholder: 'e.g. New York, NY',
+        }),
+      ],
     }),
     defineField({
       name: 'photo',
