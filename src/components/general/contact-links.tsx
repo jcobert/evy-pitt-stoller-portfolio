@@ -42,26 +42,73 @@ export const contactIcons = {
   [key in keyof Required<ContactLinkMap>]: IconType
 }
 
-type Props = {
-  links: ContactLinkMap
-  className?: string
-}
-
 export const getContactLinksArray = (
   links: ContactLinkMap,
-): [keyof typeof links, string][] => {
+  options?: {
+    include?: (keyof typeof links)[]
+    exclude?: (keyof typeof links)[]
+  },
+): [keyof typeof links, { url: string; text: string }][] => {
   if (!isObject(links)) return []
-  return Object.entries(links)?.map(([name, val]) => {
-    if (!Object.keys(Contacts)?.includes(name)) return null
-    let url = val
-    if (name === 'email') url = `mailto:${val}`
-    if (name === 'phone') url = `tel:${val}`
-    return [name, url]
-  }) as [keyof typeof links, string][]
+  return Object.entries(links)
+    ?.filter(
+      ([name]) =>
+        Object.keys(Contacts)?.includes(name) &&
+        (options?.include?.length
+          ? options?.include?.includes(name as keyof typeof links)
+          : true) &&
+        (options?.exclude?.length
+          ? !options?.exclude?.includes(name as keyof typeof links)
+          : true),
+    )
+    ?.map(([name, val]) => {
+      let url = val
+      if (name === 'email') url = `mailto:${val}`
+      if (name === 'phone') url = `tel:${val}`
+      return [name, { url, text: val }]
+    }) as [keyof typeof links, { url: string; text: string }][]
 }
 
-const ContactLinks: FC<Props> = ({ links = {}, className }) => {
-  const contactLinks = getContactLinksArray(links)
+type ContactIconProps = {
+  name: keyof ContactLinkMap
+  className?: string
+  iconClassName?: string
+}
+
+export const ContactIcon: FC<ContactIconProps> = ({
+  name,
+  className,
+  iconClassName,
+}) => {
+  const Icon = contactIcons?.[name]
+  return (
+    <div
+      aria-label={name}
+      className={cn('rounded-full bg-purple inline-block p-2', className)}
+    >
+      <Icon
+        aria-hidden
+        className={cn('text-white text-2xl md:text-xl', iconClassName)}
+      />
+    </div>
+  )
+}
+
+type Props = {
+  links: ContactLinkMap | undefined
+  className?: string
+  include?: (keyof ContactLinkMap)[]
+  exclude?: (keyof ContactLinkMap)[]
+  iconProps?: Omit<Partial<ContactIconProps>, 'name'>
+}
+
+const ContactLinks: FC<Props> = ({
+  links = {},
+  className,
+  iconProps,
+  ...options
+}) => {
+  const contactLinks = getContactLinksArray(links, options)
 
   if (!contactLinks?.length) return null
 
@@ -69,17 +116,14 @@ const ContactLinks: FC<Props> = ({ links = {}, className }) => {
     <div
       className={cn('flex items-center gap-10 sm:gap-8 flex-wrap', className)}
     >
-      {contactLinks?.map(([name, url]) => {
-        if (!Object.keys(Contacts)?.includes(name)) return null
-        const Icon = contactIcons?.[name]
+      {contactLinks?.map(([name, val]) => {
         return (
-          <a key={name} href={url} className='flex hover:opacity-90 transition'>
-            <div
-              aria-label={name}
-              className='rounded-full bg-purple inline-block p-2'
-            >
-              <Icon aria-hidden className='text-white text-2xl md:text-xl' />
-            </div>
+          <a
+            key={name}
+            href={val?.url}
+            className='flex hover:opacity-90 transition'
+          >
+            <ContactIcon name={name} {...iconProps} />
           </a>
         )
       })}

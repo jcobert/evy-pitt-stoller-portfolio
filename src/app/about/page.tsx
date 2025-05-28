@@ -12,12 +12,10 @@ import PageLayout from '@/components/layout/page-layout'
 import { PageParams } from '@/types/general'
 
 import { generatePageMeta } from '@/configuration/seo'
-import { client } from '@/sanity/lib/client'
-import { PROFILE_QUERY } from '@/sanity/lib/queries/profile-query'
-import { PROFILE_QUERYResult } from '@/sanity/types/generated/types'
+import { getProfile } from '@/sanity/lib/fetch'
 
 const fetchContent = async () => {
-  const profile = await client.fetch<PROFILE_QUERYResult>(PROFILE_QUERY)
+  const profile = await getProfile()
   return { profile }
 }
 
@@ -50,7 +48,7 @@ const Page: FC<Props> = async () => {
       <PageLayout className='pb-12'>
         <Heading text='About Me' className='max-lg:mx-auto' />
 
-        <div className='flex max-lg:flex-col-reverse max-lg:items-center gap-8 md:gap-y-10 gap-y-6'>
+        <section className='flex max-lg:flex-col-reverse max-lg:items-center gap-8 md:gap-y-10 gap-y-6'>
           <div className='max-w-prose text-pretty'>
             <PortableBlockContent value={bio} />
           </div>
@@ -63,7 +61,7 @@ const Page: FC<Props> = async () => {
               className='size-full rounded-sm object-cover object-top max-lg:aspect-square'
             />
           </div>
-        </div>
+        </section>
       </PageLayout>
     </Main>
   )
