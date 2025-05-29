@@ -13,9 +13,8 @@ export const PortableLink = ({
   return (
     <a
       href={value?.url}
-      // rel={rel}
-      // target={target}
-      className='inline-flex items-center'
+      rel='noreferrer nofollow'
+      className='inline-flex items-center gap-0.5 text-blue-600 hover:text-blue-600/90 transition'
     >
       {children}
       <HiOutlineExternalLink aria-label='This is an external link.' />

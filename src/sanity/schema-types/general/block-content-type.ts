@@ -25,10 +25,9 @@ export const blockContentType = defineType({
       // use your content.
       styles: [
         { title: 'Normal', value: 'normal' },
-        { title: 'H1', value: 'h1' },
-        { title: 'H2', value: 'h2' },
-        { title: 'H3', value: 'h3' },
-        { title: 'H4', value: 'h4' },
+        { title: 'Title', value: 'h2' },
+        { title: 'Heading', value: 'h3' },
+        { title: 'Subheading', value: 'h4' },
         { title: 'Quote', value: 'blockquote' },
       ],
       lists: [
@@ -48,14 +47,15 @@ export const blockContentType = defineType({
         // Annotations can be any object structure – e.g. a link or a footnote.
         annotations: [
           {
-            title: 'URL',
             name: 'link',
             type: 'object',
+            title: 'Link',
             fields: [
               {
-                title: 'URL',
-                name: 'href',
+                name: 'url',
                 type: 'url',
+                title: 'URL',
+                placeholder: 'e.g. https://example.com',
               },
             ],
           },

@@ -18,7 +18,12 @@ const WritingPost: FC<Props> = ({ writing }) => {
   const image = getSanityImageUrl(mainImage, { ratio: '4/3', width: 800 })
 
   return (
-    <div className='flex flex-col gap-6 sm:gap-8 items-center pb-16__'>
+    <div
+      className={cn(
+        'flex flex-col gap-6 sm:gap-8 items-center',
+        !datePublished && 'gap-8 sm:gap-10',
+      )}
+    >
       {image ? (
         <div
           className={cn(
@@ -40,9 +45,7 @@ const WritingPost: FC<Props> = ({ writing }) => {
         </span>
       ) : null}
 
-      <div className='max-w-prose text-pretty'>
-        <PortableBlockContent value={writing?.description} />
-      </div>
+      <PortableBlockContent value={writing?.description} />
     </div>
   )
 }

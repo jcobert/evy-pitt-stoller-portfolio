@@ -45,7 +45,7 @@ const ProductionCard: FC<Props> = ({
       />
       <div className='flex flex-col items-center text-pretty'>
         <div className='flex flex-col gap-2 items-center text-pretty'>
-          <span className='group-hover:text-foreground/80 transition text-lg font-medium leading-snug'>
+          <span className='group-hover:text-foreground/80 transition text-lg_ font-medium leading-snug'>
             {title}
           </span>
 
@@ -56,9 +56,11 @@ const ProductionCard: FC<Props> = ({
           ) : null}
 
           {canShowdescription ? (
-            <div className='text-sm text-pretty fade-out-b max-h-16 overflow-hidden group-hover:text-foreground/80 transition'>
-              <PortableBlockContent value={description} />
-            </div>
+            <PortableBlockContent
+              value={description}
+              prose={false}
+              className='text-sm text-pretty fade-out-b max-h-16 overflow-hidden group-hover:text-foreground/80 transition'
+            />
           ) : null}
         </div>
 

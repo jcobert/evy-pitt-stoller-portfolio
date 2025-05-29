@@ -6,8 +6,8 @@ export const PortableQuote = ({
 }: PortableTextComponentProps<unknown>) => {
   return (
     <div className='flex items-start gap-4'>
-      <ImQuotesLeft className='text-brand-gray-medium' />
-      <blockquote className='mb-0'>{children}</blockquote>
+      <ImQuotesLeft className='text-muted-foreground' />
+      <blockquote className='mb-0 text-muted-foreground'>{children}</blockquote>
     </div>
   )
 }

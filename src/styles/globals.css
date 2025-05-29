@@ -1,5 +1,6 @@
 @import 'tailwindcss';
 @import 'tw-animate-css';
+@plugin "@tailwindcss/typography";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -104,7 +105,7 @@
   /* theme colors */
   --purple: #81559b;
   --light-purple: #a97cc4;
-  --pale-purple: #E7E7F9;
+  --pale-purple: #e7e7f9;
   --dark-green: #143109;
   --light-green: #b8d6c0;
   --pale-yellow: #f1f2d6;
