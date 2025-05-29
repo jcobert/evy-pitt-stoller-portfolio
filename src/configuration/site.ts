@@ -1,5 +1,5 @@
 export const siteConfig = {
-  title: 'Evy Pitt Stoller',
+  title: 'Evy Pitt-Stoller',
   description: '',
   url: process.env.NEXT_PUBLIC_SITE_BASE_URL || '',
 } as const

@@ -1,3 +1,4 @@
+import { sortBy } from 'lodash'
 import { FC } from 'react'
 import {
   FaEnvelope,
@@ -50,7 +51,7 @@ export const getContactLinksArray = (
   },
 ): [keyof typeof links, { url: string; text: string }][] => {
   if (!isObject(links)) return []
-  return Object.entries(links)
+  const filtered = Object.entries(links)
     ?.filter(
       ([name]) =>
         Object.keys(Contacts)?.includes(name) &&
@@ -67,6 +68,10 @@ export const getContactLinksArray = (
       if (name === 'phone') url = `tel:${val}`
       return [name, { url, text: val }]
     }) as [keyof typeof links, { url: string; text: string }][]
+
+  return sortBy(filtered, ([link]) =>
+    Object.keys(Contacts)?.findIndex((c) => c === link),
+  )
 }
 
 type ContactIconProps = {
