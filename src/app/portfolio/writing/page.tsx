@@ -30,7 +30,7 @@ const Page: FC<Props> = async () => {
           text='Writing'
           description="Look, mom, I'm a published writer!"
         />
-        <section className='my-4 pb-8__'>
+        <section className='my-4'>
           {!projects?.length ? (
             <NoResults item='writing' />
           ) : (

@@ -6,6 +6,7 @@ import { cn } from '@/utils/style'
 
 import ProgressProvider from '@/providers/progress-provider'
 
+import Footer from '@/components/layout/footer'
 import Header from '@/components/layout/header/header'
 
 import '@/styles/globals.css'
@@ -41,7 +42,7 @@ export default function RootLayout({
             <Header />
             {children}
             {/** @todo add footer. */}
-            {/* <Footer /> */}
+            <Footer />
           </div>
         </ProgressProvider>
       </body>

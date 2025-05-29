@@ -28,7 +28,7 @@ const Page: FC = async () => {
   const { profile, productions, writing } = await loadContent()
 
   return (
-    <Main className='bg-gradient-to-br from-light-green/90 from-20% to-dark-green/15'>
+    <Main className='bg-gradient-to-br from-light-green/90 from-20% to-dark-green/15 pb-0'>
       <PageLayout wrapperClassName='max-sm:w-full' className='max-md:px-0'>
         <HereoSection profile={profile} />
       </PageLayout>
