@@ -4,7 +4,7 @@ import { FC } from 'react'
 import { getSanityImageUrl } from '@/utils/media'
 import { fullName } from '@/utils/string'
 
-import PortableBlockContent from '@/components/general/portable-block-content'
+import PortableBlockContent from '@/components/general/portable/portable-block-content'
 import Heading from '@/components/layout/heading'
 import Main from '@/components/layout/main'
 import PageLayout from '@/components/layout/page-layout'
@@ -48,14 +48,12 @@ const Page: FC<Props> = async () => {
   const image = getSanityImageUrl(photo, { ratio: 'original', width: 400 })
 
   return (
-    <Main className='bg-pale-yellow'>
+    <Main className='bg-pale-yellow/70'>
       <PageLayout>
         <Heading text='About Me' className='max-lg:mx-auto' />
 
         <section className='flex max-lg:flex-col-reverse max-lg:items-center gap-8 md:gap-y-10 gap-y-6'>
-          <div className='max-w-prose text-pretty'>
-            <PortableBlockContent value={bio} />
-          </div>
+          <PortableBlockContent value={bio} />
 
           <div className='w-full mx-auto flex flex-col gap-3'>
             <div className='w-3/5 lg:w-full sm:w-1/2__ h-fit max-w-2xs md:min-w-60 max-lg:aspect-square mx-auto border-4 border-white/80 rounded-md bg-light-purple'>

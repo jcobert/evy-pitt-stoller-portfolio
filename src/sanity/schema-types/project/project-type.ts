@@ -2,6 +2,8 @@ import { ProjectsIcon, VideoIcon } from '@sanity/icons'
 import { upperFirst } from 'lodash'
 import { defineField, defineType } from 'sanity'
 
+import { PROJECT_BY_SLUG_QUERYResult } from '@/sanity/types/generated/types'
+
 export const projectType = defineType({
   name: 'project',
   title: 'Project',
@@ -60,13 +62,18 @@ export const projectType = defineType({
       title: 'Video',
       type: 'videoGroup',
       group: 'media',
-      hidden: (props) => props?.parent?.projectType === 'writing',
+      hidden: (props) => {
+        const values = props?.parent as PROJECT_BY_SLUG_QUERYResult
+        return values?.projectType === 'writing'
+      },
     }),
     // image
     defineField({
       name: 'mainImage',
-      title: 'Image',
+      title: 'Preview Image',
       type: 'image',
+      description:
+        'Used as cover photo for articles or thumbnail for uploaded videos.',
       options: {
         hotspot: true,
       },
@@ -78,7 +85,13 @@ export const projectType = defineType({
         }),
       ],
       group: 'media',
-      // hidden: (props) => props?.parent?.projectType === 'production',
+      hidden: (props) => {
+        const values = props?.parent as PROJECT_BY_SLUG_QUERYResult
+        return (
+          values?.projectType === 'production' &&
+          !values?.mainVideo?.videoUpload?.file
+        )
+      },
     }),
     // body
     defineField({
@@ -91,6 +104,8 @@ export const projectType = defineType({
       title: 'Tags',
       type: 'array',
       of: [{ type: 'string' }],
+      description:
+        'Any relevant categories (e.g. "Climate change, Documentary, Soft-core porn")',
       options: { layout: 'tags' },
     }),
   ],

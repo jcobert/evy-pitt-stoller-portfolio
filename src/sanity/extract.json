@@ -415,10 +415,6 @@
                         },
                         {
                           "type": "string",
-                          "value": "h1"
-                        },
-                        {
-                          "type": "string",
                           "value": "h2"
                         },
                         {
@@ -461,7 +457,7 @@
                       "of": {
                         "type": "object",
                         "attributes": {
-                          "href": {
+                          "url": {
                             "type": "objectAttribute",
                             "value": {
                               "type": "string"
@@ -967,10 +963,6 @@
                         },
                         {
                           "type": "string",
-                          "value": "h1"
-                        },
-                        {
-                          "type": "string",
                           "value": "h2"
                         },
                         {
@@ -1013,7 +1005,7 @@
                       "of": {
                         "type": "object",
                         "attributes": {
-                          "href": {
+                          "url": {
                             "type": "objectAttribute",
                             "value": {
                               "type": "string"
@@ -1689,10 +1681,6 @@
                         },
                         {
                           "type": "string",
-                          "value": "h1"
-                        },
-                        {
-                          "type": "string",
                           "value": "h2"
                         },
                         {
@@ -1735,7 +1723,7 @@
                       "of": {
                         "type": "object",
                         "attributes": {
-                          "href": {
+                          "url": {
                             "type": "objectAttribute",
                             "value": {
                               "type": "string"
@@ -2226,10 +2214,6 @@
                     },
                     {
                       "type": "string",
-                      "value": "h1"
-                    },
-                    {
-                      "type": "string",
                       "value": "h2"
                     },
                     {
@@ -2272,7 +2256,7 @@
                   "of": {
                     "type": "object",
                     "attributes": {
-                      "href": {
+                      "url": {
                         "type": "objectAttribute",
                         "value": {
                           "type": "string"

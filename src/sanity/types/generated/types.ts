@@ -81,10 +81,10 @@ export type Project = {
           _type: 'span'
           _key: string
         }>
-        style?: 'normal' | 'h1' | 'h2' | 'h3' | 'h4' | 'blockquote'
+        style?: 'normal' | 'h2' | 'h3' | 'h4' | 'blockquote'
         listItem?: 'bullet' | 'number'
         markDefs?: Array<{
-          href?: string
+          url?: string
           _type: 'link'
           _key: string
         }>
@@ -167,10 +167,10 @@ export type Post = {
           _type: 'span'
           _key: string
         }>
-        style?: 'normal' | 'h1' | 'h2' | 'h3' | 'h4' | 'blockquote'
+        style?: 'normal' | 'h2' | 'h3' | 'h4' | 'blockquote'
         listItem?: 'bullet' | 'number'
         markDefs?: Array<{
-          href?: string
+          url?: string
           _type: 'link'
           _key: string
         }>
@@ -276,10 +276,10 @@ export type Profile = {
           _type: 'span'
           _key: string
         }>
-        style?: 'normal' | 'h1' | 'h2' | 'h3' | 'h4' | 'blockquote'
+        style?: 'normal' | 'h2' | 'h3' | 'h4' | 'blockquote'
         listItem?: 'bullet' | 'number'
         markDefs?: Array<{
-          href?: string
+          url?: string
           _type: 'link'
           _key: string
         }>
@@ -363,10 +363,10 @@ export type BlockContent = Array<
         _type: 'span'
         _key: string
       }>
-      style?: 'normal' | 'h1' | 'h2' | 'h3' | 'h4' | 'blockquote'
+      style?: 'normal' | 'h2' | 'h3' | 'h4' | 'blockquote'
       listItem?: 'bullet' | 'number'
       markDefs?: Array<{
-        href?: string
+        url?: string
         _type: 'link'
         _key: string
       }>
@@ -584,10 +584,10 @@ export type PROFILE_QUERYResult = {
           _type: 'span'
           _key: string
         }>
-        style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'normal'
+        style?: 'blockquote' | 'h2' | 'h3' | 'h4' | 'normal'
         listItem?: 'bullet' | 'number'
         markDefs?: Array<{
-          href?: string
+          url?: string
           _type: 'link'
           _key: string
         }>
@@ -614,7 +614,7 @@ export type PROFILE_QUERYResult = {
 
 // Source: ./src/sanity/lib/queries/projects-query.ts
 // Variable: PROJECTS_QUERY
-// Query: *[_type=='project' && defined(slug)]{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ ..., videoUpload{ ..., file{ ..., asset-> } } } }
+// Query: *[_type=='project' && defined(slug)]{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ ..., videoUpload{ ..., file{ ..., asset-> } } }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } } }
 export type PROJECTS_QUERYResult = Array<{
   _id: string
   _type: 'project'
@@ -688,10 +688,7 @@ export type PROJECTS_QUERYResult = Array<{
     alt?: string
     _type: 'image'
   } | null
-  description?: Array<
-    | ({
-        _key: string
-      } & Video)
+  description: Array<
     | {
         children?: Array<{
           marks?: Array<string>
@@ -699,10 +696,10 @@ export type PROJECTS_QUERYResult = Array<{
           _type: 'span'
           _key: string
         }>
-        style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'normal'
+        style?: 'blockquote' | 'h2' | 'h3' | 'h4' | 'normal'
         listItem?: 'bullet' | 'number'
         markDefs?: Array<{
-          href?: string
+          url?: string
           _type: 'link'
           _key: string
         }>
@@ -724,11 +721,26 @@ export type PROJECTS_QUERYResult = Array<{
         _type: 'image'
         _key: string
       }
-  >
+    | {
+        _key: string
+        _type: 'video'
+        file?: {
+          asset?: {
+            _ref: string
+            _type: 'reference'
+            _weak?: boolean
+            [internalGroqTypeReferenceTo]?: 'sanity.fileAsset'
+          }
+          media?: unknown
+          _type: 'file'
+        }
+        alt?: string
+      }
+  > | null
   tags: Array<string> | Array<never>
 }>
 // Variable: PROJECTS_BY_TYPE_QUERY
-// Query: *[_type=='project' && projectType==$projectType && defined(slug)]{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ ..., videoUpload{ ..., file{ ..., asset-> } } } }
+// Query: *[_type=='project' && projectType==$projectType && defined(slug)]{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ ..., videoUpload{ ..., file{ ..., asset-> } } }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } } }
 export type PROJECTS_BY_TYPE_QUERYResult = Array<{
   _id: string
   _type: 'project'
@@ -802,10 +814,7 @@ export type PROJECTS_BY_TYPE_QUERYResult = Array<{
     alt?: string
     _type: 'image'
   } | null
-  description?: Array<
-    | ({
-        _key: string
-      } & Video)
+  description: Array<
     | {
         children?: Array<{
           marks?: Array<string>
@@ -813,10 +822,10 @@ export type PROJECTS_BY_TYPE_QUERYResult = Array<{
           _type: 'span'
           _key: string
         }>
-        style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'normal'
+        style?: 'blockquote' | 'h2' | 'h3' | 'h4' | 'normal'
         listItem?: 'bullet' | 'number'
         markDefs?: Array<{
-          href?: string
+          url?: string
           _type: 'link'
           _key: string
         }>
@@ -838,11 +847,26 @@ export type PROJECTS_BY_TYPE_QUERYResult = Array<{
         _type: 'image'
         _key: string
       }
-  >
+    | {
+        _key: string
+        _type: 'video'
+        file?: {
+          asset?: {
+            _ref: string
+            _type: 'reference'
+            _weak?: boolean
+            [internalGroqTypeReferenceTo]?: 'sanity.fileAsset'
+          }
+          media?: unknown
+          _type: 'file'
+        }
+        alt?: string
+      }
+  > | null
   tags: Array<string> | Array<never>
 }>
 // Variable: PROJECT_BY_SLUG_QUERY
-// Query: *[_type=='project' && slug.current==$slug]{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ ..., videoUpload{ ..., file{ ..., asset-> } } } }[0]
+// Query: *[_type=='project' && slug.current==$slug]{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ ..., videoUpload{ ..., file{ ..., asset-> } } }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } } }[0]
 export type PROJECT_BY_SLUG_QUERYResult = {
   _id: string
   _type: 'project'
@@ -916,10 +940,7 @@ export type PROJECT_BY_SLUG_QUERYResult = {
     alt?: string
     _type: 'image'
   } | null
-  description?: Array<
-    | ({
-        _key: string
-      } & Video)
+  description: Array<
     | {
         children?: Array<{
           marks?: Array<string>
@@ -927,10 +948,10 @@ export type PROJECT_BY_SLUG_QUERYResult = {
           _type: 'span'
           _key: string
         }>
-        style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'normal'
+        style?: 'blockquote' | 'h2' | 'h3' | 'h4' | 'normal'
         listItem?: 'bullet' | 'number'
         markDefs?: Array<{
-          href?: string
+          url?: string
           _type: 'link'
           _key: string
         }>
@@ -952,7 +973,22 @@ export type PROJECT_BY_SLUG_QUERYResult = {
         _type: 'image'
         _key: string
       }
-  >
+    | {
+        _key: string
+        _type: 'video'
+        file?: {
+          asset?: {
+            _ref: string
+            _type: 'reference'
+            _weak?: boolean
+            [internalGroqTypeReferenceTo]?: 'sanity.fileAsset'
+          }
+          media?: unknown
+          _type: 'file'
+        }
+        alt?: string
+      }
+  > | null
   tags: Array<string> | Array<never>
 } | null
 
@@ -962,8 +998,8 @@ declare module '@sanity/client' {
     '{ ..., file{ ..., asset-> } }': FileResult
     '{ "youtube": coalesce(youtube, \'\'), "vimeo": coalesce(vimeo, \'\'), videoUpload{ ..., file{ ..., asset-> } } }': VideoGroupResult
     '*[_type==\'profile\' && _id=="profile"]{ ..., photo{ ..., asset-> } }[0]': PROFILE_QUERYResult
-    '*[_type==\'project\' && defined(slug)]{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ ..., videoUpload{ ..., file{ ..., asset-> } } } }': PROJECTS_QUERYResult
-    '*[_type==\'project\' && projectType==$projectType && defined(slug)]{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ ..., videoUpload{ ..., file{ ..., asset-> } } } }': PROJECTS_BY_TYPE_QUERYResult
-    '*[_type==\'project\' && slug.current==$slug]{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ ..., videoUpload{ ..., file{ ..., asset-> } } } }[0]': PROJECT_BY_SLUG_QUERYResult
+    '*[_type==\'project\' && defined(slug)]{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ ..., videoUpload{ ..., file{ ..., asset-> } } }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } } }': PROJECTS_QUERYResult
+    '*[_type==\'project\' && projectType==$projectType && defined(slug)]{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ ..., videoUpload{ ..., file{ ..., asset-> } } }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } } }': PROJECTS_BY_TYPE_QUERYResult
+    '*[_type==\'project\' && slug.current==$slug]{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ ..., videoUpload{ ..., file{ ..., asset-> } } }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } } }[0]': PROJECT_BY_SLUG_QUERYResult
   }
 }

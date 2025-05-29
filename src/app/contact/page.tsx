@@ -33,7 +33,7 @@ const Page: FC<Props> = async () => {
   const { profile } = await loadContent()
 
   return (
-    <Main className='bg-pale-purple text-purple'>
+    <Main className='bg-pale-purple/80 text-purple'>
       <PageLayout>
         <Heading
           text='Contact Me'
