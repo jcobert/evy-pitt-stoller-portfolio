@@ -4,7 +4,7 @@ import { FC } from 'react'
 import { getSanityImageUrl } from '@/utils/media'
 import { fullName } from '@/utils/string'
 
-import PortableBlockContent from '@/components/general/portable-block-content'
+import PortableBlockContent from '@/components/general/portable/portable-block-content'
 import Heading from '@/components/layout/heading'
 import Main from '@/components/layout/main'
 import PageLayout from '@/components/layout/page-layout'

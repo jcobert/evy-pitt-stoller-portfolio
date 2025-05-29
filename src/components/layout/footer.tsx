@@ -11,7 +11,7 @@ const Footer: FC = async () => {
   const copy = `${new Date().getFullYear()} ${siteConfig.title}`
 
   return (
-    <footer className='bg-accent border-t-2 pb-safe'>
+    <footer className='bg-accent border-t-2 pb-safe print:hidden'>
       <div className='layout py-6 sm:py-4'>
         <div className='flex max-sm:flex-col-reverse gap-y-6 items-center justify-between'>
           <span className='text-xs text-center text-foreground/85'>

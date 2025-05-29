@@ -5,7 +5,7 @@ import { formatDate } from '@/utils/date'
 import { getSanityVideo } from '@/utils/media'
 import { cn } from '@/utils/style'
 
-import PortableBlockContent from '@/components/general/portable-block-content'
+import PortableBlockContent from '@/components/general/portable/portable-block-content'
 import VideoThumbnail from '@/components/media/video-thumbnail'
 import { Button } from '@/components/ui/button'
 
