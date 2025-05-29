@@ -48,7 +48,7 @@ const Page: FC<Props> = async () => {
   const image = getSanityImageUrl(photo, { ratio: 'original', width: 400 })
 
   return (
-    <Main className='bg-pale-yellow'>
+    <Main className='bg-pale-yellow/70'>
       <PageLayout>
         <Heading text='About Me' className='max-lg:mx-auto' />
 
