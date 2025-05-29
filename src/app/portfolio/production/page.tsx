@@ -10,7 +10,12 @@ import PageLayout from '@/components/layout/page-layout'
 import { PageParams } from '@/types/general'
 
 import { generatePageMeta } from '@/configuration/seo'
-import { getProjects } from '@/sanity/lib/fetch'
+import { SanityFetchContext, getProjects } from '@/sanity/lib/fetch'
+
+const loadContent = async (context: SanityFetchContext) => {
+  const projects = await getProjects({ context, projectType: 'production' })
+  return { projects }
+}
 
 export const metadata: Metadata = generatePageMeta({
   title: 'Production',
@@ -21,7 +26,7 @@ export const metadata: Metadata = generatePageMeta({
 type Props = PageParams
 
 const Page: FC<Props> = async () => {
-  const projects = await getProjects({ projectType: 'production' })
+  const { projects } = await loadContent('component')
 
   return (
     <Main className='bg-background'>

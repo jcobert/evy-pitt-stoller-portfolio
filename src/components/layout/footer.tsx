@@ -6,7 +6,7 @@ import { siteConfig } from '@/configuration/site'
 import { getProfile } from '@/sanity/lib/fetch'
 
 const Footer: FC = async () => {
-  const { contactInfo } = (await getProfile()) || {}
+  const { contactInfo } = (await getProfile({ context: 'component' })) || {}
 
   const copy = `${new Date().getFullYear()} ${siteConfig.title}`
 

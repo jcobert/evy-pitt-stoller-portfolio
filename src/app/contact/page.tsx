@@ -14,10 +14,10 @@ import PageLayout from '@/components/layout/page-layout'
 import { PageParams } from '@/types/general'
 
 import { generatePageMeta } from '@/configuration/seo'
-import { getProfile } from '@/sanity/lib/fetch'
+import { SanityFetchContext, getProfile } from '@/sanity/lib/fetch'
 
-const loadContent = async () => {
-  const profile = await getProfile()
+const loadContent = async (context: SanityFetchContext) => {
+  const profile = await getProfile({ context })
   return { profile }
 }
 
@@ -30,7 +30,7 @@ export const metadata: Metadata = generatePageMeta({
 type Props = PageParams
 
 const Page: FC<Props> = async () => {
-  const { profile } = await loadContent()
+  const { profile } = await loadContent('component')
 
   return (
     <Main className='bg-pale-purple/80 text-purple'>

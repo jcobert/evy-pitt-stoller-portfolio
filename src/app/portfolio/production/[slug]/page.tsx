@@ -9,37 +9,48 @@ import PageLayout from '@/components/layout/page-layout'
 import { PageParams } from '@/types/general'
 
 import { generatePageMeta } from '@/configuration/seo'
-import { getProject, getProjects } from '@/sanity/lib/fetch'
+import { SanityFetchContext, getProject, getProjects } from '@/sanity/lib/fetch'
 
 type Props = PageParams<{ slug: string }>
+
+const loadContent = async (
+  context: SanityFetchContext,
+  slug: Awaited<Props['params']>['slug'],
+) => {
+  const project = await getProject({ context, slug })
+  return { project }
+}
 
 export const generateMetadata = async ({
   params,
 }: Props): Promise<Metadata> => {
   const { slug } = await params
-  const production = await getProject({ slug })
+  const { project } = await loadContent('generateMetadata', slug)
   return generatePageMeta({
-    title: `Production - ${production?.title}`,
+    title: `Production - ${project?.title}`,
     url: `/portfolio/production/${slug}`,
   })
 }
 
 export const generateStaticParams = async () => {
-  const productions = await getProjects({ projectType: 'production' })
+  const productions = await getProjects({
+    context: 'generateStaticParams',
+    projectType: 'production',
+  })
   return (productions || [])?.map(({ slug }) => ({ slug: slug?.current }))
 }
 
 const Page: FC<Props> = async ({ params }) => {
   const slug = (await params)?.slug
 
-  const production = await getProject({ slug })
+  const { project } = await loadContent('component', slug)
 
   return (
     <Main className='bg-background'>
       <PageLayout back={{ href: '/portfolio/production', text: 'Back' }}>
-        <Heading text={production?.title} />
+        <Heading text={project?.title} />
         <section>
-          <ProductionPost production={production} />
+          <ProductionPost production={project} />
         </section>
       </PageLayout>
     </Main>

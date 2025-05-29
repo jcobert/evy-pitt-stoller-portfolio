@@ -11,6 +11,7 @@ import { visionTool } from '@sanity/vision'
 import { DocumentActionComponent, defineConfig } from 'sanity'
 import { vimeoField } from 'sanity-plugin-vimeo-field'
 import { youtubeInput } from 'sanity-plugin-youtube-input'
+import { presentationTool } from 'sanity/presentation'
 import { structureTool } from 'sanity/structure'
 
 import { slugOnPublish } from '@/sanity/actions/slug-on-publish'
@@ -45,6 +46,13 @@ export default defineConfig({
   plugins: [
     structureTool({ structure }),
     visionTool({ defaultApiVersion: apiVersion }),
+    presentationTool({
+      previewUrl: {
+        previewMode: {
+          enable: '/api/draft-mode/enable',
+        },
+      },
+    }),
     youtubeInput({
       apiKey: process.env.NEXT_PUBLIC_SANITY_STUDIO_YOUTUBE_DATA_API_KEY || '',
     }),

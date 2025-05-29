@@ -8,11 +8,11 @@ import Main from '@/components/layout/main'
 import PageLayout from '@/components/layout/page-layout'
 
 import { generatePageMeta } from '@/configuration/seo'
-import { getProfile, getProjects } from '@/sanity/lib/fetch'
+import { SanityFetchContext, getProfile, getProjects } from '@/sanity/lib/fetch'
 
-const loadContent = async () => {
-  const profile = await getProfile()
-  const projects = await getProjects()
+const loadContent = async (context: SanityFetchContext) => {
+  const profile = await getProfile({ context })
+  const projects = await getProjects({ context })
   const productions = projects?.filter((p) => p?.projectType === 'production')
   const writing = projects?.filter((p) => p?.projectType === 'writing')
   return { profile, productions, writing }
@@ -25,7 +25,7 @@ export const metadata: Metadata = generatePageMeta({
 })
 
 const Page: FC = async () => {
-  const { profile, productions, writing } = await loadContent()
+  const { profile, productions, writing } = await loadContent('component')
 
   return (
     <Main className='bg-gradient-to-br from-light-green/90 from-20% to-dark-green/15 pb-0'>

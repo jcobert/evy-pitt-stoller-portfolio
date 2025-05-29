@@ -31,15 +31,17 @@ export type SanityVideo = {
 const findYoutubeThumbnail = (
   thumbnails: YoutubeVideo['thumbnails'],
   quality: YoutubeThumbnailQuality,
-) => {
+): YoutubeThumbnail => {
   const thumb = ((thumbnails || [])?.find((t) => t === quality) ||
-    thumbnails?.find((t) => t === 'default') ||
-    thumbnails?.find((t) => t === 'high') ||
-    thumbnails?.find((t) => t === 'medium') ||
-    thumbnails?.find((t) => t === 'standard') ||
-    thumbnails?.find((t) => t === 'maxres')) as keyof typeof YoutubeThumbnail
+    thumbnails?.find((t) => t?.toLowerCase()?.trim() === 'default') ||
+    thumbnails?.find((t) => t?.toLowerCase()?.trim() === 'high') ||
+    thumbnails?.find((t) => t?.toLowerCase()?.trim() === 'medium') ||
+    thumbnails?.find((t) => t?.toLowerCase()?.trim() === 'standard') ||
+    thumbnails?.find(
+      (t) => t?.toLowerCase()?.trim() === 'maxres',
+    )) as keyof typeof YoutubeThumbnail
 
-  return YoutubeThumbnail?.[thumb] || ''
+  return YoutubeThumbnail?.[thumb] || YoutubeThumbnail.high
 }
 
 export const getYoutubeData = (

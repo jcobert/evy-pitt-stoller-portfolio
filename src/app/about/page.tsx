@@ -12,15 +12,15 @@ import PageLayout from '@/components/layout/page-layout'
 import { PageParams } from '@/types/general'
 
 import { generatePageMeta } from '@/configuration/seo'
-import { getProfile } from '@/sanity/lib/fetch'
+import { SanityFetchContext, getProfile } from '@/sanity/lib/fetch'
 
-const fetchContent = async () => {
-  const profile = await getProfile()
+const fetchContent = async (context: SanityFetchContext) => {
+  const profile = await getProfile({ context })
   return { profile }
 }
 
 export const generateMetadata = async (): Promise<Metadata> => {
-  const { profile } = await fetchContent()
+  const { profile } = await fetchContent('generateMetadata')
 
   return generatePageMeta({
     title: 'About Me',
@@ -38,7 +38,7 @@ export const generateMetadata = async (): Promise<Metadata> => {
 type Props = PageParams
 
 const Page: FC<Props> = async () => {
-  const { profile } = await fetchContent()
+  const { profile } = await fetchContent('component')
   const { bio, photo, firstName, lastName, locations } = profile || {}
 
   const name = fullName(firstName, lastName)

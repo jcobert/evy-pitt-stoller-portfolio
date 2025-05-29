@@ -16,6 +16,16 @@ export const youtubeApiKey = assertValue(
   'Missing environment variable: NEXT_PUBLIC_SANITY_STUDIO_YOUTUBE_DATA_API_KEY',
 )
 
+export const previewToken = assertValue(
+  process.env.NEXT_PUBLIC_SANITY_STUDIO_API_READ_TOKEN,
+  'Missing environment variable: NEXT_PUBLIC_SANITY_STUDIO_API_READ_TOKEN',
+)
+
+export const studioUrl = `${assertValue(
+  process.env.NEXT_PUBLIC_SITE_BASE_URL,
+  'Missing environment variable: NEXT_PUBLIC_SITE_BASE_URL',
+)}/peach`
+
 function assertValue<T>(v: T | undefined, errorMessage: string): T {
   if (v === undefined) {
     throw new Error(errorMessage)
