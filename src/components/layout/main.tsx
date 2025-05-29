@@ -30,7 +30,7 @@ const Main: FC<PageLayoutProps> = ({
 
       <div
         className={cn([
-          'items-center justify-start pb-safe h-full',
+          'items-center justify-start h-full',
           !!backgroundImage && 'relative',
         ])}
       >
