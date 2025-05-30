@@ -75,7 +75,10 @@ const Page: FC<Props> = async () => {
                 </div>
               </div>
 
-              <div className='h-px bg-gradient-to-r to-pale-purple/5 from-light-purple/40 from-60% max-md:my-2' />
+              <div
+                aria-hidden
+                className='h-px bg-gradient-to-r to-pale-purple/5 from-light-purple/40 from-60% max-md:my-2'
+              />
 
               <div className='flex flex-col gap-6 sm:w-fit'>
                 <h3 className='text-muted-foreground font-medium text-lg'>

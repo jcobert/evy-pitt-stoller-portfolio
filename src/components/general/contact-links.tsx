@@ -12,7 +12,7 @@ import {
 } from 'react-icons/fa6'
 import { IconType } from 'react-icons/lib'
 
-import { isObject } from '@/utils/general'
+import { formatPhone, isObject } from '@/utils/general'
 import { cn } from '@/utils/style'
 
 export enum Contacts {
@@ -64,9 +64,14 @@ export const getContactLinksArray = (
     )
     ?.map(([name, val]) => {
       let url = val
+      let text = val
       if (name === 'email') url = `mailto:${val}`
-      if (name === 'phone') url = `tel:${val}`
-      return [name, { url, text: val }]
+      if (name === 'phone') {
+        const phone = formatPhone(val)
+        url = `tel:${phone?.raw}`
+        text = phone?.display
+      }
+      return [name, { url, text }]
     }) as [keyof typeof links, { url: string; text: string }][]
 
   return sortBy(filtered, ([link]) =>

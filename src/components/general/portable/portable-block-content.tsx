@@ -28,16 +28,32 @@ export const portableComponents: PortableTextComponents = {
   },
 }
 
+const previewComponents = {
+  types: {
+    image: () => null,
+    videoEmbed: () => null,
+  },
+  block: {
+    blockquote: () => null,
+  },
+  marks: {
+    divider: () => null,
+    link: () => null,
+  },
+} satisfies PortableTextComponents
+
 type Props = Omit<PortableTextProps, 'value'> & {
   value: BlockContent | undefined | null
   prose?: boolean
   className?: string
+  preview?: boolean
 }
 
 const PortableBlockContent: FC<Props> = ({
   value,
   prose = true,
   className,
+  preview = false,
   ...rest
 }) => {
   if (!value) return null
@@ -50,7 +66,11 @@ const PortableBlockContent: FC<Props> = ({
         className,
       )}
     >
-      <PortableText value={value} components={portableComponents} {...rest} />
+      <PortableText
+        value={preview ? value?.slice(0, 5) : value}
+        components={preview ? previewComponents : portableComponents}
+        {...rest}
+      />
     </div>
   )
 }

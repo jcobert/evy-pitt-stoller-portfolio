@@ -134,3 +134,18 @@ export const getPositionInSequence = (
   const remainder = (n - 1) % cycleLength
   return remainder + 1
 }
+
+/** Returns the provided string with all non-digits stripped out. */
+export const digitString = (val?: string) => {
+  if (!val) return ''
+  return val.replace(/\D/g, '')
+}
+
+export const formatPhone = (val?: string) => {
+  const digits = digitString(val)
+  const area = digits?.slice(0, 3)
+  const part1 = digits?.slice(3, 6)
+  const part2 = digits?.slice(6)
+  const display = `(${area}) ${part1}-${part2}`
+  return { display, raw: digits }
+}
