@@ -28,16 +28,26 @@ export const portableComponents: PortableTextComponents = {
   },
 }
 
+const withoutLink = {
+  ...portableComponents,
+  marks: {
+    ...portableComponents.marks,
+    link: ({ children }) => <span>{children}</span>,
+  },
+} satisfies PortableTextComponents
+
 type Props = Omit<PortableTextProps, 'value'> & {
   value: BlockContent | undefined | null
   prose?: boolean
   className?: string
+  noLinks?: boolean
 }
 
 const PortableBlockContent: FC<Props> = ({
   value,
   prose = true,
   className,
+  noLinks = false,
   ...rest
 }) => {
   if (!value) return null
@@ -50,7 +60,11 @@ const PortableBlockContent: FC<Props> = ({
         className,
       )}
     >
-      <PortableText value={value} components={portableComponents} {...rest} />
+      <PortableText
+        value={value}
+        components={noLinks ? withoutLink : portableComponents}
+        {...rest}
+      />
     </div>
   )
 }
