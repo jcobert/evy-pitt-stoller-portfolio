@@ -127,6 +127,15 @@ export const projectType = defineType({
       title: 'Article Link',
       description: 'Paste the link to your article here.',
       fieldset: 'article',
+      validation: (rule) => {
+        return rule.custom((val, ctx) => {
+          const values = ctx?.parent as PROJECT_BY_SLUG_QUERYResult
+          if (values?.projectType === 'writing' && !val) {
+            return { message: 'Required.' }
+          }
+          return true
+        })
+      },
       hidden: (props) => {
         const values = props?.parent as PROJECT_BY_SLUG_QUERYResult
         return values?.projectType !== 'writing'
