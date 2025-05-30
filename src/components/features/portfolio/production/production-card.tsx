@@ -59,7 +59,7 @@ const ProductionCard: FC<Props> = ({
             <PortableBlockContent
               value={description}
               prose={false}
-              noLinks
+              preview
               className='text-sm text-pretty fade-out-b max-h-16 overflow-hidden group-hover:text-foreground/80 transition'
             />
           ) : null}

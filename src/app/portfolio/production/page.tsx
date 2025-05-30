@@ -35,8 +35,16 @@ const Page: FC<Props> = async () => {
             <NoResults item='productions' />
           ) : (
             <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 grid-flow-row gap-x-6 gap-y-10'>
-              {projects?.map((proj) => (
-                <ProductionCard key={proj?._id} production={proj} />
+              {projects?.map((proj, i) => (
+                <div key={proj?._id}>
+                  <ProductionCard production={proj} />
+                  {i < projects.length - 1 ? (
+                    <div
+                      aria-hidden
+                      className='sm:hidden h-px bg-gradient-to-r from-accent/10 via-foreground/10 to-accent/10 mt-6'
+                    />
+                  ) : null}
+                </div>
               ))}
             </div>
           )}
