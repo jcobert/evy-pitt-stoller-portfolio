@@ -15,12 +15,12 @@ type Props = {
 }
 
 const ProductionPost: FC<Props> = ({ production }) => {
-  const { datePublished, mainVideo } = production || {}
+  const { datePublished, mainVideo, mainImage } = production || {}
 
-  const video = getSanityVideo(mainVideo)
+  const video = getSanityVideo(mainVideo, { thumbnailImage: mainImage })
 
   return (
-    <div className='flex flex-col gap-4 sm:gap-8 items-center pb-16__'>
+    <div className='flex flex-col gap-4 sm:gap-8 items-center'>
       {video?.url ? (
         <div
           className={cn(

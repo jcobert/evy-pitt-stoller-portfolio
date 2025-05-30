@@ -94,22 +94,32 @@ export const getVimeoData = (
 export const getSanityVideo = (
   video: PROJECTS_BY_TYPE_QUERYResult[number]['mainVideo'] | undefined,
   options?: {
+    thumbnailImage?: PROJECTS_BY_TYPE_QUERYResult[number]['mainImage']
     youtube?: Parameters<typeof getYoutubeData>['1']
     vimeo?: Parameters<typeof getVimeoData>['1']
   },
 ): SanityVideo => {
   const { videoUpload, youtube } = video || {}
 
-  const vimeo = video?.vimeo as VimeoData
+  const customThumbnailUrl = getSanityImageUrl(options?.thumbnailImage, {
+    ratio: '16/9',
+    width: 600,
+  })
 
   const fileData = videoUpload?.file?.asset
   const youtubeData = getYoutubeData(youtube, options?.youtube)
-  const vimeoData = getVimeoData(vimeo, options?.vimeo)
+  const vimeoData = getVimeoData(video?.vimeo as VimeoData, options?.vimeo)
 
   const url = fileData?.url || youtubeData?.url || vimeoData?.url || ''
+
   const thumbnailUrl =
-    youtubeData?.thumbnailUrl || vimeoData?.thumbnailUrl || ''
+    customThumbnailUrl ||
+    youtubeData?.thumbnailUrl ||
+    vimeoData?.thumbnailUrl ||
+    ''
+
   const title = fileData?.title || youtubeData?.title || vimeoData?.title || ''
+
   const description =
     fileData?.description ||
     youtubeData?.description ||
@@ -135,7 +145,7 @@ const buildDimensions = (ratio: ImageRatio, width: number = 800) => {
       rat = 1
       break
   }
-  const height = ratio !== 'original' ? width / rat : null
+  const height = ratio !== 'original' ? Math.floor(width / rat) : null
   return { width, height }
 }
 
