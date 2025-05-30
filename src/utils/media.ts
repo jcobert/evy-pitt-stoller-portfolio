@@ -99,7 +99,7 @@ export const getSanityVideo = (
     vimeo?: Parameters<typeof getVimeoData>['1']
   },
 ): SanityVideo => {
-  const { videoUpload, youtube } = video || {}
+  const { videoUpload, youtube, otherLink } = video || {}
 
   const customThumbnailUrl = getSanityImageUrl(options?.thumbnailImage, {
     ratio: '16/9',
@@ -110,7 +110,8 @@ export const getSanityVideo = (
   const youtubeData = getYoutubeData(youtube, options?.youtube)
   const vimeoData = getVimeoData(video?.vimeo as VimeoData, options?.vimeo)
 
-  const url = fileData?.url || youtubeData?.url || vimeoData?.url || ''
+  const url =
+    fileData?.url || youtubeData?.url || vimeoData?.url || otherLink || ''
 
   const thumbnailUrl =
     customThumbnailUrl ||

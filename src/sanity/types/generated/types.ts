@@ -335,6 +335,7 @@ export type VideoGroup = {
   _type: 'videoGroup'
   youtube?: YoutubeVideo
   vimeo?: Vimeo
+  otherLink?: string
   videoUpload?: Video
 }
 
@@ -631,6 +632,7 @@ export type PROJECTS_QUERYResult = Array<{
     _type: 'videoGroup'
     youtube?: YoutubeVideo
     vimeo?: Vimeo
+    otherLink?: string
     videoUpload: {
       _type: 'video'
       file: {
@@ -759,6 +761,7 @@ export type PROJECTS_BY_TYPE_QUERYResult = Array<{
     _type: 'videoGroup'
     youtube?: YoutubeVideo
     vimeo?: Vimeo
+    otherLink?: string
     videoUpload: {
       _type: 'video'
       file: {
@@ -887,6 +890,7 @@ export type PROJECT_BY_SLUG_QUERYResult = {
     _type: 'videoGroup'
     youtube?: YoutubeVideo
     vimeo?: Vimeo
+    otherLink?: string
     videoUpload: {
       _type: 'video'
       file: {
