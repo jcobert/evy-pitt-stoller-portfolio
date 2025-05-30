@@ -25,19 +25,20 @@ const WritingCard: FC<Props> = ({ writing, className }) => {
     <Link
       href={pageUrl}
       className={cn(
-        'w-full flex gap-2 lg:gap-4 border rounded-sm',
+        'w-full flex sm:gap-2 lg:gap-4 border rounded-sm',
         'bg-pale-yellow border border-light-green',
         'group hover:shadow-md transition',
+        'flex-wrap',
         className,
       )}
     >
       {image ? (
-        <div className='aspect-square max-w-36 flex-auto rounded-l-sm border-4 border-white/80'>
+        <div className='aspect-square self-center max-w-36 flex-none rounded-sm sm:rounded-r-none border-4 border-white/80 max-sm:m-2'>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={image}
             alt={mainImage?.alt}
-            className='aspect-square object-cover rounded-l-sm h-full'
+            className='aspect-square object-cover rounded-sm sm:rounded-r-none h-auto'
           />
         </div>
       ) : null}
