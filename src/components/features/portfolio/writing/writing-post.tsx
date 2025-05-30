@@ -13,7 +13,8 @@ type Props = {
 }
 
 const WritingPost: FC<Props> = ({ writing }) => {
-  const { datePublished, mainImage } = writing || {}
+  const { datePublished, mainImage, articleLink, articlePreview } =
+    writing || {}
 
   const image = getSanityImageUrl(mainImage, { ratio: '4/3', width: 800 })
 

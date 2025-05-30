@@ -73,6 +73,8 @@ export type Project = {
     alt?: string
     _type: 'image'
   }
+  articleLink?: string
+  articlePreview?: string
   description?: Array<
     | {
         children?: Array<{
@@ -688,6 +690,8 @@ export type PROJECTS_QUERYResult = Array<{
     alt?: string
     _type: 'image'
   } | null
+  articleLink?: string
+  articlePreview?: string
   description: Array<
     | {
         children?: Array<{
@@ -814,6 +818,8 @@ export type PROJECTS_BY_TYPE_QUERYResult = Array<{
     alt?: string
     _type: 'image'
   } | null
+  articleLink?: string
+  articlePreview?: string
   description: Array<
     | {
         children?: Array<{
@@ -940,6 +946,8 @@ export type PROJECT_BY_SLUG_QUERYResult = {
     alt?: string
     _type: 'image'
   } | null
+  articleLink?: string
+  articlePreview?: string
   description: Array<
     | {
         children?: Array<{
