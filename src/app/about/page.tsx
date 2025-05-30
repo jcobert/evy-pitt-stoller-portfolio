@@ -55,7 +55,7 @@ const Page: FC<Props> = async () => {
         <section className='flex max-lg:flex-col-reverse max-lg:items-center gap-8 md:gap-y-10 gap-y-6'>
           <PortableBlockContent value={bio} />
 
-          <div className='w-full mx-auto flex flex-col gap-3'>
+          <div className='mx-auto flex flex-col gap-3'>
             <div className='w-3/5 lg:w-full sm:w-1/2__ h-fit max-w-2xs md:min-w-60 max-lg:aspect-square mx-auto border-4 border-white/80 rounded-md bg-light-purple'>
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
