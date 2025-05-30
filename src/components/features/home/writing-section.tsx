@@ -41,7 +41,7 @@ const WritingSection: FC<Props> = ({ writing }) => {
               className={cn(
                 'grid grid-cols-1 lg:grid-cols-2 grid-flow-row',
                 'gap-x-6 lg:gap-x-10 xl:gap-x-16 gap-y-10',
-                'sm:px-16',
+                'w-full lg:px-10',
               )}
             >
               {projects?.map((prod) => (
