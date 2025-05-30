@@ -24,10 +24,10 @@ const ProductionCard: FC<Props> = ({
   showDescription = true,
   showDate = true,
 }) => {
-  const { title, datePublished, mainVideo, slug, description } =
+  const { title, datePublished, mainVideo, mainImage, slug, description } =
     production || {}
 
-  const video = getSanityVideo(mainVideo)
+  const video = getSanityVideo(mainVideo, { thumbnailImage: mainImage })
 
   const videoPageUrl = `/portfolio/production/${slug?.current}`
 

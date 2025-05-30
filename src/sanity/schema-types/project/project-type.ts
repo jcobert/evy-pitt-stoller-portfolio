@@ -104,7 +104,8 @@ export const projectType = defineType({
           const values = ctx?.parent as PROJECT_BY_SLUG_QUERYResult
           if (
             values?.projectType === 'production' &&
-            !!values?.mainVideo?.videoUpload?.file &&
+            (!!values?.mainVideo?.videoUpload?.file ||
+              !!values?.mainVideo?.otherLink) &&
             !val
           ) {
             return { message: 'Required.' }
@@ -116,7 +117,8 @@ export const projectType = defineType({
         const values = props?.parent as PROJECT_BY_SLUG_QUERYResult
         return (
           values?.projectType === 'production' &&
-          !values?.mainVideo?.videoUpload?.file
+          !values?.mainVideo?.videoUpload?.file &&
+          !values?.mainVideo?.otherLink
         )
       },
     }),

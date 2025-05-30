@@ -27,6 +27,11 @@ export const videoGroupType = defineType({
         fields: ['link', 'description', 'description_rich'],
       },
     }),
+    defineField({
+      name: 'otherLink',
+      type: 'url',
+      title: 'Other Link',
+    }),
     defineField({ name: 'videoUpload', type: 'video', title: 'Upload' }),
   ],
   preview: {
