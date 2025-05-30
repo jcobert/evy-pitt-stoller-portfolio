@@ -50,10 +50,6 @@ const Page: FC<Props> = async () => {
           )}
         </section>
       </PageLayout>
-
-      {/* <section className='bg-purple'>
-        <div className='w-full h-96'></div>
-      </section> */}
     </Main>
   )
 }

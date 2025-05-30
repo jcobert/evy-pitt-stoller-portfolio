@@ -1,7 +1,11 @@
-import { ProjectsIcon, VideoIcon } from '@sanity/icons'
+import { InfoFilledIcon, ProjectsIcon, VideoIcon } from '@sanity/icons'
 import { upperFirst } from 'lodash'
 import { defineField, defineType } from 'sanity'
 
+import {
+  SanityTextAreaInput,
+  SanityTextField,
+} from '@/sanity/components/sanity-text-input'
 import { PROJECT_BY_SLUG_QUERYResult } from '@/sanity/types/generated/types'
 
 export const projectType = defineType({
@@ -16,8 +20,18 @@ export const projectType = defineType({
       // 'The main image or video for the project. If both are added, only the video will be used.',
       options: { collapsible: true },
     },
+    {
+      name: 'article',
+      title: 'Article',
+      description: 'Add the link and preview for the article.',
+      // 'The main image or video for the project. If both are added, only the video will be used.',
+      options: { collapsible: true },
+    },
   ],
-  groups: [{ name: 'info' }, { name: 'media', icon: VideoIcon }],
+  groups: [
+    { name: 'info', icon: InfoFilledIcon },
+    { name: 'media', icon: VideoIcon },
+  ],
   fields: [
     // title
     defineField({
@@ -85,6 +99,19 @@ export const projectType = defineType({
         }),
       ],
       group: 'media',
+      validation: (rule) => {
+        return rule.custom((val, ctx) => {
+          const values = ctx?.parent as PROJECT_BY_SLUG_QUERYResult
+          if (
+            values?.projectType === 'production' &&
+            !!values?.mainVideo?.videoUpload?.file &&
+            !val
+          ) {
+            return { message: 'Required.' }
+          }
+          return true
+        })
+      },
       hidden: (props) => {
         const values = props?.parent as PROJECT_BY_SLUG_QUERYResult
         return (
@@ -93,10 +120,47 @@ export const projectType = defineType({
         )
       },
     }),
+    // article info
+    defineField({
+      name: 'articleLink',
+      type: 'url',
+      title: 'Article Link',
+      description: 'Paste the link to your article here.',
+      fieldset: 'article',
+      validation: (rule) => {
+        return rule.custom((val, ctx) => {
+          const values = ctx?.parent as PROJECT_BY_SLUG_QUERYResult
+          if (values?.projectType === 'writing' && !val) {
+            return { message: 'Required.' }
+          }
+          return true
+        })
+      },
+      hidden: (props) => {
+        const values = props?.parent as PROJECT_BY_SLUG_QUERYResult
+        return values?.projectType !== 'writing'
+      },
+    }),
+    defineField({
+      name: 'articlePreview',
+      type: 'string',
+      title: 'Article Preview',
+      description:
+        'A sample of the article (e.g. the first paragraph). A link will be provided to the reader to continue reading at the link you provided above.',
+      fieldset: 'article',
+      components: { input: SanityTextAreaInput, field: SanityTextField },
+      hidden: (props) => {
+        const values = props?.parent as PROJECT_BY_SLUG_QUERYResult
+        return values?.projectType !== 'writing'
+      },
+    }),
     // body
     defineField({
       name: 'description',
       type: 'blockContent',
+      title: 'Description',
+      description:
+        'Provide some background or introduction to the work - things you learned, problems you solved, etc.',
     }),
     // tags
     defineField({
