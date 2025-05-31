@@ -1,4 +1,9 @@
-import { InfoFilledIcon, ProjectsIcon, VideoIcon } from '@sanity/icons'
+import {
+  InfoFilledIcon,
+  ProjectsIcon,
+  SearchIcon,
+  VideoIcon,
+} from '@sanity/icons'
 import { upperFirst } from 'lodash'
 import { defineField, defineType } from 'sanity'
 
@@ -31,6 +36,7 @@ export const projectType = defineType({
   groups: [
     { name: 'info', icon: InfoFilledIcon },
     { name: 'media', icon: VideoIcon },
+    { name: 'seo', title: 'SEO', icon: SearchIcon },
   ],
   fields: [
     // title
@@ -173,6 +179,12 @@ export const projectType = defineType({
       description:
         'Any relevant categories (e.g. "Climate change, Documentary, Soft-core porn")',
       options: { layout: 'tags' },
+    }),
+    defineField({
+      name: 'seo',
+      type: 'seo',
+      title: 'SEO',
+      group: 'seo',
     }),
   ],
   preview: {

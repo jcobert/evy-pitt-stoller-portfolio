@@ -23,12 +23,13 @@ const loadContent = async () => {
 
 export const generateMetadata = async (): Promise<Metadata> => {
   const { writingPage } = await loadContent()
+  const { heading, seo } = writingPage || {}
 
-  const title = writingPage?.heading?.mainHeading
+  const title = heading?.mainHeading
 
   return generatePageMeta({
     title,
-    description: "A collection of articles that I've written.",
+    description: seo?.description,
     url: '/portfolio/writing',
   })
 }

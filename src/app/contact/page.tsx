@@ -27,13 +27,13 @@ const loadContent = async () => {
 
 export const generateMetadata = async (): Promise<Metadata> => {
   const { contactPage } = await loadContent()
+  const { heading, seo } = contactPage || {}
 
-  const title = contactPage?.heading?.mainHeading
+  const title = heading?.mainHeading
 
   return generatePageMeta({
     title,
-    description:
-      "Let's talk! I'd love to hear about opportunities you may have.",
+    description: seo?.description,
     url: '/contact',
   })
 }

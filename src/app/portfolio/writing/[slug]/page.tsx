@@ -13,13 +13,21 @@ import { getProject, getProjects } from '@/sanity/lib/fetch'
 
 type Props = PageParams<{ slug: string }>
 
+const loadContent = async (slug: Awaited<Props['params']>['slug']) => {
+  const project = await getProject({ slug })
+  return { project }
+}
+
 export const generateMetadata = async ({
   params,
 }: Props): Promise<Metadata> => {
   const { slug } = await params
-  const writing = await getProject({ slug })
+  const { project } = await loadContent(slug)
+  const { seo } = project || {}
+
   return generatePageMeta({
-    title: `Writing - ${writing?.title}`,
+    title: `Writing - ${project?.title}`,
+    description: seo?.description,
     url: `/portfolio/writing/${slug}`,
   })
 }
@@ -32,14 +40,14 @@ export const generateStaticParams = async () => {
 const Page: FC<Props> = async ({ params }) => {
   const slug = (await params)?.slug
 
-  const writing = await getProject({ slug })
+  const { project } = await loadContent(slug)
 
   return (
     <Main className='bg-background'>
       <PageLayout back={{ href: '/portfolio/writing', text: 'Back' }}>
-        <Heading text={writing?.title} />
+        <Heading text={project?.title} />
         <section>
-          <WritingPost writing={writing} />
+          <WritingPost writing={project} />
         </section>
       </PageLayout>
     </Main>

@@ -25,12 +25,13 @@ const loadContent = async () => {
 
 export const generateMetadata = async (): Promise<Metadata> => {
   const { profile, aboutPage } = await loadContent()
+  const { heading, seo } = aboutPage || {}
 
-  const title = aboutPage?.heading?.mainHeading
+  const title = heading?.mainHeading
 
   return generatePageMeta({
     title,
-    description: 'Learn more about my background, skills, and achievements.',
+    description: seo?.description,
     url: '/about',
     images: [
       getSanityImageUrl(profile?.photo, {

@@ -13,13 +13,21 @@ import { getProject, getProjects } from '@/sanity/lib/fetch'
 
 type Props = PageParams<{ slug: string }>
 
+const loadContent = async (slug: Awaited<Props['params']>['slug']) => {
+  const project = await getProject({ slug })
+  return { project }
+}
+
 export const generateMetadata = async ({
   params,
 }: Props): Promise<Metadata> => {
   const { slug } = await params
-  const production = await getProject({ slug })
+  const { project } = await loadContent(slug)
+  const { seo } = project || {}
+
   return generatePageMeta({
-    title: `Production - ${production?.title}`,
+    title: `Production - ${project?.title}`,
+    description: seo?.description,
     url: `/portfolio/production/${slug}`,
   })
 }

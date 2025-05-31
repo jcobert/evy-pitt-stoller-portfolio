@@ -40,10 +40,11 @@ export const slugOnPublish = (
         if (!props?.draft || !documentsToSlugify?.includes(props?.type)) {
           return originalResult?.onHandle?.()
         }
-        // check for a title and existing slug
+        // check for a title [and existing slug?]
         if (
-          props?.draft?.title &&
-          !(props?.published?.slug as SlugValue)?.current
+          props?.draft?.title
+          // props?.draft?.title &&
+          // !(props?.published?.slug as SlugValue)?.current
         ) {
           // use the generator package used in sanity core with default values
           const generatedSlug = props?.draft?.title

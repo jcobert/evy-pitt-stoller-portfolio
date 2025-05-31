@@ -23,12 +23,13 @@ const loadContent = async () => {
 
 export const generateMetadata = async (): Promise<Metadata> => {
   const { productionPage } = await loadContent()
+  const { heading, seo } = productionPage || {}
 
-  const title = productionPage?.heading?.mainHeading
+  const title = heading?.mainHeading
 
   return generatePageMeta({
     title,
-    description: "A collection of media projects that I've worked on.",
+    description: seo?.description,
     url: '/portfolio/production',
   })
 }
