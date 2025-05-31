@@ -113,6 +113,7 @@ export type Project = {
       } & Video)
   >
   tags?: Array<string>
+  seo?: Seo
 }
 
 export type Slug = {
@@ -128,6 +129,7 @@ export type WritingPage = {
   _updatedAt: string
   _rev: string
   heading?: PageHeading
+  seo?: Seo
 }
 
 export type ProductionPage = {
@@ -137,6 +139,7 @@ export type ProductionPage = {
   _updatedAt: string
   _rev: string
   heading?: PageHeading
+  seo?: Seo
 }
 
 export type ContactPage = {
@@ -146,6 +149,7 @@ export type ContactPage = {
   _updatedAt: string
   _rev: string
   heading?: PageHeading
+  seo?: Seo
 }
 
 export type HomePage = {
@@ -155,6 +159,7 @@ export type HomePage = {
   _updatedAt: string
   _rev: string
   welcomeBlurb?: string
+  seo?: Seo
 }
 
 export type AboutPage = {
@@ -164,6 +169,7 @@ export type AboutPage = {
   _updatedAt: string
   _rev: string
   heading?: PageHeading
+  seo?: Seo
 }
 
 export type Profile = {
@@ -249,6 +255,11 @@ export type ContactInfo = {
   instagram?: string
   tiktok?: string
   pinterest?: string
+}
+
+export type Seo = {
+  _type: 'seo'
+  description?: string
 }
 
 export type PageHeading = {
@@ -432,6 +443,7 @@ export type AllSanitySchemaTypes =
   | Profile
   | SocialLinks
   | ContactInfo
+  | Seo
   | PageHeading
   | VideoGroup
   | Video
@@ -472,6 +484,7 @@ export type HOME_PAGE_QUERYResult = {
   _updatedAt: string
   _rev: string
   welcomeBlurb?: string
+  seo?: Seo
 } | null
 // Variable: ABOUT_PAGE_QUERY
 // Query: *[_type=='aboutPage' && _id=="aboutPage"]{ ... }[0]
@@ -482,6 +495,7 @@ export type ABOUT_PAGE_QUERYResult = {
   _updatedAt: string
   _rev: string
   heading?: PageHeading
+  seo?: Seo
 } | null
 // Variable: CONTACT_PAGE_QUERY
 // Query: *[_type=='contactPage' && _id=="contactPage"]{ ... }[0]
@@ -492,6 +506,7 @@ export type CONTACT_PAGE_QUERYResult = {
   _updatedAt: string
   _rev: string
   heading?: PageHeading
+  seo?: Seo
 } | null
 // Variable: PRODUCTION_PAGE_QUERY
 // Query: *[_type=='productionPage' && _id=="productionPage"]{ ... }[0]
@@ -502,6 +517,7 @@ export type PRODUCTION_PAGE_QUERYResult = {
   _updatedAt: string
   _rev: string
   heading?: PageHeading
+  seo?: Seo
 } | null
 // Variable: WRITING_PAGE_QUERY
 // Query: *[_type=='writingPage' && _id=="writingPage"]{ ... }[0]
@@ -512,6 +528,7 @@ export type WRITING_PAGE_QUERYResult = {
   _updatedAt: string
   _rev: string
   heading?: PageHeading
+  seo?: Seo
 } | null
 
 // Source: ./src/sanity/lib/queries/profile-query.ts
@@ -725,6 +742,7 @@ export type PROJECTS_QUERYResult = Array<{
       }
   > | null
   tags: Array<string> | Array<never>
+  seo?: Seo
 }>
 // Variable: PROJECTS_BY_TYPE_QUERY
 // Query: *[_type=='project' && projectType==$projectType && defined(slug)]{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ ..., videoUpload{ ..., file{ ..., asset-> } } }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } } }
@@ -854,6 +872,7 @@ export type PROJECTS_BY_TYPE_QUERYResult = Array<{
       }
   > | null
   tags: Array<string> | Array<never>
+  seo?: Seo
 }>
 // Variable: PROJECT_BY_SLUG_QUERY
 // Query: *[_type=='project' && slug.current==$slug]{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ ..., videoUpload{ ..., file{ ..., asset-> } } }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } } }[0]
@@ -983,6 +1002,7 @@ export type PROJECT_BY_SLUG_QUERYResult = {
       }
   > | null
   tags: Array<string> | Array<never>
+  seo?: Seo
 } | null
 
 declare module '@sanity/client' {

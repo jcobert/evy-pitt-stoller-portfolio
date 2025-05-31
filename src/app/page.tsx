@@ -34,9 +34,12 @@ const loadContent = async () => {
 }
 
 export const generateMetadata = async (): Promise<Metadata> => {
+  const homePage = await getPage('homePage')
+  const seo = homePage?.seo
+
   return generatePageMeta({
     title: 'Home',
-    description: '',
+    description: seo?.description,
     url: '/',
   })
 }

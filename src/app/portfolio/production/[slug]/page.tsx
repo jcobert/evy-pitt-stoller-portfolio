@@ -1,6 +1,8 @@
 import { Metadata } from 'next'
 import { FC } from 'react'
 
+import { getSanityVideo } from '@/utils/media'
+
 import ProductionPost from '@/components/features/portfolio/production/production-post'
 import Heading from '@/components/layout/heading'
 import Main from '@/components/layout/main'
@@ -13,14 +15,27 @@ import { getProject, getProjects } from '@/sanity/lib/fetch'
 
 type Props = PageParams<{ slug: string }>
 
+const loadContent = async (slug: Awaited<Props['params']>['slug']) => {
+  const project = await getProject({ slug })
+  return { project }
+}
+
 export const generateMetadata = async ({
   params,
 }: Props): Promise<Metadata> => {
   const { slug } = await params
-  const production = await getProject({ slug })
+  const { project } = await loadContent(slug)
+  const { seo } = project || {}
+
+  const thumbnail = getSanityVideo(project?.mainVideo, {
+    thumbnailImage: project?.mainImage,
+  })?.thumbnailUrl
+
   return generatePageMeta({
-    title: `Production - ${production?.title}`,
+    title: `Production - ${project?.title}`,
+    description: seo?.description,
     url: `/portfolio/production/${slug}`,
+    images: thumbnail ? [thumbnail] : undefined,
   })
 }
 

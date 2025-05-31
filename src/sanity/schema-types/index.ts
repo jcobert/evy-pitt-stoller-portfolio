@@ -1,6 +1,7 @@
 import { imageAltText, videoAltText } from './general/alt-text-type'
 import { blockContentType } from './general/block-content-type'
 import { pageHeadingType } from './general/page-heading-type'
+import { seoType } from './general/seo-type'
 import { videoGroupType } from './general/video-group-type'
 import { videoType } from './general/video-type'
 import { aboutPageType } from './pages/about-page-type'
@@ -22,6 +23,7 @@ export const schemaTypes: SchemaTypeDefinition[] = [
   videoType,
   videoGroupType,
   pageHeadingType,
+  seoType,
   // Profile
   contactInfoType,
   socialLinksType,
