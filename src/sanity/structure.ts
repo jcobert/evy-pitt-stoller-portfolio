@@ -61,9 +61,6 @@ export const structure: StructureResolver = (S) =>
           item.getId() &&
           !(
             [
-              'post',
-              'category',
-              'author',
               'project',
               'profile',
               'homePage',

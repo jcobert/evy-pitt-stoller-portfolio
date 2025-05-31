@@ -1,6 +1,3 @@
-import { authorType } from './blog/author-type'
-import { categoryType } from './blog/category-type'
-import { postType } from './blog/post-type'
 import { imageAltText, videoAltText } from './general/alt-text-type'
 import { blockContentType } from './general/block-content-type'
 import { pageHeadingType } from './general/page-heading-type'
@@ -37,8 +34,4 @@ export const schemaTypes: SchemaTypeDefinition[] = [
   writingPageType,
   // Portfolio
   projectType,
-  // Blog
-  postType,
-  authorType,
-  categoryType,
 ]

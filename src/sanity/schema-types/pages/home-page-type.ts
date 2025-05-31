@@ -1,3 +1,4 @@
+import { DocumentTextIcon } from '@sanity/icons'
 import { defineField, defineType } from 'sanity'
 
 import {
@@ -9,6 +10,7 @@ export const homePageType = defineType({
   name: 'homePage',
   type: 'document',
   title: 'Home Page',
+  icon: DocumentTextIcon,
   fields: [
     defineField({
       name: 'welcomeBlurb',

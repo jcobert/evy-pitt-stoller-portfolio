@@ -1,10 +1,7 @@
 import {
   AboutPage,
-  Author,
-  Category,
   ContactPage,
   HomePage,
-  Post,
   ProductionPage,
   Profile,
   Project,
@@ -14,9 +11,6 @@ import {
 /** Union of all document type schemas. */
 export type DocumentSchema =
   | Project
-  | Author
-  | Post
-  | Category
   | Profile
   | HomePage
   | AboutPage
