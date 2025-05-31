@@ -14,11 +14,12 @@ import PageLayout from '@/components/layout/page-layout'
 import { PageParams } from '@/types/general'
 
 import { generatePageMeta } from '@/configuration/seo'
-import { getProfile } from '@/sanity/lib/fetch'
+import { getPage, getProfile } from '@/sanity/lib/fetch'
 
 const loadContent = async () => {
+  const contactPage = await getPage('contactPage')
   const profile = await getProfile()
-  return { profile }
+  return { profile, contactPage }
 }
 
 export const metadata: Metadata = generatePageMeta({
@@ -30,15 +31,18 @@ export const metadata: Metadata = generatePageMeta({
 type Props = PageParams
 
 const Page: FC<Props> = async () => {
-  const { profile } = await loadContent()
+  const { profile, contactPage } = await loadContent()
+  const { heading } = contactPage || {}
+
+  const mainHeading = heading?.mainHeading || 'Contact Me'
+  const subheading =
+    heading?.subheading ||
+    "Let's talk! I'd love to hear about opportunities you may have."
 
   return (
     <Main className='bg-pale-purple/80 text-purple'>
       <PageLayout>
-        <Heading
-          text='Contact Me'
-          description="Let's talk! I'd love to hear about opportunities you may have."
-        />
+        <Heading text={mainHeading} description={subheading} />
 
         <section className='mt-8 flex flex-col gap-4 md:gap-8 border-2 border-purple/20 p-4 pb-6 sm:p-6 sm:pb-12 rounded-sm bg-white/90'>
           <div>

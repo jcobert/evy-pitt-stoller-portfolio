@@ -27,6 +27,11 @@ export type DocumentSchema =
 /** Union of all document type schema names. */
 export type DocumentType = DocumentSchema['_type']
 
+export type PageDocumentType = Extract<
+  DocumentSchema,
+  HomePage | AboutPage | ContactPage | ProductionPage | WritingPage
+>['_type']
+
 export enum VimeoThumbnailSize {
   xl = 1080,
   lg = 720,

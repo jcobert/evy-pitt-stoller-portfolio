@@ -291,12 +291,6 @@ export type AboutPage = {
   heading?: PageHeading
 }
 
-export type PageHeading = {
-  _type: 'pageHeading'
-  mainHeading?: string
-  subheading?: string
-}
-
 export type Profile = {
   _id: string
   _type: 'profile'
@@ -380,6 +374,12 @@ export type ContactInfo = {
   instagram?: string
   tiktok?: string
   pinterest?: string
+}
+
+export type PageHeading = {
+  _type: 'pageHeading'
+  mainHeading?: string
+  subheading?: string
 }
 
 export type VideoGroup = {
@@ -557,10 +557,10 @@ export type AllSanitySchemaTypes =
   | ContactPage
   | HomePage
   | AboutPage
-  | PageHeading
   | Profile
   | SocialLinks
   | ContactInfo
+  | PageHeading
   | VideoGroup
   | Video
   | VideoAltText
@@ -589,6 +589,58 @@ export type VideoGroupResult = {
   vimeo: ''
   videoUpload: never
 }
+
+// Source: ./src/sanity/lib/queries/page-query.ts
+// Variable: HOME_PAGE_QUERY
+// Query: *[_type=='homePage' && _id=="homePage"]{ ... }[0]
+export type HOME_PAGE_QUERYResult = {
+  _id: string
+  _type: 'homePage'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  welcomeBlurb?: string
+} | null
+// Variable: ABOUT_PAGE_QUERY
+// Query: *[_type=='aboutPage' && _id=="aboutPage"]{ ... }[0]
+export type ABOUT_PAGE_QUERYResult = {
+  _id: string
+  _type: 'aboutPage'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  heading?: PageHeading
+} | null
+// Variable: CONTACT_PAGE_QUERY
+// Query: *[_type=='contactPage' && _id=="contactPage"]{ ... }[0]
+export type CONTACT_PAGE_QUERYResult = {
+  _id: string
+  _type: 'contactPage'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  heading?: PageHeading
+} | null
+// Variable: PRODUCTION_PAGE_QUERY
+// Query: *[_type=='productionPage' && _id=="productionPage"]{ ... }[0]
+export type PRODUCTION_PAGE_QUERYResult = {
+  _id: string
+  _type: 'productionPage'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  heading?: PageHeading
+} | null
+// Variable: WRITING_PAGE_QUERY
+// Query: *[_type=='writingPage' && _id=="writingPage"]{ ... }[0]
+export type WRITING_PAGE_QUERYResult = {
+  _id: string
+  _type: 'writingPage'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  heading?: PageHeading
+} | null
 
 // Source: ./src/sanity/lib/queries/profile-query.ts
 // Variable: PROFILE_QUERY
@@ -1066,6 +1118,11 @@ declare module '@sanity/client' {
     '{ ..., asset-> }': ImageResult
     '{ ..., file{ ..., asset-> } }': FileResult
     '{ "youtube": coalesce(youtube, \'\'), "vimeo": coalesce(vimeo, \'\'), videoUpload{ ..., file{ ..., asset-> } } }': VideoGroupResult
+    '*[_type==\'homePage\' && _id=="homePage"]{ ... }[0]': HOME_PAGE_QUERYResult
+    '*[_type==\'aboutPage\' && _id=="aboutPage"]{ ... }[0]': ABOUT_PAGE_QUERYResult
+    '*[_type==\'contactPage\' && _id=="contactPage"]{ ... }[0]': CONTACT_PAGE_QUERYResult
+    '*[_type==\'productionPage\' && _id=="productionPage"]{ ... }[0]': PRODUCTION_PAGE_QUERYResult
+    '*[_type==\'writingPage\' && _id=="writingPage"]{ ... }[0]': WRITING_PAGE_QUERYResult
     '*[_type==\'profile\' && _id=="profile"]{ ..., photo{ ..., asset-> } }[0]': PROFILE_QUERYResult
     '*[_type==\'project\' && defined(slug)]{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ ..., videoUpload{ ..., file{ ..., asset-> } } }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } } }': PROJECTS_QUERYResult
     '*[_type==\'project\' && projectType==$projectType && defined(slug)]{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ ..., videoUpload{ ..., file{ ..., asset-> } } }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } } }': PROJECTS_BY_TYPE_QUERYResult

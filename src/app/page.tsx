@@ -8,14 +8,25 @@ import Main from '@/components/layout/main'
 import PageLayout from '@/components/layout/page-layout'
 
 import { generatePageMeta } from '@/configuration/seo'
-import { getProfile, getProjects } from '@/sanity/lib/fetch'
+import { getPage, getProfile, getProjects } from '@/sanity/lib/fetch'
 
 const loadContent = async () => {
+  const homePage = await getPage('homePage')
   const profile = await getProfile()
   const projects = await getProjects()
+  const productionPage = await getPage('productionPage')
+  const writingPage = await getPage('writingPage')
+
   const productions = projects?.filter((p) => p?.projectType === 'production')
   const writing = projects?.filter((p) => p?.projectType === 'writing')
-  return { profile, productions, writing }
+  return {
+    profile,
+    productions,
+    writing,
+    homePage,
+    productionPage,
+    writingPage,
+  }
 }
 
 export const metadata: Metadata = generatePageMeta({
@@ -25,15 +36,27 @@ export const metadata: Metadata = generatePageMeta({
 })
 
 const Page: FC = async () => {
-  const { profile, productions, writing } = await loadContent()
+  const {
+    homePage,
+    profile,
+    productions,
+    writing,
+    productionPage,
+    writingPage,
+  } = await loadContent()
+
+  const { welcomeBlurb } = homePage || {}
 
   return (
     <Main className='bg-gradient-to-br from-light-green/90 from-20% to-dark-green/15 pb-0'>
       <PageLayout wrapperClassName='max-sm:w-full' className='max-md:px-0'>
-        <HereoSection profile={profile} />
+        <HereoSection profile={profile} welcomeBlurb={welcomeBlurb} />
       </PageLayout>
-      <ProductionsSection productions={productions} />
-      <WritingSection writing={writing} />
+      <ProductionsSection
+        productions={productions}
+        heading={productionPage?.heading}
+      />
+      <WritingSection writing={writing} heading={writingPage?.heading} />
     </Main>
   )
 }
