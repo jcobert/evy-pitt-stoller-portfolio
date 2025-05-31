@@ -1,6 +1,8 @@
 import { Metadata } from 'next'
 import { FC } from 'react'
 
+import { getSanityImageUrl } from '@/utils/media'
+
 import WritingPost from '@/components/features/portfolio/writing/writing-post'
 import Heading from '@/components/layout/heading'
 import Main from '@/components/layout/main'
@@ -25,10 +27,16 @@ export const generateMetadata = async ({
   const { project } = await loadContent(slug)
   const { seo } = project || {}
 
+  const image = getSanityImageUrl(project?.mainImage, {
+    ratio: '4/3',
+    width: 800,
+  })
+
   return generatePageMeta({
     title: `Writing - ${project?.title}`,
     description: seo?.description,
     url: `/portfolio/writing/${slug}`,
+    images: image ? [image] : undefined,
   })
 }
 

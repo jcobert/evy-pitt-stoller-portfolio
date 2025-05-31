@@ -1,6 +1,8 @@
 import { Metadata } from 'next'
 import { FC } from 'react'
 
+import { getSanityVideo } from '@/utils/media'
+
 import ProductionPost from '@/components/features/portfolio/production/production-post'
 import Heading from '@/components/layout/heading'
 import Main from '@/components/layout/main'
@@ -25,10 +27,15 @@ export const generateMetadata = async ({
   const { project } = await loadContent(slug)
   const { seo } = project || {}
 
+  const thumbnail = getSanityVideo(project?.mainVideo, {
+    thumbnailImage: project?.mainImage,
+  })?.thumbnailUrl
+
   return generatePageMeta({
     title: `Production - ${project?.title}`,
     description: seo?.description,
     url: `/portfolio/production/${slug}`,
+    images: thumbnail ? [thumbnail] : undefined,
   })
 }
 
