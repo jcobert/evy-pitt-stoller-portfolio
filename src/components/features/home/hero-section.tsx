@@ -6,13 +6,14 @@ import { cn } from '@/utils/style'
 import CardStack from '@/components/general/card-stack'
 import ContactLinks from '@/components/general/contact-links'
 
-import { PROFILE_QUERYResult } from '@/sanity/types/generated/types'
+import { HomePage, PROFILE_QUERYResult } from '@/sanity/types/generated/types'
 
 type Props = {
   profile: PROFILE_QUERYResult | undefined
+  welcomeBlurb: HomePage['welcomeBlurb']
 }
 
-const HereoSection: FC<Props> = ({ profile }) => {
+const HereoSection: FC<Props> = ({ profile, welcomeBlurb }) => {
   const firstName = profile?.firstName || 'Evy'
   const lastName = profile?.lastName || 'Pitt-Stoller'
 
@@ -23,9 +24,6 @@ const HereoSection: FC<Props> = ({ profile }) => {
   const photo = getSanityImageUrl(profile?.photo, {
     ratio: 'original',
   })
-
-  const blurb =
-    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec quis libero et enim dignissim venenatis a facilisis eros. Donec commodo nec dolor quis lacinia.'
 
   return (
     <section className='flex flex-col justify-between gap-16'>
@@ -73,7 +71,7 @@ const HereoSection: FC<Props> = ({ profile }) => {
           )}
         >
           <div className='p-4 md:p-6 text-pretty flex flex-col gap-8 justify-between pb-8'>
-            <p>{blurb}</p>
+            {welcomeBlurb ? <p>{welcomeBlurb}</p> : null}
             <ContactLinks
               links={{
                 linkedIn: profile?.contactInfo?.linkedIn,

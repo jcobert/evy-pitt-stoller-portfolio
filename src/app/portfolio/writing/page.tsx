@@ -10,26 +10,42 @@ import PageLayout from '@/components/layout/page-layout'
 import { PageParams } from '@/types/general'
 
 import { generatePageMeta } from '@/configuration/seo'
-import { getProjects } from '@/sanity/lib/fetch'
+import { getPage, getProjects } from '@/sanity/lib/fetch'
 
-export const metadata: Metadata = generatePageMeta({
-  title: 'Writing',
-  description: "A collection of articles that I've written.",
-  url: '/portfolio/writing',
-})
+const loadContent = async () => {
+  const [writingPage, projects] = await Promise.all([
+    getPage('writingPage'),
+    getProjects({ projectType: 'writing' }),
+  ])
+
+  return { writingPage, projects }
+}
+
+export const generateMetadata = async (): Promise<Metadata> => {
+  const { writingPage } = await loadContent()
+
+  const title = writingPage?.heading?.mainHeading
+
+  return generatePageMeta({
+    title,
+    description: "A collection of articles that I've written.",
+    url: '/portfolio/writing',
+  })
+}
 
 type Props = PageParams
 
 const Page: FC<Props> = async () => {
-  const projects = await getProjects({ projectType: 'writing' })
+  const { projects, writingPage } = await loadContent()
+  const { heading } = writingPage || {}
+
+  const mainHeading = heading?.mainHeading || 'Writing'
+  const subheading = heading?.subheading || "Look, mom, I'm a published writer!"
 
   return (
     <Main className='bg-background'>
       <PageLayout>
-        <Heading
-          text='Writing'
-          description="Look, mom, I'm a published writer!"
-        />
+        <Heading text={mainHeading} description={subheading} />
         <section className='my-4'>
           {!projects?.length ? (
             <NoResults item='writing' />

@@ -1,10 +1,30 @@
-import { Author, Category, Post, Profile, Project } from './generated/types'
+import {
+  AboutPage,
+  ContactPage,
+  HomePage,
+  ProductionPage,
+  Profile,
+  Project,
+  WritingPage,
+} from './generated/types'
 
 /** Union of all document type schemas. */
-export type DocumentSchema = Project | Author | Post | Category | Profile
+export type DocumentSchema =
+  | Project
+  | Profile
+  | HomePage
+  | AboutPage
+  | ContactPage
+  | ProductionPage
+  | WritingPage
 
 /** Union of all document type schema names. */
 export type DocumentType = DocumentSchema['_type']
+
+export type PageDocumentType = Extract<
+  DocumentSchema,
+  HomePage | AboutPage | ContactPage | ProductionPage | WritingPage
+>['_type']
 
 export enum VimeoThumbnailSize {
   xl = 1080,

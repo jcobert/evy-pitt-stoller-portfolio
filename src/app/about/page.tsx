@@ -12,18 +12,24 @@ import PageLayout from '@/components/layout/page-layout'
 import { PageParams } from '@/types/general'
 
 import { generatePageMeta } from '@/configuration/seo'
-import { getProfile } from '@/sanity/lib/fetch'
+import { getPage, getProfile } from '@/sanity/lib/fetch'
 
-const fetchContent = async () => {
-  const profile = await getProfile()
-  return { profile }
+const loadContent = async () => {
+  const [aboutPage, profile] = await Promise.all([
+    getPage('aboutPage'),
+    getProfile(),
+  ])
+
+  return { aboutPage, profile }
 }
 
 export const generateMetadata = async (): Promise<Metadata> => {
-  const { profile } = await fetchContent()
+  const { profile, aboutPage } = await loadContent()
+
+  const title = aboutPage?.heading?.mainHeading
 
   return generatePageMeta({
-    title: 'About Me',
+    title,
     description: 'Learn more about my background, skills, and achievements.',
     url: '/about',
     images: [
@@ -38,8 +44,12 @@ export const generateMetadata = async (): Promise<Metadata> => {
 type Props = PageParams
 
 const Page: FC<Props> = async () => {
-  const { profile } = await fetchContent()
+  const { profile, aboutPage } = await loadContent()
   const { bio, photo, firstName, lastName, locations } = profile || {}
+  const { heading } = aboutPage || {}
+
+  const mainHeading = heading?.mainHeading || 'About Me'
+  const subheading = heading?.subheading || ''
 
   const name = fullName(firstName, lastName)
 
@@ -50,7 +60,11 @@ const Page: FC<Props> = async () => {
   return (
     <Main className='bg-pale-yellow/70'>
       <PageLayout>
-        <Heading text='About Me' className='max-lg:mx-auto' />
+        <Heading
+          text={mainHeading}
+          description={subheading}
+          className='max-lg:mx-auto'
+        />
 
         <section className='flex max-lg:flex-col-reverse max-lg:items-center gap-8 md:gap-y-10 gap-y-6'>
           <PortableBlockContent value={bio} />

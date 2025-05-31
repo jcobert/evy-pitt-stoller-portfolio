@@ -7,13 +7,17 @@ import { cn } from '@/utils/style'
 import NoResults from '@/components/general/no-results'
 import { Button } from '@/components/ui/button'
 
-import { PROJECTS_BY_TYPE_QUERYResult } from '@/sanity/types/generated/types'
+import {
+  PROJECTS_BY_TYPE_QUERYResult,
+  PageHeading,
+} from '@/sanity/types/generated/types'
 
 type Props = {
   productions: PROJECTS_BY_TYPE_QUERYResult
+  heading: Omit<PageHeading, '_type'> | undefined
 }
 
-const ProductionsSection: FC<Props> = ({ productions }) => {
+const ProductionsSection: FC<Props> = ({ productions, heading }) => {
   const projects = (productions || [])?.slice(0, 4)
 
   const noProjects = !projects?.length
@@ -23,10 +27,10 @@ const ProductionsSection: FC<Props> = ({ productions }) => {
       <div className='layout px-4 md:px-12 flex flex-col gap-12'>
         <div className='max-w-prose flex flex-col gap-2'>
           <h3 className='text-3xl sm:text-4xl font-medium font-display text-balance text-dark-green'>
-            Production
+            {heading?.mainHeading}
           </h3>
           <p className='text-balance text-lg text-muted-foreground md:max-w-xs'>
-            {"Check out some of the awesome projects I've worked on!"}
+            {heading?.subheading}
           </p>
         </div>
 

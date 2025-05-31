@@ -115,135 +115,55 @@ export type Project = {
   tags?: Array<string>
 }
 
-export type Category = {
-  _id: string
-  _type: 'category'
-  _createdAt: string
-  _updatedAt: string
-  _rev: string
-  title?: string
-  slug?: Slug
-  description?: string
-}
-
-export type Post = {
-  _id: string
-  _type: 'post'
-  _createdAt: string
-  _updatedAt: string
-  _rev: string
-  title?: string
-  slug?: Slug
-  author?: {
-    _ref: string
-    _type: 'reference'
-    _weak?: boolean
-    [internalGroqTypeReferenceTo]?: 'author'
-  }
-  mainImage?: {
-    asset?: {
-      _ref: string
-      _type: 'reference'
-      _weak?: boolean
-      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
-    }
-    media?: unknown
-    hotspot?: SanityImageHotspot
-    crop?: SanityImageCrop
-    alt?: string
-    _type: 'image'
-  }
-  categories?: Array<{
-    _ref: string
-    _type: 'reference'
-    _weak?: boolean
-    _key: string
-    [internalGroqTypeReferenceTo]?: 'category'
-  }>
-  publishedAt?: string
-  body?: Array<
-    | {
-        children?: Array<{
-          marks?: Array<string>
-          text?: string
-          _type: 'span'
-          _key: string
-        }>
-        style?: 'normal' | 'h2' | 'h3' | 'h4' | 'blockquote'
-        listItem?: 'bullet' | 'number'
-        markDefs?: Array<{
-          url?: string
-          _type: 'link'
-          _key: string
-        }>
-        level?: number
-        _type: 'block'
-        _key: string
-      }
-    | {
-        asset?: {
-          _ref: string
-          _type: 'reference'
-          _weak?: boolean
-          [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
-        }
-        media?: unknown
-        hotspot?: SanityImageHotspot
-        crop?: SanityImageCrop
-        alt?: string
-        _type: 'image'
-        _key: string
-      }
-    | ({
-        _key: string
-      } & Video)
-  >
-}
-
-export type Author = {
-  _id: string
-  _type: 'author'
-  _createdAt: string
-  _updatedAt: string
-  _rev: string
-  name?: string
-  slug?: Slug
-  image?: {
-    asset?: {
-      _ref: string
-      _type: 'reference'
-      _weak?: boolean
-      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
-    }
-    media?: unknown
-    hotspot?: SanityImageHotspot
-    crop?: SanityImageCrop
-    _type: 'image'
-  }
-  bio?: Array<{
-    children?: Array<{
-      marks?: Array<string>
-      text?: string
-      _type: 'span'
-      _key: string
-    }>
-    style?: 'normal'
-    listItem?: never
-    markDefs?: Array<{
-      href?: string
-      _type: 'link'
-      _key: string
-    }>
-    level?: number
-    _type: 'block'
-    _key: string
-  }>
-}
-
 export type Slug = {
   _type: 'slug'
   current?: string
   source?: string
+}
+
+export type WritingPage = {
+  _id: string
+  _type: 'writingPage'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  heading?: PageHeading
+}
+
+export type ProductionPage = {
+  _id: string
+  _type: 'productionPage'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  heading?: PageHeading
+}
+
+export type ContactPage = {
+  _id: string
+  _type: 'contactPage'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  heading?: PageHeading
+}
+
+export type HomePage = {
+  _id: string
+  _type: 'homePage'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  welcomeBlurb?: string
+}
+
+export type AboutPage = {
+  _id: string
+  _type: 'aboutPage'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  heading?: PageHeading
 }
 
 export type Profile = {
@@ -329,6 +249,12 @@ export type ContactInfo = {
   instagram?: string
   tiktok?: string
   pinterest?: string
+}
+
+export type PageHeading = {
+  _type: 'pageHeading'
+  mainHeading?: string
+  subheading?: string
 }
 
 export type VideoGroup = {
@@ -497,13 +423,16 @@ export type AllSanitySchemaTypes =
   | SanityImageDimensions
   | Geopoint
   | Project
-  | Category
-  | Post
-  | Author
   | Slug
+  | WritingPage
+  | ProductionPage
+  | ContactPage
+  | HomePage
+  | AboutPage
   | Profile
   | SocialLinks
   | ContactInfo
+  | PageHeading
   | VideoGroup
   | Video
   | VideoAltText
@@ -532,6 +461,58 @@ export type VideoGroupResult = {
   vimeo: ''
   videoUpload: never
 }
+
+// Source: ./src/sanity/lib/queries/page-query.ts
+// Variable: HOME_PAGE_QUERY
+// Query: *[_type=='homePage' && _id=="homePage"]{ ... }[0]
+export type HOME_PAGE_QUERYResult = {
+  _id: string
+  _type: 'homePage'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  welcomeBlurb?: string
+} | null
+// Variable: ABOUT_PAGE_QUERY
+// Query: *[_type=='aboutPage' && _id=="aboutPage"]{ ... }[0]
+export type ABOUT_PAGE_QUERYResult = {
+  _id: string
+  _type: 'aboutPage'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  heading?: PageHeading
+} | null
+// Variable: CONTACT_PAGE_QUERY
+// Query: *[_type=='contactPage' && _id=="contactPage"]{ ... }[0]
+export type CONTACT_PAGE_QUERYResult = {
+  _id: string
+  _type: 'contactPage'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  heading?: PageHeading
+} | null
+// Variable: PRODUCTION_PAGE_QUERY
+// Query: *[_type=='productionPage' && _id=="productionPage"]{ ... }[0]
+export type PRODUCTION_PAGE_QUERYResult = {
+  _id: string
+  _type: 'productionPage'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  heading?: PageHeading
+} | null
+// Variable: WRITING_PAGE_QUERY
+// Query: *[_type=='writingPage' && _id=="writingPage"]{ ... }[0]
+export type WRITING_PAGE_QUERYResult = {
+  _id: string
+  _type: 'writingPage'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  heading?: PageHeading
+} | null
 
 // Source: ./src/sanity/lib/queries/profile-query.ts
 // Variable: PROFILE_QUERY
@@ -1009,6 +990,11 @@ declare module '@sanity/client' {
     '{ ..., asset-> }': ImageResult
     '{ ..., file{ ..., asset-> } }': FileResult
     '{ "youtube": coalesce(youtube, \'\'), "vimeo": coalesce(vimeo, \'\'), videoUpload{ ..., file{ ..., asset-> } } }': VideoGroupResult
+    '*[_type==\'homePage\' && _id=="homePage"]{ ... }[0]': HOME_PAGE_QUERYResult
+    '*[_type==\'aboutPage\' && _id=="aboutPage"]{ ... }[0]': ABOUT_PAGE_QUERYResult
+    '*[_type==\'contactPage\' && _id=="contactPage"]{ ... }[0]': CONTACT_PAGE_QUERYResult
+    '*[_type==\'productionPage\' && _id=="productionPage"]{ ... }[0]': PRODUCTION_PAGE_QUERYResult
+    '*[_type==\'writingPage\' && _id=="writingPage"]{ ... }[0]': WRITING_PAGE_QUERYResult
     '*[_type==\'profile\' && _id=="profile"]{ ..., photo{ ..., asset-> } }[0]': PROFILE_QUERYResult
     '*[_type==\'project\' && defined(slug)]{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ ..., videoUpload{ ..., file{ ..., asset-> } } }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } } }': PROJECTS_QUERYResult
     '*[_type==\'project\' && projectType==$projectType && defined(slug)]{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ ..., videoUpload{ ..., file{ ..., asset-> } } }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } } }': PROJECTS_BY_TYPE_QUERYResult
