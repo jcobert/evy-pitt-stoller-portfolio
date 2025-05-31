@@ -33,11 +33,13 @@ const loadContent = async () => {
   }
 }
 
-export const metadata: Metadata = generatePageMeta({
-  title: 'Home',
-  description: '',
-  url: '/',
-})
+export const generateMetadata = async (): Promise<Metadata> => {
+  return generatePageMeta({
+    title: 'Home',
+    description: '',
+    url: '/',
+  })
+}
 
 const Page: FC = async () => {
   const {

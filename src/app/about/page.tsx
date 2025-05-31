@@ -14,7 +14,7 @@ import { PageParams } from '@/types/general'
 import { generatePageMeta } from '@/configuration/seo'
 import { getPage, getProfile } from '@/sanity/lib/fetch'
 
-const fetchContent = async () => {
+const loadContent = async () => {
   const [aboutPage, profile] = await Promise.all([
     getPage('aboutPage'),
     getProfile(),
@@ -24,10 +24,12 @@ const fetchContent = async () => {
 }
 
 export const generateMetadata = async (): Promise<Metadata> => {
-  const { profile } = await fetchContent()
+  const { profile, aboutPage } = await loadContent()
+
+  const title = aboutPage?.heading?.mainHeading
 
   return generatePageMeta({
-    title: 'About Me',
+    title,
     description: 'Learn more about my background, skills, and achievements.',
     url: '/about',
     images: [
@@ -42,7 +44,7 @@ export const generateMetadata = async (): Promise<Metadata> => {
 type Props = PageParams
 
 const Page: FC<Props> = async () => {
-  const { profile, aboutPage } = await fetchContent()
+  const { profile, aboutPage } = await loadContent()
   const { bio, photo, firstName, lastName, locations } = profile || {}
   const { heading } = aboutPage || {}
 

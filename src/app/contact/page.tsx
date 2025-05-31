@@ -25,11 +25,18 @@ const loadContent = async () => {
   return { profile, contactPage }
 }
 
-export const metadata: Metadata = generatePageMeta({
-  title: 'Contact',
-  description: "Let's talk! I'd love to hear about opportunities you may have.",
-  url: '/contact',
-})
+export const generateMetadata = async (): Promise<Metadata> => {
+  const { contactPage } = await loadContent()
+
+  const title = contactPage?.heading?.mainHeading
+
+  return generatePageMeta({
+    title,
+    description:
+      "Let's talk! I'd love to hear about opportunities you may have.",
+    url: '/contact',
+  })
+}
 
 type Props = PageParams
 

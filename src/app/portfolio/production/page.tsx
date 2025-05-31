@@ -21,11 +21,17 @@ const loadContent = async () => {
   return { productionPage, projects }
 }
 
-export const metadata: Metadata = generatePageMeta({
-  title: 'Production',
-  description: "A collection of media projects that I've worked on.",
-  url: '/portfolio/production',
-})
+export const generateMetadata = async (): Promise<Metadata> => {
+  const { productionPage } = await loadContent()
+
+  const title = productionPage?.heading?.mainHeading
+
+  return generatePageMeta({
+    title,
+    description: "A collection of media projects that I've worked on.",
+    url: '/portfolio/production',
+  })
+}
 
 type Props = PageParams
 
