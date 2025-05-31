@@ -49,72 +49,6 @@ export type Geopoint = {
   alt?: number
 }
 
-export type Project = {
-  _id: string
-  _type: 'project'
-  _createdAt: string
-  _updatedAt: string
-  _rev: string
-  title?: string
-  slug?: Slug
-  datePublished?: string
-  projectType?: 'production' | 'writing'
-  mainVideo?: VideoGroup
-  mainImage?: {
-    asset?: {
-      _ref: string
-      _type: 'reference'
-      _weak?: boolean
-      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
-    }
-    media?: unknown
-    hotspot?: SanityImageHotspot
-    crop?: SanityImageCrop
-    alt?: string
-    _type: 'image'
-  }
-  articleLink?: string
-  articlePreview?: string
-  description?: Array<
-    | {
-        children?: Array<{
-          marks?: Array<string>
-          text?: string
-          _type: 'span'
-          _key: string
-        }>
-        style?: 'normal' | 'h2' | 'h3' | 'h4' | 'blockquote'
-        listItem?: 'bullet' | 'number'
-        markDefs?: Array<{
-          url?: string
-          _type: 'link'
-          _key: string
-        }>
-        level?: number
-        _type: 'block'
-        _key: string
-      }
-    | {
-        asset?: {
-          _ref: string
-          _type: 'reference'
-          _weak?: boolean
-          [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
-        }
-        media?: unknown
-        hotspot?: SanityImageHotspot
-        crop?: SanityImageCrop
-        alt?: string
-        _type: 'image'
-        _key: string
-      }
-    | ({
-        _key: string
-      } & Video)
-  >
-  tags?: Array<string>
-}
-
 export type Category = {
   _id: string
   _type: 'category'
@@ -240,10 +174,127 @@ export type Author = {
   }>
 }
 
+export type Project = {
+  _id: string
+  _type: 'project'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  title?: string
+  slug?: Slug
+  datePublished?: string
+  projectType?: 'production' | 'writing'
+  mainVideo?: VideoGroup
+  mainImage?: {
+    asset?: {
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+    }
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: string
+    _type: 'image'
+  }
+  articleLink?: string
+  articlePreview?: string
+  description?: Array<
+    | {
+        children?: Array<{
+          marks?: Array<string>
+          text?: string
+          _type: 'span'
+          _key: string
+        }>
+        style?: 'normal' | 'h2' | 'h3' | 'h4' | 'blockquote'
+        listItem?: 'bullet' | 'number'
+        markDefs?: Array<{
+          url?: string
+          _type: 'link'
+          _key: string
+        }>
+        level?: number
+        _type: 'block'
+        _key: string
+      }
+    | {
+        asset?: {
+          _ref: string
+          _type: 'reference'
+          _weak?: boolean
+          [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+        }
+        media?: unknown
+        hotspot?: SanityImageHotspot
+        crop?: SanityImageCrop
+        alt?: string
+        _type: 'image'
+        _key: string
+      }
+    | ({
+        _key: string
+      } & Video)
+  >
+  tags?: Array<string>
+}
+
 export type Slug = {
   _type: 'slug'
   current?: string
   source?: string
+}
+
+export type WritingPage = {
+  _id: string
+  _type: 'writingPage'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  heading?: PageHeading
+}
+
+export type ProductionPage = {
+  _id: string
+  _type: 'productionPage'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  heading?: PageHeading
+}
+
+export type ContactPage = {
+  _id: string
+  _type: 'contactPage'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  heading?: PageHeading
+}
+
+export type HomePage = {
+  _id: string
+  _type: 'homePage'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  welcomeBlurb?: string
+}
+
+export type AboutPage = {
+  _id: string
+  _type: 'aboutPage'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  heading?: PageHeading
+}
+
+export type PageHeading = {
+  _type: 'pageHeading'
+  mainHeading?: string
+  subheading?: string
 }
 
 export type Profile = {
@@ -496,11 +547,17 @@ export type AllSanitySchemaTypes =
   | SanityImagePalette
   | SanityImageDimensions
   | Geopoint
-  | Project
   | Category
   | Post
   | Author
+  | Project
   | Slug
+  | WritingPage
+  | ProductionPage
+  | ContactPage
+  | HomePage
+  | AboutPage
+  | PageHeading
   | Profile
   | SocialLinks
   | ContactInfo

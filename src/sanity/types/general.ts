@@ -1,7 +1,28 @@
-import { Author, Category, Post, Profile, Project } from './generated/types'
+import {
+  AboutPage,
+  Author,
+  Category,
+  ContactPage,
+  HomePage,
+  Post,
+  ProductionPage,
+  Profile,
+  Project,
+  WritingPage,
+} from './generated/types'
 
 /** Union of all document type schemas. */
-export type DocumentSchema = Project | Author | Post | Category | Profile
+export type DocumentSchema =
+  | Project
+  | Author
+  | Post
+  | Category
+  | Profile
+  | HomePage
+  | AboutPage
+  | ContactPage
+  | ProductionPage
+  | WritingPage
 
 /** Union of all document type schema names. */
 export type DocumentType = DocumentSchema['_type']
