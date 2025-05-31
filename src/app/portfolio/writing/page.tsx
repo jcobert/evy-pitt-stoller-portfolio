@@ -13,8 +13,11 @@ import { generatePageMeta } from '@/configuration/seo'
 import { getPage, getProjects } from '@/sanity/lib/fetch'
 
 const loadContent = async () => {
-  const writingPage = await getPage('writingPage')
-  const projects = await getProjects({ projectType: 'writing' })
+  const [writingPage, projects] = await Promise.all([
+    getPage('writingPage'),
+    getProjects({ projectType: 'writing' }),
+  ])
+
   return { writingPage, projects }
 }
 

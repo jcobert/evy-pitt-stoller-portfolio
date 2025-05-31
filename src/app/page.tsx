@@ -11,14 +11,18 @@ import { generatePageMeta } from '@/configuration/seo'
 import { getPage, getProfile, getProjects } from '@/sanity/lib/fetch'
 
 const loadContent = async () => {
-  const homePage = await getPage('homePage')
-  const profile = await getProfile()
-  const projects = await getProjects()
-  const productionPage = await getPage('productionPage')
-  const writingPage = await getPage('writingPage')
+  const [homePage, profile, projects, productionPage, writingPage] =
+    await Promise.all([
+      getPage('homePage'),
+      getProfile(),
+      getProjects(),
+      getPage('productionPage'),
+      getPage('writingPage'),
+    ])
 
   const productions = projects?.filter((p) => p?.projectType === 'production')
   const writing = projects?.filter((p) => p?.projectType === 'writing')
+
   return {
     profile,
     productions,
