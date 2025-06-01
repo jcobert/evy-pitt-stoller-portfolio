@@ -19,7 +19,11 @@ const WritingCard: FC<Props> = ({ writing, className }) => {
 
   const pageUrl = `/portfolio/writing/${slug?.current}`
 
-  const image = getSanityImageUrl(mainImage, { ratio: 'square', width: 400 })
+  const imageSquare = getSanityImageUrl(mainImage, {
+    ratio: 'square',
+    width: 400,
+  })
+  const imageWide = getSanityImageUrl(mainImage, { ratio: '16/9', width: 400 })
 
   return (
     <Link
@@ -29,23 +33,54 @@ const WritingCard: FC<Props> = ({ writing, className }) => {
         'bg-pale-yellow border border-light-green',
         'group hover:shadow-md transition',
         'flex-wrap',
+        'max-sm:flex-col',
         className,
       )}
     >
-      {image ? (
-        <div className='aspect-square self-center max-w-1/3 sm:max-w-48 min-w-24 flex-none rounded-sm sm:rounded-r-none border-4 border-white/80 max-sm:m-2 max-sm:mr-0'>
+      {imageSquare ? (
+        <div
+          className={cn(
+            'aspect-square self-center max-w-1/3 sm:max-w-48 min-w-24 flex-none rounded-sm sm:rounded-r-none border-4 border-white/80',
+            // 'max-sm:m-2 max-sm:mr-0',
+            'max-sm:aspect-video max-sm:max-w-full max-sm:w-full max-sm:rounded-b-none max-sm:max-h-7/12',
+          )}
+        >
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src={image}
+            src={imageSquare}
             alt={mainImage?.alt}
-            className='aspect-square object-cover rounded-sm sm:rounded-r-none h-auto'
+            className={cn(
+              'aspect-square object-cover rounded-sm sm:rounded-r-none h-auto',
+              'max-sm:aspect-video max-sm:w-full max-sm:rounded-b-none',
+              'max-sm:hidden',
+            )}
+          />
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={imageWide}
+            alt={mainImage?.alt}
+            className={cn(
+              'aspect-square object-cover rounded-sm sm:rounded-r-none h-full',
+              'max-sm:aspect-video max-sm:w-full max-sm:rounded-b-none',
+              'sm:hidden',
+            )}
           />
         </div>
       ) : null}
 
       <div className={cn('w-full flex flex-col items-start gap-3 p-4 flex-1')}>
-        <div className='group flex flex-col gap-6 items-start text-pretty flex-1'>
-          <div className='flex flex-col gap-4 items-start text-pretty flex-1'>
+        <div
+          className={cn(
+            'group flex flex-col gap-6 items-start text-pretty flex-1',
+            'max-sm:w-full max-sm:items-center',
+          )}
+        >
+          <div
+            className={cn(
+              'flex flex-col gap-4 items-start text-pretty flex-1',
+              'max-sm:w-full max-sm:items-center max-sm:justify-center',
+            )}
+          >
             <span className='group-hover:text-foreground/80 transition md:text-lg font-medium leading-snug'>
               {title}
             </span>
@@ -57,7 +92,7 @@ const WritingCard: FC<Props> = ({ writing, className }) => {
           </div>
 
           {description ? (
-            <Button variant='outline' className='px-6'>
+            <Button variant='outline' className='px-6 max-sm:px-10'>
               Read
             </Button>
           ) : null}
