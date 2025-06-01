@@ -41,7 +41,6 @@ const WritingCard: FC<Props> = ({ writing, className }) => {
         <div
           className={cn(
             'aspect-square self-center max-w-1/3 sm:max-w-48 min-w-24 flex-none rounded-sm sm:rounded-r-none border-4 border-white/80',
-            // 'max-sm:m-2 max-sm:mr-0',
             'max-sm:aspect-video max-sm:max-w-full max-sm:w-full max-sm:rounded-b-none max-sm:max-h-7/12',
           )}
         >
@@ -50,8 +49,7 @@ const WritingCard: FC<Props> = ({ writing, className }) => {
             src={imageSquare}
             alt={mainImage?.alt}
             className={cn(
-              'aspect-square object-cover rounded-sm sm:rounded-r-none h-auto',
-              'max-sm:aspect-video max-sm:w-full max-sm:rounded-b-none',
+              'aspect-square object-cover rounded-sm rounded-r-none h-auto',
               'max-sm:hidden',
             )}
           />
@@ -60,8 +58,7 @@ const WritingCard: FC<Props> = ({ writing, className }) => {
             src={imageWide}
             alt={mainImage?.alt}
             className={cn(
-              'aspect-square object-cover rounded-sm sm:rounded-r-none h-full',
-              'max-sm:aspect-video max-sm:w-full max-sm:rounded-b-none',
+              'aspect-video object-cover rounded-sm rounded-b-none size-full',
               'sm:hidden',
             )}
           />

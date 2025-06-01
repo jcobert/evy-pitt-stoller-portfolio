@@ -19,7 +19,6 @@ const Footer: FC = async () => {
           </span>
 
           <div className='flex max-sm:flex-col gap-6 items-center flex-wrap'>
-            <ContactCta className='md:hidden max-sm:px-12 max-sm:py-5' />
             <ContactLinks
               links={contactInfo}
               iconProps={{
@@ -27,6 +26,7 @@ const Footer: FC = async () => {
                 iconClassName: 'text-light-purple',
               }}
             />
+            <ContactCta className='md:hidden max-sm:px-12 max-sm:py-5' />
           </div>
         </div>
       </div>
