@@ -33,7 +33,7 @@ const WritingCard: FC<Props> = ({ writing, className }) => {
       )}
     >
       {image ? (
-        <div className='aspect-square self-center max-w-36 flex-none rounded-sm sm:rounded-r-none border-4 border-white/80 max-sm:m-2'>
+        <div className='aspect-square self-center max-w-1/3 sm:max-w-48 min-w-24 flex-none rounded-sm sm:rounded-r-none border-4 border-white/80 max-sm:m-2 max-sm:mr-0'>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={image}
