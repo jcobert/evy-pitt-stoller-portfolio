@@ -5,7 +5,7 @@
   /* pale yellow */
   --primary-light: #f1f2d6;
   /* dark green */
-  --primary-black: #143109;
+  --primary-foreground: #143109;
 
   /* purple */
   --secondary: #81559b;
@@ -14,3 +14,23 @@
   /* pale purple */
   --secondary-extra-light: #e7e7f9;
 }
+
+/* .theme-2 {
+  --primary: #b8d6c0;
+  --primary-light: #f1f2d6;
+  --primary-foreground: #143109;
+
+  --secondary: #81559b;
+  --secondary-light: #a97cc4;
+  --secondary-extra-light: #e7e7f9;
+}
+
+.theme-3 {
+  --primary: #b8d6c0;
+  --primary-light: #f1f2d6;
+  --primary-foreground: #143109;
+
+  --secondary: #81559b;
+  --secondary-light: #a97cc4;
+  --secondary-extra-light: #e7e7f9;
+} */

@@ -76,7 +76,7 @@ const Page: FC<Props> = async () => {
                     <a
                       key={name}
                       href={url}
-                      className='hover:opacity-90 transition flex items-center gap-x-4 sm:gap-x-6 lg:gap-x-4 gap-y-3 text-foreground sm:text-lg flex-wrap break-all'
+                      className='hover:opacity-90 transition flex items-center gap-x-4 sm:gap-x-6 lg:gap-x-4 gap-y-3 text-primary-foreground sm:text-lg flex-wrap break-all'
                     >
                       <ContactIcon
                         name={name}

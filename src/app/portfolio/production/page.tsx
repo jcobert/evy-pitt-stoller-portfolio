@@ -60,7 +60,7 @@ const Page: FC<Props> = async () => {
                   {i < projects.length - 1 ? (
                     <div
                       aria-hidden
-                      className='sm:hidden h-px bg-gradient-to-r from-accent/10 via-foreground/10 to-accent/10 mt-6'
+                      className='sm:hidden h-px bg-gradient-to-r from-accent/10 via-primary-foreground/10 to-accent/10 mt-6'
                     />
                   ) : null}
                 </div>

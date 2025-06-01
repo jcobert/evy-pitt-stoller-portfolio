@@ -78,7 +78,7 @@ const WritingCard: FC<Props> = ({ writing, className }) => {
               'max-sm:w-full max-sm:items-center max-sm:justify-center',
             )}
           >
-            <span className='group-hover:text-foreground/80 transition md:text-lg font-medium leading-snug'>
+            <span className='group-hover:text-primary-foreground/80 transition md:text-lg font-medium leading-snug'>
               {title}
             </span>
             {datePublished ? (
