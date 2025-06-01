@@ -44,7 +44,7 @@ const DesktopNav: FC<Props> = ({ className }) => {
                     'font-medium',
                     'transition-colors bg-transparent hover:bg-white/20 focus:bg-white/20',
                     'data-[state=open]:bg-white/60 data-[state=open]:hover:bg-white/60',
-                    isActive && 'font-semibold text-purple focus:text-purple',
+                    isActive && 'font-semibold text-secondary focus:text-secondary',
                   )}
                 >
                   {item?.name}
@@ -85,7 +85,7 @@ const DesktopNav: FC<Props> = ({ className }) => {
                                 className={cn(
                                   'text-sm font-medium leading-none',
                                   isActiveMenuItem &&
-                                    'font-semibold text-purple',
+                                    'font-semibold text-secondary',
                                 )}
                               >
                                 {menuItem?.name}
@@ -112,7 +112,7 @@ const DesktopNav: FC<Props> = ({ className }) => {
                 className={navigationMenuTriggerStyle({
                   className: cn(
                     'bg-transparent hover:bg-white/20 focus:bg-white/20 transition font-medium',
-                    isActive && 'font-semibold text-purple focus:text-purple',
+                    isActive && 'font-semibold text-secondary focus:text-secondary',
                   ),
                 })}
                 onClick={(e) => handleLinkClick(e, item?.url)}

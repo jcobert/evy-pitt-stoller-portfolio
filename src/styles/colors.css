@@ -1,0 +1,16 @@
+:root,
+.theme-1 {
+  /* light green */
+  --primary: #b8d6c0;
+  /* pale yellow */
+  --primary-light: #f1f2d6;
+  /* dark green */
+  --primary-black: #143109;
+
+  /* purple */
+  --secondary: #81559b;
+  /* light purple */
+  --secondary-light: #a97cc4;
+  /* pale purple */
+  --secondary-extra-light: #e7e7f9;
+}

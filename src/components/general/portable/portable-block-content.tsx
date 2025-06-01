@@ -62,7 +62,7 @@ const PortableBlockContent: FC<Props> = ({
     <div
       className={cn(
         prose &&
-          'text-pretty prose prose-h4:text-purple prose-h3:text-muted-foreground',
+          'text-pretty prose prose-h4:text-secondary prose-h3:text-muted-foreground',
         className,
       )}
     >

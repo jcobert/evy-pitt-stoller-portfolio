@@ -50,11 +50,11 @@ const Page: FC<Props> = async () => {
     "Let's talk! I'd love to hear about opportunities you may have."
 
   return (
-    <Main className='bg-pale-purple/80 text-purple'>
+    <Main className='bg-secondary-extra-light/80 text-secondary'>
       <PageLayout>
         <Heading text={mainHeading} description={subheading} />
 
-        <section className='mt-8 flex flex-col gap-4 md:gap-8 border-2 border-purple/20 p-4 pb-6 sm:p-6 sm:pb-12 rounded-sm bg-white/90'>
+        <section className='mt-8 flex flex-col gap-4 md:gap-8 border-2 border-secondary/20 p-4 pb-6 sm:p-6 sm:pb-12 rounded-sm bg-white/90'>
           <div>
             <h3 className='text-2xl md:text-3xl font-medium'>
               {fullName(profile?.firstName, profile?.lastName)}
@@ -81,7 +81,7 @@ const Page: FC<Props> = async () => {
                       <ContactIcon
                         name={name}
                         className='bg-transparent'
-                        iconClassName='text-2xl sm:text-3xl md:text-4xl text-purple'
+                        iconClassName='text-2xl sm:text-3xl md:text-4xl text-secondary'
                       />
                       {text}
                     </a>
@@ -91,7 +91,7 @@ const Page: FC<Props> = async () => {
 
               <div
                 aria-hidden
-                className='h-px bg-gradient-to-r to-pale-purple/5 from-light-purple/40 from-60% max-md:my-2'
+                className='h-px bg-gradient-to-r to-secondary-extra-light/5 from-secondary-light/40 from-60% max-md:my-2'
               />
 
               <div className='flex flex-col gap-6 sm:w-fit'>

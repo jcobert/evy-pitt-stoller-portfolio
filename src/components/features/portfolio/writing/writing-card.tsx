@@ -30,7 +30,7 @@ const WritingCard: FC<Props> = ({ writing, className }) => {
       href={pageUrl}
       className={cn(
         'w-full flex sm:gap-2 lg:gap-4 border rounded-sm',
-        'bg-pale-yellow border border-light-green',
+        'bg-primary-light border border-primary',
         'group hover:shadow-md transition',
         'flex-wrap',
         'max-sm:flex-col',

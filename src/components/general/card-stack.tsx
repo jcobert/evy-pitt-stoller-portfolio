@@ -13,7 +13,7 @@ const CardStack: FC<Props> = ({ children, className }) => {
       <div
         className={cn(
           'absolute z-30',
-          'bg-pale-yellow rounded-md shadow-md',
+          'bg-primary-light rounded-md shadow-md',
           'w-[96%] min-h-58 bottom-0',
           'sm:w-80 sm:min-h-44 sm:right-8 sm:bottom-12',
           'md:w-96 md:min-h-54 md:right-12 md:bottom-12',
@@ -25,7 +25,7 @@ const CardStack: FC<Props> = ({ children, className }) => {
       <div
         className={cn(
           'absolute z-20',
-          'bg-light-green rounded-md shadow-md',
+          'bg-primary rounded-md shadow-md',
           '-rotate-3',
           'w-full h-48 bottom-2',
           'sm:w-84 sm:h-42 sm:right-2 sm:bottom-8',
@@ -35,7 +35,7 @@ const CardStack: FC<Props> = ({ children, className }) => {
       <div
         className={cn(
           'relative z-10',
-          'bg-purple rounded-md shadow-2xl',
+          'bg-secondary rounded-md shadow-2xl',
           'rotate-1 sm:rotate-3',
           'w-full h-42 -bottom-4',
           'sm:w-80 sm:h-42 sm:bottom-4',

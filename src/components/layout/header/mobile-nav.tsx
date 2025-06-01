@@ -46,7 +46,7 @@ const MenuItem = forwardRef<
           className: cn(
             'w-full items-start p-6 text-balance bg-transparent rounded-none',
             active &&
-              'font-semibold bg-primary/25 hover:bg-primary/25 focus:bg-primary/50 text-purple',
+              'font-semibold bg-primary/25 hover:bg-primary/25 focus:bg-primary/50 text-secondary',
           ),
         })}
       >

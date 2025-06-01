@@ -21,7 +21,7 @@ const Heading: FC<HeadingProps> = ({
     <div className='flex flex-col gap-4 py-6 md:py-10'>
       <h1
         className={cn([
-          'text-3xl sm:text-4xl md:text-5xl font-semibold font-display text-balance text-light-purple',
+          'text-3xl sm:text-4xl md:text-5xl font-semibold font-display text-balance text-secondary-light',
           {
             'text-left': alignment === 'left',
             'text-center': alignment === 'center',

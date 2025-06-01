@@ -94,7 +94,7 @@ export const ContactIcon: FC<ContactIconProps> = ({
   return (
     <div
       aria-label={name}
-      className={cn('rounded-full bg-purple inline-block p-2', className)}
+      className={cn('rounded-full bg-secondary inline-block p-2', className)}
     >
       <Icon
         aria-hidden

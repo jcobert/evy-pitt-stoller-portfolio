@@ -26,7 +26,7 @@ const WritingSection: FC<Props> = ({ writing, heading }) => {
     <section className='bg-gradient-to-br from-[#FFFDF9] to-[#FFFAEC] relative py-16'>
       <div className='layout px-4 md:px-12 flex flex-col gap-12'>
         <div className='max-w-prose flex flex-col gap-2'>
-          <h3 className='text-3xl sm:text-4xl font-medium font-display text-balance text-purple'>
+          <h3 className='text-3xl sm:text-4xl font-medium font-display text-balance text-secondary'>
             {heading?.mainHeading}
           </h3>
           <p className='text-balance text-lg text-muted-foreground md:max-w-xs'>
@@ -37,7 +37,7 @@ const WritingSection: FC<Props> = ({ writing, heading }) => {
         {noProjects ? (
           <NoResults
             item='projects'
-            className='bg-white/50 border-light-purple/40'
+            className='bg-white/50 border-secondary-light/40'
           />
         ) : (
           <div className='flex flex-col gap-16 items-center'>
