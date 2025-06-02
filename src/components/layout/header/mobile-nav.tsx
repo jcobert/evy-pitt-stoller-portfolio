@@ -86,7 +86,7 @@ const MobileNav: FC<Props> = ({ className }) => {
         </SheetTrigger>
         <SheetContent className='backdrop-blur-lg bg-background/90 pb-safe'>
           <SheetHeader className='border-b-2'>
-            <SheetTitle>Menu</SheetTitle>
+            <SheetTitle className='text-muted-foreground'>Menu</SheetTitle>
             <SheetDescription className='sr-only'>
               Navigation menu
             </SheetDescription>

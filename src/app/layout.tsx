@@ -16,13 +16,13 @@ export const metadata: Metadata = {
 }
 
 const bodoniModa = Bodoni_Moda({
-  weight: ['400', '500', '600', '700', '800', '900'],
+  // weight: ['400', '500', '600', '700', '800', '900'],
   subsets: ['latin'],
   variable: '--font-bodoni-moda',
 })
 
 const inter = Inter({
-  weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
+  // weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
   subsets: ['latin'],
   variable: '--font-inter',
 })

@@ -31,7 +31,7 @@ const DesktopNav: FC<Props> = ({ className }) => {
 
   return (
     <NavigationMenu className={className}>
-      <NavigationMenuList className='gap-6'>
+      <NavigationMenuList className='gap-6 lg:gap-8'>
         {NAV_ITEMS?.map((item) => {
           const hasMenu = !!item?.menu?.links?.length
           const isActive = isActiveItem(item)
@@ -41,6 +41,7 @@ const DesktopNav: FC<Props> = ({ className }) => {
               <NavigationMenuItem key={item?.id}>
                 <NavigationMenuTrigger
                   className={cn(
+                    '-mr-3',
                     'font-medium text-primary-foreground hover:text-primary-foreground',
                     'transition-colors bg-transparent hover:bg-white/20 focus:bg-white/20',
                     'data-[state=open]:bg-white/60 data-[state=open]:hover:bg-white/60 data-[state=open]:hover:text-primary-foreground',

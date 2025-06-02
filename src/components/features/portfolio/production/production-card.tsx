@@ -43,7 +43,7 @@ const ProductionCard: FC<Props> = ({
     >
       <VideoThumbnail
         video={video}
-        className='group-hover:shadow-md transition animate-none'
+        className='group-hover:shadow-md transition animate-none border border-secondary/75'
       />
       <div className='flex flex-col items-center text-pretty'>
         <div className='flex flex-col gap-2 items-center text-pretty'>
