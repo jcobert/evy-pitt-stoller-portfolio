@@ -39,17 +39,17 @@ export default function RootLayout({
   return (
     <html lang='en' suppressHydrationWarning className={fontVars}>
       <body className='antialiased'>
-        <ThemeProvider>
-          <ProgressProvider>
-            <div className='flex flex-col h-full min-h-dvh'>
-              <Header />
-              {children}
-              {/** @todo add footer. */}
-              <Footer />
-            </div>
-          </ProgressProvider>
-          <ThemeSelector />
-        </ThemeProvider>
+        {/* <ThemeProvider> */}
+        <ProgressProvider>
+          <div className='flex flex-col h-full min-h-dvh'>
+            <Header />
+            {children}
+            {/** @todo add footer. */}
+            <Footer />
+          </div>
+        </ProgressProvider>
+        {/* <ThemeSelector /> */}
+        {/* </ThemeProvider> */}
       </body>
     </html>
   )
