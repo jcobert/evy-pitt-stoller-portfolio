@@ -1,12 +1,24 @@
 :root {
+  --primary: #f4efea;
+  --primary-light: #fcf9f7;
+  --primary-foreground: #3a0711;
+  --secondary: #874b57;
+  --secondary-light: #c98a92;
+  --secondary-extra-light: #d7c4b9;
+}
+
+/* THEME REVISION 1  */
+/* :root {
   --primary: #3d4425;
   --primary-light: #d3d47b;
+  --primary-extra-light: #f6f7c3;
   --primary-foreground: #2c1b2d;
   --secondary: #5e416d;
   --secondary-light: #b49fd0;
   --secondary-extra-light: #ebc6d2;
-}
+} */
 
+/* ORIGINAL THEME */
 /* light green */
 /* --primary: #b8d6c0; */
 /* pale yellow */

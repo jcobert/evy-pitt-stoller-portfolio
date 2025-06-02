@@ -46,7 +46,7 @@ const Page: FC<Props> = async () => {
     "Check out some of the awesome projects I've worked on!"
 
   return (
-    <Main className='bg-background'>
+    <Main>
       <PageLayout>
         <Heading text={mainHeading} description={subheading} />
         <section className='my-4'>

@@ -31,14 +31,23 @@ const HereoSection: FC<Props> = ({ profile, welcomeBlurb }) => {
         <h1
           className={cn(
             'text-5xl sm:text-6xl md:text-7xl font-display text-balance',
-            'text-white text-shadow-sm text-shadow-secondary',
+            // 'text-white text-shadow-md text-shadow-secondary',
+            // 'text-primary-light text-shadow-md text-shadow-secondary',
+            'text-secondary text-shadow-md text-shadow-white',
             'flex flex-col gap-3',
           )}
         >
           <span>{firstName}</span>
           <span>{`${lastName}.`}</span>
         </h1>
-        <h2 className='flex items-start gap-2 text-xl sm:text-2xl font-medium text-balance text-secondary flex-wrap overflow-hidden fade-out-r'>
+        <h2
+          className={cn(
+            'flex items-start gap-2 text-xl sm:text-2xl font-medium text-balance flex-wrap overflow-hidden fade-out-r',
+            // 'text-secondary',
+            'text-secondary-light',
+            // 'text-secondary-light text-shadow-sm text-shadow-secondary-extra-light'
+          )}
+        >
           {titles?.map((title, i) => (
             <div key={title} className='flex items-center gap-2'>
               <span>{title}</span>

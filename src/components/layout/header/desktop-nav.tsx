@@ -41,11 +41,11 @@ const DesktopNav: FC<Props> = ({ className }) => {
               <NavigationMenuItem key={item?.id}>
                 <NavigationMenuTrigger
                   className={cn(
-                    'font-medium text-primary-foreground',
+                    'font-medium text-primary-foreground hover:text-primary-foreground',
                     'transition-colors bg-transparent hover:bg-white/20 focus:bg-white/20',
-                    'data-[state=open]:bg-white/60 data-[state=open]:hover:bg-white/60',
+                    'data-[state=open]:bg-white/60 data-[state=open]:hover:bg-white/60 data-[state=open]:hover:text-primary-foreground',
                     isActive &&
-                      'font-semibold text-secondary focus:text-secondary',
+                      'font-semibold text-secondary hover:text-secondary focus:text-secondary bg-secondary-light/5 hover:bg-secondary-light/5 data-[state=open]:text-secondary data-[state=open]:hover:text-secondary',
                   )}
                 >
                   {item?.name}
@@ -112,9 +112,9 @@ const DesktopNav: FC<Props> = ({ className }) => {
                 asChild
                 className={navigationMenuTriggerStyle({
                   className: cn(
-                    'bg-transparent hover:bg-white/20 focus:bg-white/20 transition font-medium text-primary-foreground',
+                    'bg-transparent hover:bg-white/20 focus:bg-white/20 transition font-medium text-primary-foreground hover:text-primary-foreground',
                     isActive &&
-                      'font-semibold text-secondary focus:text-secondary',
+                      'font-semibold text-secondary hover:text-secondary focus:text-secondary bg-secondary-light/5 hover:bg-secondary-light/5',
                   ),
                 })}
                 onClick={(e) => handleLinkClick(e, item?.url)}

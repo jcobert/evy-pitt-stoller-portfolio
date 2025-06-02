@@ -23,7 +23,7 @@ const Footer: FC = async () => {
               links={contactInfo}
               iconProps={{
                 className: 'bg-transparent',
-                iconClassName: 'text-secondary-light',
+                iconClassName: 'text-secondary',
               }}
             />
             <ContactCta className='md:hidden max-sm:px-12 max-sm:py-5' />

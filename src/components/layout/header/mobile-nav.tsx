@@ -82,7 +82,7 @@ const MobileNav: FC<Props> = ({ className }) => {
             setIsMenuOpen(true)
           }}
         >
-          <HiOutlineMenu className='text-4xl text-white' />
+          <HiOutlineMenu className='text-4xl text-secondary' />
         </SheetTrigger>
         <SheetContent className='backdrop-blur-lg bg-background/90 pb-safe'>
           <SheetHeader className='border-b-2'>

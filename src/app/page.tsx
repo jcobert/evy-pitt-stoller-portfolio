@@ -57,7 +57,7 @@ const Page: FC = async () => {
   const { welcomeBlurb } = homePage || {}
 
   return (
-    <Main className='bg-gradient-to-br__ bg-primary/90 from-primary/90 from-20% to-primary-foreground/15 pb-0'>
+    <Main className='bg-gradient-to-br from-primary/90 from-20% to-primary pb-0'>
       <PageLayout wrapperClassName='max-sm:w-full' className='max-md:px-0'>
         <HereoSection profile={profile} welcomeBlurb={welcomeBlurb} />
       </PageLayout>
