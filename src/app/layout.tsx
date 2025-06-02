@@ -5,9 +5,11 @@ import { ReactNode } from 'react'
 import { cn } from '@/utils/style'
 
 import ProgressProvider from '@/providers/progress-provider'
+import ThemeProvider from '@/providers/theme-provider'
 
 import Footer from '@/components/layout/footer'
 import Header from '@/components/layout/header/header'
+import ThemeSelector from '@/components/theme-selector'
 
 import '@/styles/globals.css'
 
@@ -35,16 +37,19 @@ export default function RootLayout({
   children: ReactNode
 }>) {
   return (
-    <html lang='en' className={fontVars}>
+    <html lang='en' suppressHydrationWarning className={fontVars}>
       <body className='antialiased'>
-        <ProgressProvider>
-          <div className='flex flex-col h-full min-h-dvh'>
-            <Header />
-            {children}
-            {/** @todo add footer. */}
-            <Footer />
-          </div>
-        </ProgressProvider>
+        <ThemeProvider>
+          <ProgressProvider>
+            <div className='flex flex-col h-full min-h-dvh'>
+              <Header />
+              {children}
+              {/** @todo add footer. */}
+              <Footer />
+            </div>
+          </ProgressProvider>
+          <ThemeSelector />
+        </ThemeProvider>
       </body>
     </html>
   )
