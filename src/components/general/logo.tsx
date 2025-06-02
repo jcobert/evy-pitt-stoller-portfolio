@@ -18,7 +18,7 @@ const Logo: FC<Props> = ({ className, ...props }) => {
         Evy.
       </div> */}
 
-      <div className='flex-auto flex items-baseline justify-center pb-px -mx-1 bg-secondary-light text-center text-white font-display'>
+      <div className='flex-auto flex items-baseline justify-center pb-px -mx-1 bg-secondary-light__ bg-secondary text-center text-white font-display'>
         <span className='leading'>Evy</span>
         <span className='text-2xl leading-0'>.</span>
       </div>
