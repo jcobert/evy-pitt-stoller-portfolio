@@ -91,6 +91,7 @@ const ThemeSelector: FC<Props> = ({ className }) => {
                 </label>
                 <div className='flex items-center gap-2'>
                   <input
+                    tabIndex={-1}
                     id={key}
                     className='rounded border text-sm p-1 w-[9ch] uppercase'
                     value={colors?.[key]}
