@@ -3,6 +3,7 @@ import {
   ABOUT_PAGE_QUERYResult,
   CONTACT_PAGE_QUERYResult,
   HOME_PAGE_QUERYResult,
+  PORTFOLIO_PAGE_QUERYResult,
   PRODUCTION_PAGE_QUERYResult,
   PROFILE_QUERYResult,
   PROJECTS_BY_TYPE_QUERYResult,
@@ -17,6 +18,7 @@ import {
   ABOUT_PAGE_QUERY,
   CONTACT_PAGE_QUERY,
   HOME_PAGE_QUERY,
+  PORTFOLIO_PAGE_QUERY,
   PRODUCTION_PAGE_QUERY,
   WRITING_PAGE_QUERY,
 } from './queries/page-query'
@@ -73,9 +75,10 @@ export const getProfile = async () => {
 }
 
 const PAGE_QUERIES = {
+  homePage: HOME_PAGE_QUERY,
   aboutPage: ABOUT_PAGE_QUERY,
   contactPage: CONTACT_PAGE_QUERY,
-  homePage: HOME_PAGE_QUERY,
+  portfolioPage: PORTFOLIO_PAGE_QUERY,
   productionPage: PRODUCTION_PAGE_QUERY,
   writingPage: WRITING_PAGE_QUERY,
 } satisfies { [x in PageDocumentType]: string }
@@ -101,7 +104,9 @@ export const getPage = async <TPage extends PageDocumentType>(page: TPage) => {
               ? PRODUCTION_PAGE_QUERYResult
               : TPage extends 'writingPage'
                 ? WRITING_PAGE_QUERYResult
-                : null
+                : TPage extends 'portfolioPage'
+                  ? PORTFOLIO_PAGE_QUERYResult
+                  : null
     >(query)
   return res
 }

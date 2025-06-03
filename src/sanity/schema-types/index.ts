@@ -7,6 +7,7 @@ import { videoType } from './general/video-type'
 import { aboutPageType } from './pages/about-page-type'
 import { contactPageType } from './pages/contact-page-type'
 import { homePageType } from './pages/home-page-type'
+import { portfolioPageType } from './pages/portfolio-page-type'
 import { productionPageType } from './pages/production-page-type'
 import { writingPageType } from './pages/writing-page-type'
 import { contactInfoType } from './profile/contact-info-type'
@@ -32,6 +33,7 @@ export const schemaTypes: SchemaTypeDefinition[] = [
   aboutPageType,
   homePageType,
   contactPageType,
+  portfolioPageType,
   productionPageType,
   writingPageType,
   // Portfolio

@@ -2,6 +2,7 @@ import {
   AboutPage,
   ContactPage,
   HomePage,
+  PortfolioPage,
   ProductionPage,
   Profile,
   Project,
@@ -15,6 +16,7 @@ export type DocumentSchema =
   | HomePage
   | AboutPage
   | ContactPage
+  | PortfolioPage
   | ProductionPage
   | WritingPage
 
@@ -23,7 +25,12 @@ export type DocumentType = DocumentSchema['_type']
 
 export type PageDocumentType = Extract<
   DocumentSchema,
-  HomePage | AboutPage | ContactPage | ProductionPage | WritingPage
+  | HomePage
+  | AboutPage
+  | ContactPage
+  | PortfolioPage
+  | ProductionPage
+  | WritingPage
 >['_type']
 
 export enum VimeoThumbnailSize {

@@ -19,26 +19,26 @@ import { generatePageMeta } from '@/configuration/seo'
 import { getPage, getProjects } from '@/sanity/lib/fetch'
 
 const loadContent = async () => {
-  const [productionPage, writingPage, productions, writing] = await Promise.all(
-    [
+  const [portfolioPage, productionPage, writingPage, productions, writing] =
+    await Promise.all([
+      getPage('portfolioPage'),
       getPage('productionPage'),
       getPage('writingPage'),
       getProjects({ projectType: 'production' }),
       getProjects({ projectType: 'writing' }),
-    ],
-  )
+    ])
 
-  return { productionPage, writingPage, productions, writing }
+  return { portfolioPage, productionPage, writingPage, productions, writing }
 }
 
 export const generateMetadata = async (): Promise<Metadata> => {
-  const { productionPage } = await loadContent()
-  const { heading, seo } = productionPage || {}
+  const { portfolioPage } = await loadContent()
+  const { heading, seo } = portfolioPage || {}
 
   const title = heading?.mainHeading
 
   return generatePageMeta({
-    title: 'Portfolio',
+    title,
     description: seo?.description,
     url: '/portfolio',
   })
@@ -47,11 +47,13 @@ export const generateMetadata = async (): Promise<Metadata> => {
 type Props = PageParams
 
 const Page: FC<Props> = async () => {
-  const { productionPage, writingPage, productions, writing } =
+  const { portfolioPage, productionPage, writingPage, productions, writing } =
     await loadContent()
 
-  const mainHeading = 'Portfolio'
-  const subheading = "Check out some of the awesome projects I've worked on!"
+  const mainHeading = portfolioPage?.heading?.mainHeading || 'Portfolio'
+  const subheading =
+    portfolioPage?.heading?.subheading ||
+    "A collection of projects that I've worked on."
 
   return (
     <Main>
@@ -61,7 +63,7 @@ const Page: FC<Props> = async () => {
 
       <section className='layout px-4 md:px-12 flex flex-col gap-12 py-8'>
         <div className='max-w-prose flex flex-col gap-2'>
-          <h3 className='text-2xl sm:text-3xl md:text-4xl font-semibold font-display text-balance text-primary-light__'>
+          <h3 className='text-2xl sm:text-3xl md:text-4xl font-semibold font-display text-balance text-primary-light__ border-b lg:w-1/2 min-w-fit pb-2'>
             {productionPage?.heading?.mainHeading}
           </h3>
           {/* <p className='text-balance text-lg text-primary/70__ md:max-w-xs'>
@@ -102,11 +104,11 @@ const Page: FC<Props> = async () => {
         )}
       </section>
 
-      <Separator className='my-8' />
+      <Separator className='my-8 lg:w-1/3 mx-auto' />
 
       <section className='layout px-4 md:px-12 flex flex-col gap-12 py-8'>
         <div className='max-w-prose flex flex-col gap-2'>
-          <h3 className='text-2xl sm:text-3xl font-semibold font-display text-balance text-secondary__'>
+          <h3 className='text-2xl sm:text-3xl font-semibold font-display text-balance text-secondary__ border-b lg:w-1/3 min-w-fit pb-2'>
             {writingPage?.heading?.mainHeading}
           </h3>
           {/* <p className='text-balance text-lg text-secondary/70__ md:max-w-xs'>

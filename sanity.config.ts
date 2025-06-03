@@ -23,6 +23,7 @@ export const singletonDocuments = new Set<string>([
   'aboutPage',
   'homePage',
   'contactPage',
+  'portfolioPage',
   'productionPage',
   'writingPage',
 ] satisfies DocumentType[])

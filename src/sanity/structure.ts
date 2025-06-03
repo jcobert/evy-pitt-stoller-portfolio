@@ -41,6 +41,12 @@ export const structure: StructureResolver = (S) =>
           .documentId('contactPage')
           .title('Contact Page'),
       ),
+      S.documentTypeListItem('portfolioPage' satisfies DocumentType).child(
+        S.document()
+          .schemaType('portfolioPage' satisfies DocumentType)
+          .documentId('portfolioPage')
+          .title('Portfolio Page'),
+      ),
       S.documentTypeListItem('productionPage' satisfies DocumentType).child(
         S.document()
           .schemaType('productionPage' satisfies DocumentType)
@@ -66,6 +72,7 @@ export const structure: StructureResolver = (S) =>
               'homePage',
               'aboutPage',
               'contactPage',
+              'portfolioPage',
               'productionPage',
               'writingPage',
             ] as DocumentType[]
