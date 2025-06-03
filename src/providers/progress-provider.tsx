@@ -11,7 +11,7 @@ const ProgressProvider: FC<AppProgressProviderProps> = ({
     <AppProgressProvider
       options={{ showSpinner: false }}
       shallowRouting
-      color='var(--light-purple)'
+      color='var(--secondary-light)'
       {...props}
     >
       {children}

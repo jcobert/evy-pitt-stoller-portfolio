@@ -59,7 +59,7 @@ const Page: FC<Props> = async () => {
   const image = getSanityImageUrl(photo, { ratio: 'original', width: 400 })
 
   return (
-    <Main className='bg-pale-yellow/70'>
+    <Main className='bg-primary-light/70'>
       <PageLayout>
         <Heading
           text={mainHeading}
@@ -71,7 +71,7 @@ const Page: FC<Props> = async () => {
           <PortableBlockContent value={bio} />
 
           <div className='mx-auto flex flex-col gap-3'>
-            <div className='w-3/5 lg:w-full sm:w-1/2__ h-fit max-w-2xs md:min-w-60 max-lg:aspect-square mx-auto border-4 border-white/80 rounded-md bg-light-purple'>
+            <div className='w-3/5 lg:w-full sm:w-1/2__ h-fit max-w-2xs md:min-w-60 max-lg:aspect-square mx-auto border-4 border-white/80 rounded-md bg-secondary-light'>
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={image}
@@ -81,7 +81,7 @@ const Page: FC<Props> = async () => {
             </div>
 
             <div className='flex flex-col items-center'>
-              <p className='text-light-purple font-medium text-xl'>{name}</p>
+              <p className='text-secondary-light font-medium text-xl'>{name}</p>
               <p className='text-muted-foreground'>{locale}</p>
             </div>
           </div>

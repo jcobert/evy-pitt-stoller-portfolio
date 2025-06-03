@@ -46,7 +46,7 @@ const MenuItem = forwardRef<
           className: cn(
             'w-full items-start p-6 text-balance bg-transparent rounded-none',
             active &&
-              'font-semibold bg-primary/25 hover:bg-primary/25 focus:bg-primary/50 text-purple',
+              'font-semibold bg-primary/25 hover:bg-primary/25 focus:bg-primary/50 text-secondary',
           ),
         })}
       >
@@ -82,11 +82,11 @@ const MobileNav: FC<Props> = ({ className }) => {
             setIsMenuOpen(true)
           }}
         >
-          <HiOutlineMenu className='text-4xl text-white' />
+          <HiOutlineMenu className='text-4xl text-secondary' />
         </SheetTrigger>
         <SheetContent className='backdrop-blur-lg bg-background/90 pb-safe'>
           <SheetHeader className='border-b-2'>
-            <SheetTitle>Menu</SheetTitle>
+            <SheetTitle className='text-muted-foreground'>Menu</SheetTitle>
             <SheetDescription className='sr-only'>
               Navigation menu
             </SheetDescription>

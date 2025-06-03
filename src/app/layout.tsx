@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Poppins, Righteous } from 'next/font/google'
+import { Bodoni_Moda, Inter } from 'next/font/google'
 import { ReactNode } from 'react'
 
 import { cn } from '@/utils/style'
@@ -15,19 +15,19 @@ export const metadata: Metadata = {
   title: 'Evy Pitt Stoller',
 }
 
-const poppins = Poppins({
-  weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
+const bodoniModa = Bodoni_Moda({
+  // weight: ['400', '500', '600', '700', '800', '900'],
   subsets: ['latin'],
-  variable: '--font-poppins',
+  variable: '--font-bodoni-moda',
 })
 
-const righteous = Righteous({
-  weight: ['400'],
+const inter = Inter({
+  // weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
   subsets: ['latin'],
-  variable: '--font-righteous',
+  variable: '--font-inter',
 })
 
-const fontVars = cn([poppins.variable, righteous.variable])
+const fontVars = cn([bodoniModa.variable, inter.variable])
 
 export default function RootLayout({
   children,
@@ -35,13 +35,12 @@ export default function RootLayout({
   children: ReactNode
 }>) {
   return (
-    <html lang='en' className={fontVars}>
+    <html lang='en' suppressHydrationWarning className={fontVars}>
       <body className='antialiased'>
         <ProgressProvider>
           <div className='flex flex-col h-full min-h-dvh'>
             <Header />
             {children}
-            {/** @todo add footer. */}
             <Footer />
           </div>
         </ProgressProvider>

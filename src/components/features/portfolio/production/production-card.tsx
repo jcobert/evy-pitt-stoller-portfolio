@@ -16,6 +16,7 @@ type Props = {
   className?: string
   showDescription?: boolean
   showDate?: boolean
+  dark?: boolean
 }
 
 const ProductionCard: FC<Props> = ({
@@ -23,6 +24,7 @@ const ProductionCard: FC<Props> = ({
   className,
   showDescription = true,
   showDate = true,
+  dark = false,
 }) => {
   const { title, datePublished, mainVideo, mainImage, slug, description } =
     production || {}
@@ -41,11 +43,17 @@ const ProductionCard: FC<Props> = ({
     >
       <VideoThumbnail
         video={video}
-        className='group-hover:shadow-md transition animate-none'
+        className='group-hover:shadow-md shadow transition animate-none border-secondary/75'
       />
       <div className='flex flex-col items-center text-pretty'>
         <div className='flex flex-col gap-2 items-center text-pretty'>
-          <span className='group-hover:text-foreground/80 transition text-lg_ font-medium leading-snug'>
+          <span
+            className={cn(
+              'transition text-lg_ font-medium leading-snug',
+              'text-primary-foreground group-hover:text-primary-foreground/80',
+              dark && 'text-primary-light group-hover:text-primary',
+            )}
+          >
             {title}
           </span>
 
@@ -60,7 +68,7 @@ const ProductionCard: FC<Props> = ({
               value={description}
               prose={false}
               preview
-              className='text-sm text-pretty fade-out-b max-h-16 overflow-hidden group-hover:text-foreground/80 transition'
+              className='text-sm text-pretty fade-out-b max-h-16 overflow-hidden group-hover:text-primary-foreground/80 transition'
             />
           ) : null}
         </div>

@@ -10,7 +10,12 @@ export const CONTACT_CTA_LINK = '/contact'
 
 const ContactCta: FC<Props> = ({ className, ...props }) => {
   return (
-    <Button asChild className={cn('w-fit', className)} {...props}>
+    <Button
+      asChild
+      variant='outline'
+      className={cn('w-fit', className)}
+      {...props}
+    >
       <Link href={CONTACT_CTA_LINK}>{"Let's talk"}</Link>
     </Button>
   )

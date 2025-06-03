@@ -20,7 +20,9 @@ const Main: FC<PageLayoutProps> = ({
   backgroundImageClassName,
 }) => {
   return (
-    <main className={cn(['h-full grow pb-16', className])}>
+    <main
+      className={cn(['h-full grow pb-16', 'bg-primary-light/40', className])}
+    >
       {backgroundImage ? (
         <BackgroundImage
           backgroundImage={backgroundImage}

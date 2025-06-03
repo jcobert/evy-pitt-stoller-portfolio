@@ -44,7 +44,7 @@ const Page: FC<Props> = async () => {
   const subheading = heading?.subheading || "Look, mom, I'm a published writer!"
 
   return (
-    <Main className='bg-background'>
+    <Main>
       <PageLayout>
         <Heading text={mainHeading} description={subheading} />
         <section className='my-4'>
