@@ -63,7 +63,7 @@ const Page: FC<Props> = async () => {
 
       <section className='layout px-4 md:px-12 flex flex-col gap-12 py-8'>
         <div className='max-w-prose flex flex-col gap-2'>
-          <h3 className='text-2xl sm:text-3xl md:text-4xl font-semibold font-display text-balance text-primary-light__ border-b lg:w-1/2 min-w-fit pb-2'>
+          <h3 className='text-2xl sm:text-3xl md:text-4xl font-semibold font-display text-balance text-muted-foreground border-b lg:w-1/2 min-w-fit pb-2'>
             {productionPage?.heading?.mainHeading}
           </h3>
           {/* <p className='text-balance text-lg text-primary/70__ md:max-w-xs'>
@@ -104,11 +104,11 @@ const Page: FC<Props> = async () => {
         )}
       </section>
 
-      <Separator className='my-8 lg:w-1/3 mx-auto' />
+      <Separator className='my-8 md:w-1/3 mx-auto' />
 
       <section className='layout px-4 md:px-12 flex flex-col gap-12 py-8'>
         <div className='max-w-prose flex flex-col gap-2'>
-          <h3 className='text-2xl sm:text-3xl font-semibold font-display text-balance text-secondary__ border-b lg:w-1/3 min-w-fit pb-2'>
+          <h3 className='text-2xl sm:text-3xl md:text-4xl font-semibold font-display text-balance text-muted-foreground border-b lg:w-1/2 min-w-fit pb-2'>
             {writingPage?.heading?.mainHeading}
           </h3>
           {/* <p className='text-balance text-lg text-secondary/70__ md:max-w-xs'>
