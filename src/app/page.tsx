@@ -5,6 +5,7 @@ import BrandsList from '@/components/brands-list'
 import HereoSection from '@/components/features/home/hero-section'
 import ProductionsSection from '@/components/features/home/productions-section'
 import WritingSection from '@/components/features/home/writing-section'
+import Ticker from '@/components/general/ticker'
 import Main from '@/components/layout/main'
 import PageLayout from '@/components/layout/page-layout'
 
@@ -63,7 +64,9 @@ const Page: FC = async () => {
         <HereoSection profile={profile} welcomeBlurb={welcomeBlurb} />
       </PageLayout>
 
-      <BrandsList brands={profile?.companies} className=' bg-white w-full overflow-auto p-4' />
+      <Ticker className='bg-white/50 py-4'>
+        <BrandsList brands={profile?.companies} />
+      </Ticker>
 
       <ProductionsSection
         productions={productions}
