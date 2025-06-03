@@ -156,6 +156,7 @@ export const getSanityImageUrl = (
     ratio?: ImageRatio
     width?: number
     crop?: Parameters<ImageUrlBuilder['crop']>['0']
+    format?: Parameters<ImageUrlBuilder['format']>['0']
   },
 ) => {
   if (!image?.asset) return ''
@@ -164,6 +165,7 @@ export const getSanityImageUrl = (
     ratio = 'original',
     width = originalDimensions?.width,
     crop = 'entropy',
+    format = 'webp',
   } = options || {}
   const hotspot = image?.hotspot
 
@@ -172,7 +174,7 @@ export const getSanityImageUrl = (
   let img = urlFor(image)
     .fit('crop')
     .crop(hotspot ? 'focalpoint' : crop)
-    .format('webp')
+    .format(format)
 
   if (
     size?.width &&

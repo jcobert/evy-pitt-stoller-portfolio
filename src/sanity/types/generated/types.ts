@@ -233,6 +233,22 @@ export type Profile = {
         _key: string
       } & Video)
   >
+  companies?: Array<{
+    name?: string
+    logo?: {
+      asset?: {
+        _ref: string
+        _type: 'reference'
+        _weak?: boolean
+        [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+      }
+      media?: unknown
+      hotspot?: SanityImageHotspot
+      crop?: SanityImageCrop
+      _type: 'image'
+    }
+    _key: string
+  }>
 }
 
 export type SocialLinks = {
@@ -533,7 +549,7 @@ export type WRITING_PAGE_QUERYResult = {
 
 // Source: ./src/sanity/lib/queries/profile-query.ts
 // Variable: PROFILE_QUERY
-// Query: *[_type=='profile' && _id=="profile"]{ ..., photo{ ..., asset-> } }[0]
+// Query: *[_type=='profile' && _id=="profile"]{ ..., photo{ ..., asset-> }, companies[]{ ..., logo{ ..., asset-> } } }[0]
 export type PROFILE_QUERYResult = {
   _id: string
   _type: 'profile'
@@ -611,6 +627,38 @@ export type PROFILE_QUERYResult = {
         _key: string
       }
   >
+  companies: Array<{
+    name?: string
+    logo: {
+      asset: {
+        _id: string
+        _type: 'sanity.imageAsset'
+        _createdAt: string
+        _updatedAt: string
+        _rev: string
+        originalFilename?: string
+        label?: string
+        title?: string
+        description?: string
+        altText?: string
+        sha1hash?: string
+        extension?: string
+        mimeType?: string
+        size?: number
+        assetId?: string
+        uploadId?: string
+        path?: string
+        url?: string
+        metadata?: SanityImageMetadata
+        source?: SanityAssetSourceData
+      } | null
+      media?: unknown
+      hotspot?: SanityImageHotspot
+      crop?: SanityImageCrop
+      _type: 'image'
+    } | null
+    _key: string
+  }> | null
 } | null
 
 // Source: ./src/sanity/lib/queries/projects-query.ts
@@ -1015,7 +1063,7 @@ declare module '@sanity/client' {
     '*[_type==\'contactPage\' && _id=="contactPage"]{ ... }[0]': CONTACT_PAGE_QUERYResult
     '*[_type==\'productionPage\' && _id=="productionPage"]{ ... }[0]': PRODUCTION_PAGE_QUERYResult
     '*[_type==\'writingPage\' && _id=="writingPage"]{ ... }[0]': WRITING_PAGE_QUERYResult
-    '*[_type==\'profile\' && _id=="profile"]{ ..., photo{ ..., asset-> } }[0]': PROFILE_QUERYResult
+    '*[_type==\'profile\' && _id=="profile"]{ ..., photo{ ..., asset-> }, companies[]{ ..., logo{ ..., asset-> } } }[0]': PROFILE_QUERYResult
     '*[_type==\'project\' && defined(slug)]{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ ..., videoUpload{ ..., file{ ..., asset-> } } }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } } }': PROJECTS_QUERYResult
     '*[_type==\'project\' && projectType==$projectType && defined(slug)]{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ ..., videoUpload{ ..., file{ ..., asset-> } } }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } } }': PROJECTS_BY_TYPE_QUERYResult
     '*[_type==\'project\' && slug.current==$slug]{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ ..., videoUpload{ ..., file{ ..., asset-> } } }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } } }[0]': PROJECT_BY_SLUG_QUERYResult

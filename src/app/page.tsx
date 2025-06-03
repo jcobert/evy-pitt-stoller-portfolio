@@ -1,6 +1,7 @@
 import { Metadata } from 'next'
 import { FC } from 'react'
 
+import BrandsList from '@/components/brands-list'
 import HereoSection from '@/components/features/home/hero-section'
 import ProductionsSection from '@/components/features/home/productions-section'
 import WritingSection from '@/components/features/home/writing-section'
@@ -61,6 +62,9 @@ const Page: FC = async () => {
       <PageLayout wrapperClassName='max-sm:w-full' className='max-md:px-0'>
         <HereoSection profile={profile} welcomeBlurb={welcomeBlurb} />
       </PageLayout>
+
+      <BrandsList brands={profile?.companies} className=' bg-white w-full overflow-auto p-4' />
+
       <ProductionsSection
         productions={productions}
         heading={productionPage?.heading}

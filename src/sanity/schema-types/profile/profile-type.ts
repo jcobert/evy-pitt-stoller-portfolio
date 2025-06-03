@@ -70,5 +70,27 @@ export const profileType = defineType({
       title: 'Bio',
       type: 'blockContent',
     }),
+    defineField({
+      name: 'companies',
+      type: 'array',
+      title: 'Companies',
+      description: "List of companies you've worked for or with.",
+      of: [
+        defineArrayMember({
+          type: 'object',
+          fields: [
+            defineField({ name: 'name', type: 'string', title: 'Name' }),
+            defineField({
+              name: 'logo',
+              type: 'image',
+              title: 'Logo',
+              options: {
+                hotspot: true,
+              },
+            }),
+          ],
+        }),
+      ],
+    }),
   ],
 })
