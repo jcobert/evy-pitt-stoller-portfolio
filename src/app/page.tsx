@@ -78,13 +78,13 @@ const Page: FC = async () => {
         <Ticker duration={18}>
           <BrandsList
             brands={profile?.companies?.slice(0, 6)}
-            className='grid-rows-1 !gap-0'
+            className='grid-rows-1 !gap-0 -mr-10'
           />
         </Ticker>
         <Ticker duration={22}>
           <BrandsList
             brands={profile?.companies?.slice(6)}
-            className='grid-rows-1 !gap-0'
+            className='grid-rows-1 !gap-0 -mr-10'
           />
         </Ticker>
       </div>
