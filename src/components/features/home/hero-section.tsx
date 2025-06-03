@@ -69,6 +69,7 @@ const HereoSection: FC<Props> = ({ profile, welcomeBlurb }) => {
           className={cn(
             'shrink-0 w-full sm:max-w-80 max-sm:self-center',
             'relative md:right-12 md:-ml-16',
+            'pointer-events-none',
           )}
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}

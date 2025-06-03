@@ -1,6 +1,8 @@
 import { Metadata } from 'next'
 import { FC } from 'react'
 
+import { cn } from '@/utils/style'
+
 import BrandsList from '@/components/brands-list'
 import HereoSection from '@/components/features/home/hero-section'
 import ProductionsSection from '@/components/features/home/productions-section'
@@ -64,7 +66,14 @@ const Page: FC = async () => {
         <HereoSection profile={profile} welcomeBlurb={welcomeBlurb} />
       </PageLayout>
 
-      <Ticker className='bg-white/50 py-4'>
+      <Ticker
+        className={cn(
+          'bg-primary-light py-4 relative',
+          'fade-out-r',
+          'pointer-events-none',
+          // 'before:absolute before:top-0 before:w-full before:h-full before:bg-[#ffffff4f] before:z-1',
+        )}
+      >
         <BrandsList brands={profile?.companies} />
       </Ticker>
 
