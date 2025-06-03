@@ -112,7 +112,7 @@ const Page: FC<Props> = async () => {
           </div>
 
           <Button asChild variant='outline' className='mx-auto self-center'>
-            <Link href='/portfolio/production'>View my portfolio</Link>
+            <Link href='/portfolio'>View my portfolio</Link>
           </Button>
         </section>
       </PageLayout>
