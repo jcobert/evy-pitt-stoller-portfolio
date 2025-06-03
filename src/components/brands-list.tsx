@@ -43,8 +43,8 @@ const BrandsList: FC<Props> = ({ brands, className, imageClassName }) => {
     <div
       className={cn(
         'px-4',
-        'gap-1 sm:gap-2 items-center grid grid-flow-col grid-rows-2 sm:grid-rows-1',
-        // 'flex items-center justify-around -mr-10',
+        // 'gap-1 sm:gap-2 items-center grid grid-flow-col-dense grid-rows-2 sm:grid-rows-1',
+        'flex items-center justify-around -mr-10',
         className,
       )}
     >

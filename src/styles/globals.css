@@ -197,4 +197,8 @@
     mask-mode: luminance;
     mask-image: linear-gradient(to right, white 95%, transparent);
   }
+  .fade-out-x {
+    mask-mode: luminance;
+    mask-image: linear-gradient(to right, transparent 0%, white 20%, white 50%, white 80%, transparent 100%);
+  }
 }

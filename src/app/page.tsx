@@ -68,36 +68,20 @@ const Page: FC = async () => {
 
       <div
         className={cn(
-          'bg-primary-light py-4 flex flex-col gap-2',
-          'fade-out-r',
+          'py-4 flex flex-col gap-2',
           'pointer-events-none',
+          'bg-primary-light',
+          'fade-out-x',
+          'border-y-3 border-secondary-light/80',
         )}
       >
-        <Ticker
-          className={
-            cn()
-            // 'bg-primary-light py-4 relative',
-            // 'fade-out-r',
-            // 'pointer-events-none',
-            // 'before:absolute before:top-0 before:w-full before:h-full before:bg-[#ffffff4f] before:z-1',
-          }
-          // duration={18}
-        >
+        <Ticker duration={18}>
           <BrandsList
             brands={profile?.companies?.slice(0, 6)}
             className='grid-rows-1 !gap-0'
           />
         </Ticker>
-        <Ticker
-          className={
-            cn()
-            // 'bg-primary-light py-4 relative',
-            // 'fade-out-r',
-            // 'pointer-events-none',
-            // 'before:absolute before:top-0 before:w-full before:h-full before:bg-[#ffffff4f] before:z-1',
-          }
-          duration={25}
-        >
+        <Ticker duration={22}>
           <BrandsList
             brands={profile?.companies?.slice(6)}
             className='grid-rows-1 !gap-0'
