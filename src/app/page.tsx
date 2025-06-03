@@ -66,16 +66,44 @@ const Page: FC = async () => {
         <HereoSection profile={profile} welcomeBlurb={welcomeBlurb} />
       </PageLayout>
 
-      <Ticker
+      <div
         className={cn(
-          'bg-primary-light py-4 relative',
+          'bg-primary-light py-4 flex flex-col gap-2',
           'fade-out-r',
           'pointer-events-none',
-          // 'before:absolute before:top-0 before:w-full before:h-full before:bg-[#ffffff4f] before:z-1',
         )}
       >
-        <BrandsList brands={profile?.companies} />
-      </Ticker>
+        <Ticker
+          className={
+            cn()
+            // 'bg-primary-light py-4 relative',
+            // 'fade-out-r',
+            // 'pointer-events-none',
+            // 'before:absolute before:top-0 before:w-full before:h-full before:bg-[#ffffff4f] before:z-1',
+          }
+          // duration={18}
+        >
+          <BrandsList
+            brands={profile?.companies?.slice(0, 6)}
+            className='grid-rows-1 !gap-0'
+          />
+        </Ticker>
+        <Ticker
+          className={
+            cn()
+            // 'bg-primary-light py-4 relative',
+            // 'fade-out-r',
+            // 'pointer-events-none',
+            // 'before:absolute before:top-0 before:w-full before:h-full before:bg-[#ffffff4f] before:z-1',
+          }
+          duration={25}
+        >
+          <BrandsList
+            brands={profile?.companies?.slice(6)}
+            className='grid-rows-1 !gap-0'
+          />
+        </Ticker>
+      </div>
 
       <ProductionsSection
         productions={productions}

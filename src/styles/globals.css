@@ -58,7 +58,6 @@
 @theme {
   --animate-fade-in: fadeIn 2000ms ease;
   --animate-infinite-scroll: infiniteScroll 30s linear infinite;
-  --animate-infinite-scroll2: infiniteScroll2 30s linear infinite;
 
   @keyframes fadeIn {
     0% {
