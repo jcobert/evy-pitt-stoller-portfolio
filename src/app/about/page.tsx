@@ -94,7 +94,7 @@ const Page: FC<Props> = async () => {
         <section className='mt-12 max-lg:mx-auto max-w-prose flex flex-col gap-8 w-full'>
           <div className='flex flex-col gap-6'>
             <h3 className='font-semibold text-lg__ text-secondary'>
-              {"Companies I've worked with"}
+              Featured In
             </h3>
             <BrandsList
               brands={profile?.companies}
@@ -106,7 +106,7 @@ const Page: FC<Props> = async () => {
               imageClassName={cn(
                 'col-span-1 mx-auto',
                 'pointer-events-none',
-                'size-20 max-w-none rounded-full border p-2',
+                'size-20 max-w-none rounded-full border border-primary p-2',
               )}
             />
           </div>
