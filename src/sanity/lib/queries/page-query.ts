@@ -6,6 +6,8 @@ export const ABOUT_PAGE_QUERY = groq`*[_type=='aboutPage' && _id=="aboutPage"]{ 
 
 export const CONTACT_PAGE_QUERY = groq`*[_type=='contactPage' && _id=="contactPage"]{ ... }[0]`
 
+export const PORTFOLIO_PAGE_QUERY = groq`*[_type=='portfolioPage' && _id=="portfolioPage"]{ ... }[0]`
+
 export const PRODUCTION_PAGE_QUERY = groq`*[_type=='productionPage' && _id=="productionPage"]{ ... }[0]`
 
 export const WRITING_PAGE_QUERY = groq`*[_type=='writingPage' && _id=="writingPage"]{ ... }[0]`

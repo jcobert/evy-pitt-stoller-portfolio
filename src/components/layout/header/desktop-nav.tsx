@@ -70,7 +70,9 @@ const DesktopNav: FC<Props> = ({ className }) => {
                       </li>
                     ) : null}
                     {item?.menu?.links?.map((menuItem) => {
-                      const isActiveMenuItem = isActivePath(menuItem?.url)
+                      const isActiveMenuItem = isActivePath(menuItem?.url, {
+                        exact: true,
+                      })
                       return (
                         <li key={menuItem?.id}>
                           <NavigationMenuLink

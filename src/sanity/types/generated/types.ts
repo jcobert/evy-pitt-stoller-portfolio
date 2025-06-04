@@ -142,6 +142,16 @@ export type ProductionPage = {
   seo?: Seo
 }
 
+export type PortfolioPage = {
+  _id: string
+  _type: 'portfolioPage'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  heading?: PageHeading
+  seo?: Seo
+}
+
 export type ContactPage = {
   _id: string
   _type: 'contactPage'
@@ -453,6 +463,7 @@ export type AllSanitySchemaTypes =
   | Slug
   | WritingPage
   | ProductionPage
+  | PortfolioPage
   | ContactPage
   | HomePage
   | AboutPage
@@ -518,6 +529,17 @@ export type ABOUT_PAGE_QUERYResult = {
 export type CONTACT_PAGE_QUERYResult = {
   _id: string
   _type: 'contactPage'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  heading?: PageHeading
+  seo?: Seo
+} | null
+// Variable: PORTFOLIO_PAGE_QUERY
+// Query: *[_type=='portfolioPage' && _id=="portfolioPage"]{ ... }[0]
+export type PORTFOLIO_PAGE_QUERYResult = {
+  _id: string
+  _type: 'portfolioPage'
   _createdAt: string
   _updatedAt: string
   _rev: string
@@ -1061,6 +1083,7 @@ declare module '@sanity/client' {
     '*[_type==\'homePage\' && _id=="homePage"]{ ... }[0]': HOME_PAGE_QUERYResult
     '*[_type==\'aboutPage\' && _id=="aboutPage"]{ ... }[0]': ABOUT_PAGE_QUERYResult
     '*[_type==\'contactPage\' && _id=="contactPage"]{ ... }[0]': CONTACT_PAGE_QUERYResult
+    '*[_type==\'portfolioPage\' && _id=="portfolioPage"]{ ... }[0]': PORTFOLIO_PAGE_QUERYResult
     '*[_type==\'productionPage\' && _id=="productionPage"]{ ... }[0]': PRODUCTION_PAGE_QUERYResult
     '*[_type==\'writingPage\' && _id=="writingPage"]{ ... }[0]': WRITING_PAGE_QUERYResult
     '*[_type==\'profile\' && _id=="profile"]{ ..., photo{ ..., asset-> }, companies[]{ ..., logo{ ..., asset-> } } }[0]': PROFILE_QUERYResult
