@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { FC } from 'react'
 
 import { getSanityImageUrl } from '@/utils/media'
-import { fullName } from '@/utils/string'
+import { getFullName } from '@/utils/string'
 import { cn } from '@/utils/style'
 
 import BrandsList from '@/components/brands-list'
@@ -56,7 +56,7 @@ const Page: FC<Props> = async () => {
   const mainHeading = heading?.mainHeading || 'About Me'
   const subheading = heading?.subheading || ''
 
-  const name = fullName(firstName, lastName)
+  const name = getFullName(firstName, lastName)
 
   const locale = locations?.join(' | ')
 

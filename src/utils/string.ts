@@ -1,4 +1,4 @@
-export const fullName = (
+export const getFullName = (
   first: string | null = '',
   last: string | null = '',
 ) => {

@@ -18,9 +18,13 @@ const Logo: FC<Props> = ({ className, ...props }) => {
         Evy.
       </div> */}
 
-      <div className='flex-auto flex items-baseline justify-center pb-px -mx-1 bg-secondary-light__ bg-secondary text-center text-white font-display'>
+      {/* <div className='flex-auto flex items-baseline justify-center pb-px -mx-1 bg-secondary-light__ bg-secondary text-center text-white font-display'>
         <span className='leading'>Evy</span>
         <span className='text-2xl leading-0'>.</span>
+      </div> */}
+
+      <div className='flex-auto -mx-1 bg-secondary pt-px text-center text-white font-display'>
+        EPS
       </div>
     </div>
   )
