@@ -114,7 +114,9 @@ const MobileNav: FC<Props> = ({ className }) => {
                               key={menuItem?.id}
                               item={menuItem}
                               inner
-                              active={isActivePath(menuItem?.url)}
+                              active={isActivePath(menuItem?.url, {
+                                exact: true,
+                              })}
                               onClick={(e) => handleLinkClick(e, menuItem?.url)}
                             />
                           ))}
