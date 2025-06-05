@@ -1,3 +1,5 @@
+import { productionPageMeta } from './(data)/meta'
+import { productionsPageJsonLd } from './(data)/structured'
 import { Metadata } from 'next'
 import { FC } from 'react'
 
@@ -9,7 +11,6 @@ import PageLayout from '@/components/layout/page-layout'
 
 import { PageParams } from '@/types/general'
 
-import { generatePageMeta } from '@/configuration/seo'
 import { getPage, getProjects } from '@/sanity/lib/fetch'
 
 const loadContent = async () => {
@@ -17,33 +18,29 @@ const loadContent = async () => {
     getPage('productionPage'),
     getProjects({ projectType: 'production' }),
   ])
-
   return { productionPage, projects }
 }
 
+export type ProductionPageData = Awaited<ReturnType<typeof loadContent>>
+
 export const generateMetadata = async (): Promise<Metadata> => {
-  const { productionPage } = await loadContent()
-  const { heading, seo } = productionPage || {}
-
-  const title = heading?.mainHeading
-
-  return generatePageMeta({
-    title,
-    description: seo?.description,
-    url: '/portfolio/production',
-  })
+  const data = await loadContent()
+  return productionPageMeta(data)
 }
 
 type Props = PageParams
 
 const Page: FC<Props> = async () => {
-  const { projects, productionPage } = await loadContent()
+  const data = await loadContent()
+  const { projects, productionPage } = data
   const { heading } = productionPage || {}
 
   const mainHeading = heading?.mainHeading || 'Production'
   const subheading =
     heading?.subheading ||
     "Check out some of the awesome projects I've worked on!"
+
+  const jsonLd = await productionsPageJsonLd(data)
 
   return (
     <Main>
@@ -69,6 +66,11 @@ const Page: FC<Props> = async () => {
           )}
         </section>
       </PageLayout>
+
+      <script
+        type='application/ld+json'
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
     </Main>
   )
 }

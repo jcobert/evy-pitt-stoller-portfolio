@@ -1,3 +1,5 @@
+import { portfolioPageMeta } from './(data)/meta'
+import { portfolioPageJsonLd } from './(data)/structured'
 import { Metadata } from 'next'
 import Link from 'next/link'
 import { FC } from 'react'
@@ -15,7 +17,6 @@ import { Button } from '@/components/ui/button'
 
 import { PageParams } from '@/types/general'
 
-import { generatePageMeta } from '@/configuration/seo'
 import { getPage, getProjects } from '@/sanity/lib/fetch'
 
 const loadContent = async () => {
@@ -27,33 +28,29 @@ const loadContent = async () => {
       getProjects({ projectType: 'production' }),
       getProjects({ projectType: 'writing' }),
     ])
-
   return { portfolioPage, productionPage, writingPage, productions, writing }
 }
 
+export type PortfolioPageData = Awaited<ReturnType<typeof loadContent>>
+
 export const generateMetadata = async (): Promise<Metadata> => {
-  const { portfolioPage } = await loadContent()
-  const { heading, seo } = portfolioPage || {}
-
-  const title = heading?.mainHeading
-
-  return generatePageMeta({
-    title,
-    description: seo?.description,
-    url: '/portfolio',
-  })
+  const data = await loadContent()
+  return portfolioPageMeta(data)
 }
 
 type Props = PageParams
 
 const Page: FC<Props> = async () => {
+  const data = await loadContent()
   const { portfolioPage, productionPage, writingPage, productions, writing } =
-    await loadContent()
+    data
 
   const mainHeading = portfolioPage?.heading?.mainHeading || 'Portfolio'
   const subheading =
     portfolioPage?.heading?.subheading ||
     "A collection of projects that I've worked on."
+
+  const jsonLd = await portfolioPageJsonLd(data)
 
   return (
     <Main>
@@ -141,6 +138,11 @@ const Page: FC<Props> = async () => {
           </div>
         )}
       </section>
+
+      <script
+        type='application/ld+json'
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
     </Main>
   )
 }
