@@ -1,5 +1,5 @@
 import { productionPageMeta } from './(data)/meta'
-import { productionsPageJsonLd } from './(data)/structured'
+import { productionPageJsonLd } from './(data)/structured'
 import { Metadata } from 'next'
 import { FC } from 'react'
 
@@ -40,7 +40,7 @@ const Page: FC<Props> = async () => {
     heading?.subheading ||
     "Check out some of the awesome projects I've worked on!"
 
-  const jsonLd = await productionsPageJsonLd(data)
+  const jsonLd = await productionPageJsonLd(data)
 
   return (
     <Main>

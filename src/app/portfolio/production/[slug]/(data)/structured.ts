@@ -1,13 +1,13 @@
-import { productionPageMeta } from './meta'
+import { productionSlugPageMeta } from './meta'
 import { WebPage, WithContext } from 'schema-dts'
 
 import { websiteJsonLd } from '@/configuration/structured-data'
 
-export const productionPageJsonLd = async (
-  ...params: Parameters<typeof productionPageMeta>
+export const productionSlugPageJsonLd = async (
+  ...params: Parameters<typeof productionSlugPageMeta>
 ) => {
   const website = await websiteJsonLd()
-  const meta = productionPageMeta(...params)
+  const meta = productionSlugPageMeta(...params)
 
   const url = meta?.openGraph?.url as string
 
