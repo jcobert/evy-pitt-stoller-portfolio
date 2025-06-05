@@ -29,14 +29,14 @@ const HereoSection: FC<Props> = ({ profile, welcomeBlurb }) => {
 
   return (
     <section className='flex flex-col justify-between gap-16'>
-      <div className='flex flex-col gap-6 mt-8 md:mt-20 max-md:px-4'>
+      <div className='flex flex-col gap-2 sm:gap-6 mt-8 md:mt-20 max-md:px-4'>
         <h1
           className={cn(
             'flex flex-col gap-3 w-fit',
-            'text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-display font-bold text-balance',
+            'text-4xl sm:text-6xl md:text-7xl lg:text-7xl font-display font-bold text-balance',
             'text-transparent bg-clip-text bg-gradient-to-r from-secondary from-30% to-secondary-light',
-            'uppercase',
-            // 'pb-2 md:pb-3',
+            // 'uppercase',
+            'pb-2 md:pb-3',
           )}
         >
           {fullName}
