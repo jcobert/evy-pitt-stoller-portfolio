@@ -1,3 +1,5 @@
+import { aboutPageMeta } from './(data)/meta'
+import { aboutPageJsonLd } from './(data)/structured'
 import { Metadata } from 'next'
 import Link from 'next/link'
 import { FC } from 'react'
@@ -15,7 +17,6 @@ import { Button } from '@/components/ui/button'
 
 import { PageParams } from '@/types/general'
 
-import { generatePageMeta } from '@/configuration/seo'
 import { getPage, getProfile } from '@/sanity/lib/fetch'
 
 const loadContent = async () => {
@@ -23,33 +24,21 @@ const loadContent = async () => {
     getPage('aboutPage'),
     getProfile(),
   ])
-
   return { aboutPage, profile }
 }
 
+export type AboutPageData = Awaited<ReturnType<typeof loadContent>>
+
 export const generateMetadata = async (): Promise<Metadata> => {
-  const { profile, aboutPage } = await loadContent()
-  const { heading, seo } = aboutPage || {}
-
-  const title = heading?.mainHeading
-
-  return generatePageMeta({
-    title,
-    description: seo?.description,
-    url: '/about',
-    images: [
-      getSanityImageUrl(profile?.photo, {
-        ratio: 'square',
-        crop: 'top',
-      }),
-    ],
-  })
+  const data = await loadContent()
+  return aboutPageMeta(data)
 }
 
 type Props = PageParams
 
 const Page: FC<Props> = async () => {
-  const { profile, aboutPage } = await loadContent()
+  const data = await loadContent()
+  const { profile, aboutPage } = data
   const { bio, photo, firstName, lastName, locations } = profile || {}
   const { heading } = aboutPage || {}
 
@@ -61,6 +50,8 @@ const Page: FC<Props> = async () => {
   const locale = locations?.join(' | ')
 
   const image = getSanityImageUrl(photo, { ratio: 'original', width: 400 })
+
+  const jsonLd = await aboutPageJsonLd(data)
 
   return (
     <Main className='bg-primary-light/70'>
@@ -116,6 +107,11 @@ const Page: FC<Props> = async () => {
           </Button>
         </section>
       </PageLayout>
+
+      <script
+        type='application/ld+json'
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
     </Main>
   )
 }
