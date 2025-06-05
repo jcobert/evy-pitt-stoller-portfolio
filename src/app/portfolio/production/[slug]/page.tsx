@@ -1,7 +1,7 @@
+import { productionSlugPageMeta } from './(data)/meta'
+import { productionSlugPageJsonLd } from './(data)/structured'
 import { Metadata } from 'next'
 import { FC } from 'react'
-
-import { getSanityVideo } from '@/utils/media'
 
 import ProductionPost from '@/components/features/portfolio/production/production-post'
 import Heading from '@/components/layout/heading'
@@ -10,7 +10,6 @@ import PageLayout from '@/components/layout/page-layout'
 
 import { PageParams } from '@/types/general'
 
-import { generatePageMeta } from '@/configuration/seo'
 import { getProject, getProjects } from '@/sanity/lib/fetch'
 
 type Props = PageParams<{ slug: string }>
@@ -20,23 +19,15 @@ const loadContent = async (slug: Awaited<Props['params']>['slug']) => {
   return { project }
 }
 
+export type ProductionSlugPageData = Awaited<ReturnType<typeof loadContent>> &
+  Awaited<Props['params']>
+
 export const generateMetadata = async ({
   params,
 }: Props): Promise<Metadata> => {
   const { slug } = await params
   const { project } = await loadContent(slug)
-  const { seo } = project || {}
-
-  const thumbnail = getSanityVideo(project?.mainVideo, {
-    thumbnailImage: project?.mainImage,
-  })?.thumbnailUrl
-
-  return generatePageMeta({
-    title: `Production - ${project?.title}`,
-    description: seo?.description,
-    url: `/portfolio/production/${slug}`,
-    images: thumbnail ? [thumbnail] : undefined,
-  })
+  return productionSlugPageMeta({ project, slug })
 }
 
 export const generateStaticParams = async () => {
@@ -47,16 +38,23 @@ export const generateStaticParams = async () => {
 const Page: FC<Props> = async ({ params }) => {
   const slug = (await params)?.slug
 
-  const production = await getProject({ slug })
+  const project = await getProject({ slug })
+
+  const jsonLd = await productionSlugPageJsonLd({ project, slug })
 
   return (
     <Main className='bg-background'>
       <PageLayout back={{ href: '/portfolio/production', text: 'Back' }}>
-        <Heading text={production?.title} />
+        <Heading text={project?.title} />
         <section>
-          <ProductionPost production={production} />
+          <ProductionPost production={project} />
         </section>
       </PageLayout>
+
+      <script
+        type='application/ld+json'
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
     </Main>
   )
 }

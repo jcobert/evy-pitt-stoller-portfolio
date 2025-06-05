@@ -1,7 +1,7 @@
+import { writingSlugPageMeta } from './(data)/meta'
+import { writingSlugPageJsonLd } from './(data)/structured'
 import { Metadata } from 'next'
 import { FC } from 'react'
-
-import { getSanityImageUrl } from '@/utils/media'
 
 import WritingPost from '@/components/features/portfolio/writing/writing-post'
 import Heading from '@/components/layout/heading'
@@ -10,7 +10,6 @@ import PageLayout from '@/components/layout/page-layout'
 
 import { PageParams } from '@/types/general'
 
-import { generatePageMeta } from '@/configuration/seo'
 import { getProject, getProjects } from '@/sanity/lib/fetch'
 
 type Props = PageParams<{ slug: string }>
@@ -20,24 +19,15 @@ const loadContent = async (slug: Awaited<Props['params']>['slug']) => {
   return { project }
 }
 
+export type WritingSlugPageData = Awaited<ReturnType<typeof loadContent>> &
+  Awaited<Props['params']>
+
 export const generateMetadata = async ({
   params,
 }: Props): Promise<Metadata> => {
   const { slug } = await params
   const { project } = await loadContent(slug)
-  const { seo } = project || {}
-
-  const image = getSanityImageUrl(project?.mainImage, {
-    ratio: '4/3',
-    width: 800,
-  })
-
-  return generatePageMeta({
-    title: `Writing - ${project?.title}`,
-    description: seo?.description,
-    url: `/portfolio/writing/${slug}`,
-    images: image ? [image] : undefined,
-  })
+  return writingSlugPageMeta({ project, slug })
 }
 
 export const generateStaticParams = async () => {
@@ -50,6 +40,8 @@ const Page: FC<Props> = async ({ params }) => {
 
   const { project } = await loadContent(slug)
 
+  const jsonLd = await writingSlugPageJsonLd({ project, slug })
+
   return (
     <Main className='bg-background'>
       <PageLayout back={{ href: '/portfolio/writing', text: 'Back' }}>
@@ -58,6 +50,11 @@ const Page: FC<Props> = async ({ params }) => {
           <WritingPost writing={project} />
         </section>
       </PageLayout>
+
+      <script
+        type='application/ld+json'
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
     </Main>
   )
 }

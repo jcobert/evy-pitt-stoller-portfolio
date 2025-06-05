@@ -1,3 +1,5 @@
+import { homePageMeta } from './(data)/meta'
+import { homePageJsonLd } from './(data)/structured'
 import { Metadata } from 'next'
 import { FC } from 'react'
 
@@ -11,7 +13,6 @@ import Ticker from '@/components/general/ticker'
 import Main from '@/components/layout/main'
 import PageLayout from '@/components/layout/page-layout'
 
-import { generatePageMeta } from '@/configuration/seo'
 import { getPage, getProfile, getProjects } from '@/sanity/lib/fetch'
 
 const loadContent = async () => {
@@ -39,13 +40,7 @@ const loadContent = async () => {
 
 export const generateMetadata = async (): Promise<Metadata> => {
   const homePage = await getPage('homePage')
-  const seo = homePage?.seo
-
-  return generatePageMeta({
-    title: 'Home',
-    description: seo?.description,
-    url: '/',
-  })
+  return homePageMeta(homePage)
 }
 
 const Page: FC = async () => {
@@ -59,6 +54,8 @@ const Page: FC = async () => {
   } = await loadContent()
 
   const { welcomeBlurb } = homePage || {}
+
+  const jsonLd = await homePageJsonLd(homePage)
 
   return (
     <Main className='bg-gradient-to-br from-primary/90 from-20% to-primary pb-0'>
@@ -94,6 +91,11 @@ const Page: FC = async () => {
         heading={productionPage?.heading}
       />
       <WritingSection writing={writing} heading={writingPage?.heading} />
+
+      <script
+        type='application/ld+json'
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
     </Main>
   )
 }

@@ -1,3 +1,5 @@
+import { contactPageMeta } from './(data)/meta'
+import { contactPageJsonLd } from './(data)/structured'
 import { Metadata } from 'next'
 import { FC } from 'react'
 
@@ -13,7 +15,6 @@ import PageLayout from '@/components/layout/page-layout'
 
 import { PageParams } from '@/types/general'
 
-import { generatePageMeta } from '@/configuration/seo'
 import { getPage, getProfile } from '@/sanity/lib/fetch'
 
 const loadContent = async () => {
@@ -21,33 +22,29 @@ const loadContent = async () => {
     getPage('contactPage'),
     getProfile(),
   ])
-
   return { profile, contactPage }
 }
 
+export type ContactPageData = Awaited<ReturnType<typeof loadContent>>
+
 export const generateMetadata = async (): Promise<Metadata> => {
-  const { contactPage } = await loadContent()
-  const { heading, seo } = contactPage || {}
-
-  const title = heading?.mainHeading
-
-  return generatePageMeta({
-    title,
-    description: seo?.description,
-    url: '/contact',
-  })
+  const data = await loadContent()
+  return contactPageMeta(data)
 }
 
 type Props = PageParams
 
 const Page: FC<Props> = async () => {
-  const { profile, contactPage } = await loadContent()
+  const data = await loadContent()
+  const { profile, contactPage } = data
   const { heading } = contactPage || {}
 
   const mainHeading = heading?.mainHeading || 'Contact Me'
   const subheading =
     heading?.subheading ||
     "Let's talk! I'd love to hear about opportunities you may have."
+
+  const jsonLd = await contactPageJsonLd(data)
 
   return (
     <Main>
@@ -112,6 +109,11 @@ const Page: FC<Props> = async () => {
           ) : null}
         </section>
       </PageLayout>
+
+      <script
+        type='application/ld+json'
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
     </Main>
   )
 }
