@@ -1,9 +1,20 @@
 import { Person, WebSite, WithContext } from 'schema-dts'
 
-import { canonicalUrl, siteConfig } from '@/configuration/site'
+import { getContactLinksArray } from '@/components/general/contact-links'
 
-export const personJsonLd = () =>
-  ({
+import { canonicalUrl, siteConfig } from '@/configuration/site'
+import { getProfile } from '@/sanity/lib/fetch'
+
+export const personJsonLd = async () => {
+  const { contactInfo } = (await getProfile()) || {}
+
+  const links = contactInfo
+    ? getContactLinksArray(contactInfo, { exclude: ['email', 'phone'] })?.map(
+        ([, { url }]) => url,
+      )
+    : []
+
+  return {
     '@context': 'https://schema.org',
     '@type': 'Person',
     '@id': canonicalUrl('#evy-pitt-stoller'),
@@ -11,19 +22,17 @@ export const personJsonLd = () =>
     familyName: 'Pitt-Stoller',
     givenName: 'Evy',
     alternateName: 'Evelyn Pitt-Stoller',
-    /** @todo add social links. */
-    sameAs: [''],
-  }) satisfies WithContext<Person>
+    sameAs: links,
+  } satisfies WithContext<Person>
+}
 
-export const websiteJsonLd = () => {
-  const website: WithContext<WebSite> = {
+export const websiteJsonLd = async () => {
+  return {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
     '@id': siteConfig?.url,
     name: siteConfig?.title,
     url: siteConfig?.url,
-    publisher: personJsonLd(),
-  }
-
-  return website
+    publisher: await personJsonLd(),
+  } satisfies WithContext<WebSite>
 }
