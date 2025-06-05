@@ -1,6 +1,7 @@
 import { FC } from 'react'
 
 import { getSanityImageUrl } from '@/utils/media'
+import { getFullName } from '@/utils/string'
 import { cn } from '@/utils/style'
 
 import CardStack from '@/components/general/card-stack'
@@ -16,6 +17,9 @@ type Props = {
 const HereoSection: FC<Props> = ({ profile, welcomeBlurb }) => {
   const firstName = profile?.firstName || 'Evy'
   const lastName = profile?.lastName || 'Pitt-Stoller'
+  const fullName = getFullName(firstName, lastName)
+
+  const nameIsUppercase = fullName?.toUpperCase() === fullName
 
   const titles = profile?.titles?.length
     ? profile?.titles
@@ -27,24 +31,24 @@ const HereoSection: FC<Props> = ({ profile, welcomeBlurb }) => {
 
   return (
     <section className='flex flex-col justify-between gap-16'>
-      <div className='flex flex-col gap-6 mt-8 md:mt-20 max-md:px-4'>
+      <div className='flex flex-col gap-2 sm:gap-6 mt-8 md:mt-20 max-md:px-4 max-md:items-center'>
         <h1
           className={cn(
             'flex flex-col gap-3 w-fit',
-            'text-5xl sm:text-6xl md:text-7xl font-display font-bold text-balance',
-            // Dark with white shadow
-            // 'text-secondary',
-            // 'text-shadow-md text-shadow-white',
-            // Gradient no shadow
+            'text-4xl sm:text-6xl md:text-7xl font-display font-bold text-balance',
             'text-transparent bg-clip-text bg-gradient-to-r from-secondary from-30% to-secondary-light',
+            'pb-2 md:pb-3',
+            nameIsUppercase &&
+              'text-3xl sm:text-5xl md:text-6xl sm:pb-0 md:pb-0',
           )}
         >
-          <span>{firstName}</span>
-          <span>{`${lastName}.`}</span>
+          {fullName}
+          {/* <span>{firstName}</span>
+          <span>{`${lastName}.`}</span> */}
         </h1>
         <h2
           className={cn(
-            'flex items-start gap-2 text-xl sm:text-2xl font-medium__ text-balance flex-wrap overflow-hidden fade-out-r',
+            'flex items-start gap-2 text-xl sm:text-2xl font-medium__ text-balance flex-wrap overflow-hidden__ fade-out-r__',
             // 'text-secondary',
             // 'text-secondary-light',
             // 'text-secondary/70',
