@@ -18,11 +18,14 @@ export const videoGroupType = defineType({
       name: 'youtube',
       type: 'youtubeVideo',
       title: 'Youtube',
+      description: 'Enter the full URL.',
     }),
     defineField({
       name: 'vimeo',
       type: 'vimeo',
       title: 'Vimeo',
+      description:
+        'Enter just the ID at the end of the URL (e.g. for "https://vimeo.com/12345" put "12345").',
       options: {
         fields: ['link', 'description', 'description_rich'],
       },
