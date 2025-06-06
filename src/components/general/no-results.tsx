@@ -17,6 +17,7 @@ const NoResults: FC<Props> = ({ text, item, className }) => {
       className={cn(
         'max-w-prose w-fit text-pretty mx-auto rounded-sm p-8 border',
         'bg-white/50 border-secondary-light/40',
+        'text-primary-foreground',
         className,
       )}
     >

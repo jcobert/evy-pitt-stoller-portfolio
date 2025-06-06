@@ -48,7 +48,7 @@ const Page: FC<Props> = async ({ params }) => {
   const jsonLd = await productionSlugPageJsonLd({ project, slug })
 
   return (
-    <Main className='bg-background'>
+    <Main>
       <PageLayout back={project ? { href: backLink, text: 'Back' } : undefined}>
         {project ? (
           <>

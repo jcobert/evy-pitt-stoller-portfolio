@@ -96,9 +96,15 @@ const HereoSection: FC<Props> = ({ profile, welcomeBlurb }) => {
               'md:right-8',
             )}
           >
-            <div className='p-4 md:p-6 text-pretty flex flex-col gap-8 justify-between pb-8'>
-              {welcomeBlurb ? <p>{welcomeBlurb}</p> : null}
+            <div
+              className={cn(
+                'p-4 md:p-6 text-pretty flex flex-col gap-8 pb-8',
+                'justify-center mx-auto',
+              )}
+            >
+              {welcomeBlurb ? <p className='text-primary-foreground'>{welcomeBlurb}</p> : null}
               <ContactLinks
+                className='mx-auto'
                 links={{
                   linkedIn: profile?.contactInfo?.linkedIn,
                   twitter: profile?.contactInfo?.twitter,
