@@ -36,8 +36,10 @@ const HereoSection: FC<Props> = ({ profile, welcomeBlurb }) => {
           className={cn(
             'flex flex-col gap-3 w-fit',
             'text-4xl sm:text-6xl md:text-7xl font-display font-bold text-balance',
-            'text-transparent bg-clip-text bg-gradient-to-r from-secondary from-30% to-secondary-light',
+            'text-transparent bg-clip-text bg-gradient-to-r from-secondary from-40% to-secondary-light',
             'pb-2 md:pb-3',
+            'animate-shimmer',
+            'bg-no-repeat',
             nameIsUppercase &&
               'text-3xl sm:text-5xl md:text-6xl sm:pb-0 md:pb-0',
           )}
@@ -48,7 +50,7 @@ const HereoSection: FC<Props> = ({ profile, welcomeBlurb }) => {
         </h1>
         <h2
           className={cn(
-            'flex items-start gap-2 text-xl sm:text-2xl font-medium__ text-balance flex-wrap overflow-hidden__ fade-out-r__',
+            'flex items-start gap-2 text-xl sm:text-2xl text-balance flex-wrap',
             // 'text-secondary',
             // 'text-secondary-light',
             // 'text-secondary/70',
