@@ -54,7 +54,7 @@ const Page: FC<Props> = async () => {
   const jsonLd = await aboutPageJsonLd(data)
 
   return (
-    <Main className='bg-primary-light/70'>
+    <Main>
       <PageLayout>
         <Heading
           text={mainHeading}

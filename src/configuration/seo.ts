@@ -65,6 +65,7 @@ export const generatePageMeta = ({
       images: images ?? [buildOgImage()],
       ...twitter,
     }),
+    appleWebApp: { title: 'Evy' },
     ...rest,
   }
 }
