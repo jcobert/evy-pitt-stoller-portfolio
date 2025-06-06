@@ -63,28 +63,30 @@ const Page: FC = async () => {
         <HereoSection profile={profile} welcomeBlurb={welcomeBlurb} />
       </PageLayout>
 
-      <div
-        className={cn(
-          'py-4 flex flex-col gap-2',
-          'pointer-events-none',
-          'bg-primary-light',
-          'fade-out-x',
-          'border-y-3 border-secondary-light/80',
-        )}
-      >
-        <Ticker duration={18}>
-          <BrandsList
-            brands={profile?.companies?.slice(0, 6)}
-            className='grid-rows-1 !gap-0 -mr-10'
-          />
-        </Ticker>
-        <Ticker duration={22}>
-          <BrandsList
-            brands={profile?.companies?.slice(6)}
-            className='grid-rows-1 !gap-0 -mr-10'
-          />
-        </Ticker>
-      </div>
+      {profile?.companies?.length ? (
+        <div
+          className={cn(
+            'py-4 flex flex-col gap-2',
+            'pointer-events-none',
+            'bg-primary-light',
+            'fade-out-x',
+            'border-y-3 border-secondary-light/80',
+          )}
+        >
+          <Ticker duration={18}>
+            <BrandsList
+              brands={profile?.companies?.slice(0, 6)}
+              className='grid-rows-1 !gap-0 -mr-10'
+            />
+          </Ticker>
+          <Ticker duration={22}>
+            <BrandsList
+              brands={profile?.companies?.slice(6)}
+              className='grid-rows-1 !gap-0 -mr-10'
+            />
+          </Ticker>
+        </div>
+      ) : null}
 
       <ProductionsSection
         productions={productions}

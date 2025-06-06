@@ -37,7 +37,7 @@ const Page: FC<Props> = async () => {
   const { heading } = writingPage || {}
 
   const mainHeading = heading?.mainHeading || 'Writing'
-  const subheading = heading?.subheading || "Look, mom, I'm a published writer!"
+  const subheading = heading?.subheading
 
   const jsonLd = await writingPageJsonLd(data)
 

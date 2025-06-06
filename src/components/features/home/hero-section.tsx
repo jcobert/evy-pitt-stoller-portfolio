@@ -78,29 +78,37 @@ const HereoSection: FC<Props> = ({ profile, welcomeBlurb }) => {
             'pointer-events-none',
           )}
         >
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={photo} alt='Evy smiling' className={cn('w-full h-auto')} />
+          {photo ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={photo}
+              alt='Evy smiling'
+              className={cn('w-full h-auto')}
+            />
+          ) : null}
         </div>
 
-        <CardStack
-          className={cn(
-            'max-sm:w-full max-sm:overflow-x-clip max-sm:bottom-16 max-sm:-mb-12',
-            'sm:max-md:top-8 sm:right-8',
-            'md:right-8',
-          )}
-        >
-          <div className='p-4 md:p-6 text-pretty flex flex-col gap-8 justify-between pb-8'>
-            {welcomeBlurb ? <p>{welcomeBlurb}</p> : null}
-            <ContactLinks
-              links={{
-                linkedIn: profile?.contactInfo?.linkedIn,
-                twitter: profile?.contactInfo?.twitter,
-                email: profile?.contactInfo?.email,
-                phone: profile?.contactInfo?.phone,
-              }}
-            />
-          </div>
-        </CardStack>
+        {!!welcomeBlurb || !!profile?.contactInfo ? (
+          <CardStack
+            className={cn(
+              'max-sm:w-full max-sm:overflow-x-clip max-sm:bottom-16 max-sm:-mb-12',
+              'sm:max-md:top-8 sm:right-8',
+              'md:right-8',
+            )}
+          >
+            <div className='p-4 md:p-6 text-pretty flex flex-col gap-8 justify-between pb-8'>
+              {welcomeBlurb ? <p>{welcomeBlurb}</p> : null}
+              <ContactLinks
+                links={{
+                  linkedIn: profile?.contactInfo?.linkedIn,
+                  twitter: profile?.contactInfo?.twitter,
+                  email: profile?.contactInfo?.email,
+                  phone: profile?.contactInfo?.phone,
+                }}
+              />
+            </div>
+          </CardStack>
+        ) : null}
       </div>
     </section>
   )

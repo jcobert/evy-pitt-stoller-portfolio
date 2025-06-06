@@ -46,9 +46,7 @@ const Page: FC<Props> = async () => {
     data
 
   const mainHeading = portfolioPage?.heading?.mainHeading || 'Portfolio'
-  const subheading =
-    portfolioPage?.heading?.subheading ||
-    "A collection of projects that I've worked on."
+  const subheading = portfolioPage?.heading?.subheading
 
   const jsonLd = await portfolioPageJsonLd(data)
 
@@ -56,88 +54,91 @@ const Page: FC<Props> = async () => {
     <Main>
       <PageLayout>
         <Heading text={mainHeading} description={subheading} />
+        {!productions?.length && !writing?.length ? (
+          <NoResults item='projects' className='my-4' />
+        ) : null}
       </PageLayout>
 
-      <section className='layout px-4 md:px-12 flex flex-col gap-12 py-8'>
-        <div className='max-w-prose flex flex-col gap-2'>
-          <h3 className='text-2xl sm:text-3xl md:text-4xl font-semibold font-display text-balance text-muted-foreground border-b lg:w-1/2 min-w-fit pb-2'>
-            {productionPage?.heading?.mainHeading}
-          </h3>
-          {/* <p className='text-balance text-lg text-primary/70__ md:max-w-xs'>
+      {productions?.length ? (
+        <section className='layout px-4 md:px-12 flex flex-col gap-12 py-8'>
+          <div className='max-w-prose flex flex-col gap-2'>
+            <h3 className='text-2xl sm:text-3xl md:text-4xl font-semibold font-display text-balance text-muted-foreground border-b lg:w-1/2 min-w-fit pb-2'>
+              {productionPage?.heading?.mainHeading}
+            </h3>
+            {/* <p className='text-balance text-lg text-primary/70__ md:max-w-xs'>
             {productionPage?.heading?.subheading}
           </p> */}
-        </div>
-        {!productions?.length ? (
-          <NoResults
-            item='projects'
-            className='bg-white/50 border-secondary-light/40'
-          />
-        ) : (
-          <div className='flex flex-col gap-12 items-center'>
-            <div
-              className={cn(
-                'grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3__ lg:grid-cols-4__ grid-flow-row',
-                'gap-x-6 lg:gap-x-10 xl:gap-x-16 gap-y-10',
-                'px-4 sm:px-16__',
-              )}
-            >
-              {productions
-                ?.slice(0, 2)
-                ?.map((prod) => (
-                  <ProductionCard
-                    key={prod?._id}
-                    production={prod}
-                    className=''
-                    showDescription={false}
-                    showDate={false}
-                  />
-                ))}
-            </div>
-
-            <Button asChild className='w-fit' variant='outline'>
-              <Link href='/portfolio/production'>More projects</Link>
-            </Button>
           </div>
-        )}
-      </section>
+          {!productions?.length ? (
+            <NoResults item='projects' />
+          ) : (
+            <div className='flex flex-col gap-12 items-center'>
+              <div
+                className={cn(
+                  'grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3__ lg:grid-cols-4__ grid-flow-row',
+                  'gap-x-6 lg:gap-x-10 xl:gap-x-16 gap-y-10',
+                  'px-4 sm:px-16__',
+                )}
+              >
+                {productions
+                  ?.slice(0, 2)
+                  ?.map((prod) => (
+                    <ProductionCard
+                      key={prod?._id}
+                      production={prod}
+                      className=''
+                      showDescription={false}
+                      showDate={false}
+                    />
+                  ))}
+              </div>
 
-      <Separator className='my-8 md:w-1/3 mx-auto' />
+              <Button asChild className='w-fit' variant='outline'>
+                <Link href='/portfolio/production'>More projects</Link>
+              </Button>
+            </div>
+          )}
+        </section>
+      ) : null}
 
-      <section className='layout px-4 md:px-12 flex flex-col gap-12 py-8'>
-        <div className='max-w-prose flex flex-col gap-2'>
-          <h3 className='text-2xl sm:text-3xl md:text-4xl font-semibold font-display text-balance text-muted-foreground border-b lg:w-1/2 min-w-fit pb-2'>
-            {writingPage?.heading?.mainHeading}
-          </h3>
-          {/* <p className='text-balance text-lg text-secondary/70__ md:max-w-xs'>
+      {!!productions?.length && !!writing?.length ? (
+        <Separator className='my-8 md:w-1/3 mx-auto' />
+      ) : null}
+
+      {writing?.length ? (
+        <section className='layout px-4 md:px-12 flex flex-col gap-12 py-8'>
+          <div className='max-w-prose flex flex-col gap-2'>
+            <h3 className='text-2xl sm:text-3xl md:text-4xl font-semibold font-display text-balance text-muted-foreground border-b lg:w-1/2 min-w-fit pb-2'>
+              {writingPage?.heading?.mainHeading}
+            </h3>
+            {/* <p className='text-balance text-lg text-secondary/70__ md:max-w-xs'>
             {writingPage?.heading?.subheading}
           </p> */}
-        </div>
-
-        {!writing?.length ? (
-          <NoResults
-            item='projects'
-            className='bg-white/50 border-secondary-light/40'
-          />
-        ) : (
-          <div className='flex flex-col gap-16 items-center'>
-            <div
-              className={cn(
-                'grid grid-cols-1 lg:grid-cols-2 grid-flow-row',
-                'gap-x-6 lg:gap-x-10 xl:gap-x-16 gap-y-10',
-                'w-full px-4 lg:px-10__',
-              )}
-            >
-              {writing?.map((prod) => (
-                <WritingCard key={prod?._id} writing={prod} className='' />
-              ))}
-            </div>
-
-            <Button asChild className='w-fit' variant='outline'>
-              <Link href='/portfolio/writing'>More projects</Link>
-            </Button>
           </div>
-        )}
-      </section>
+
+          {!writing?.length ? (
+            <NoResults item='projects' />
+          ) : (
+            <div className='flex flex-col gap-16 items-center'>
+              <div
+                className={cn(
+                  'grid grid-cols-1 lg:grid-cols-2 grid-flow-row',
+                  'gap-x-6 lg:gap-x-10 xl:gap-x-16 gap-y-10',
+                  'w-full px-4 lg:px-10__',
+                )}
+              >
+                {writing?.map((prod) => (
+                  <WritingCard key={prod?._id} writing={prod} className='' />
+                ))}
+              </div>
+
+              <Button asChild className='w-fit' variant='outline'>
+                <Link href='/portfolio/writing'>More projects</Link>
+              </Button>
+            </div>
+          )}
+        </section>
+      ) : null}
 
       <script
         type='application/ld+json'
