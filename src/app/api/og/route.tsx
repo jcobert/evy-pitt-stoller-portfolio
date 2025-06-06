@@ -61,51 +61,49 @@ export const GET = async (request: Request) => {
     const imgWidth = searchParams?.get('width') || ''
     const imgHeight = searchParams?.get('height') || ''
 
-    return new ImageResponse(
-      (
-        <div
-          style={{
-            // backgroundColor: '#FDFDFF',
-            // backgroundColor: '#f4efea',
-            backgroundImage:
-              'linear-gradient(to bottom right, #c98a92, #874b57)',
-            // backgroundImage:
-            //   'linear-gradient(to bottom right, #d7c4b9, #c98a92)',
-            height: '100%',
-            width: '100%',
-            display: 'flex',
-            textAlign: 'center',
-            alignItems: 'center',
-            justifyContent: 'center',
-            flexDirection: 'column',
-            flexWrap: 'nowrap',
-            // gap: '12px'
-          }}
-        >
-          {/* Dynamic image */}
-          {imgUrl ? (
-            <div
+    const base = (
+      <div
+        style={{
+          // backgroundColor: '#FDFDFF',
+          // backgroundColor: '#f4efea',
+          // backgroundImage:
+          //   'linear-gradient(to bottom right, #d7c4b9, #c98a92)',
+          // backgroundImage: 'linear-gradient(to bottom right, #c98a92, #874b57)',
+          // height: '100%',
+          // width: '100%',
+          display: 'flex',
+          textAlign: 'center',
+          alignItems: 'center',
+          justifyContent: 'center',
+          flexDirection: 'column',
+          flexWrap: 'nowrap',
+          // gap: '12px'
+        }}
+      >
+        {/* Dynamic image */}
+        {imgUrl ? (
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              justifyItems: 'center',
+            }}
+          >
+            <img
+              alt={imgAlt}
+              width={imgWidth}
+              height={imgHeight}
+              src={imgUrl}
               style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                justifyItems: 'center',
+                backgroundSize: 'contain',
               }}
-            >
-              <img
-                alt={imgAlt}
-                width={imgWidth}
-                height={imgHeight}
-                src={imgUrl}
-                style={{
-                  backgroundSize: 'contain',
-                }}
-              />
-            </div>
-          ) : null}
+            />
+          </div>
+        ) : null}
 
-          {/* Profile photo */}
-          {/* {profile?.photo ? (
+        {/* Profile photo */}
+        {/* {profile?.photo ? (
             <div
               style={{
                 display: 'flex',
@@ -127,27 +125,73 @@ export const GET = async (request: Request) => {
             </div>
           ) : null} */}
 
-          {/* Logo */}
+        {/* Logo */}
+        <div
+          style={{
+            backgroundColor: '#fcf9f7',
+          }}
+          tw={cn(
+            'w-32 h-32 border border-primary/50',
+            'flex items-center justify-center',
+          )}
+        >
           <div
             style={{
-              backgroundColor: '#fcf9f7',
+              backgroundColor: '#874b57',
             }}
-            tw={cn(
-              'w-32 h-32 border border-primary/50',
-              'flex items-center justify-center',
-            )}
+            tw='flex-auto h-18 w-full flex justify-center items-center text-5xl -mx-3 pt-px text-center text-white font-display'
           >
-            <div
-              style={{
-                backgroundColor: '#874b57',
-              }}
-              tw='flex-auto h-18 w-full flex justify-center items-center text-5xl -mx-3 pt-px text-center text-white font-display'
-            >
-              EPS
-            </div>
+            EPS
           </div>
+        </div>
 
-          {/* Separator */}
+        {/* Separator */}
+        <div
+          style={{
+            height: '1px',
+            width: '40%',
+            border: '1px solid #c98a92',
+            borderRadius: '4px',
+            marginTop: '48px',
+          }}
+        />
+
+        {/* Name */}
+        <div
+          style={{
+            padding: '24px 0 0 0',
+            fontSize: '80px',
+            // color: '#c98a92',
+            backgroundImage:
+              'linear-gradient(to bottom right, #f4efea 50%, #c98a92)',
+            // backgroundImage:
+            //   'linear-gradient(to bottom right, #874b57, #c98a92)',
+            backgroundClip: 'text',
+            color: 'transparent',
+            // fontWeight: 'bold',
+            // width: '100%',
+          }}
+        >
+          {profile?.fullname || 'Evy Pitt-Stoller'}
+        </div>
+
+        {/* Headline */}
+        {profile?.headline ? (
+          <div
+            style={{
+              fontFamily: 'inter',
+              fontSize: '28px',
+              color: '#fcf9f7',
+              opacity: 0.7,
+            }}
+            tw='text-3xl mt-4'
+          >
+            {profile?.headline}
+          </div>
+        ) : null}
+
+        {/* Separator */}
+        {title ? (
           <div
             style={{
               height: '1px',
@@ -157,80 +201,78 @@ export const GET = async (request: Request) => {
               marginTop: '48px',
             }}
           />
+        ) : null}
 
-          {/* Name */}
+        {/* Title */}
+        {title ? (
           <div
             style={{
-              padding: '24px 0 0 0',
-              fontSize: '80px',
-              // color: '#c98a92',
-              backgroundImage:
-                'linear-gradient(to bottom right, #f4efea 50%, #c98a92)',
+              fontSize: 36,
+              fontStyle: 'normal',
+              letterSpacing: '-0.025em',
+              marginTop: 64,
+              padding: '0 120px',
+              lineHeight: 1.4,
+              whiteSpace: 'pre-wrap',
               // backgroundImage:
               //   'linear-gradient(to bottom right, #874b57, #c98a92)',
-              backgroundClip: 'text',
-              color: 'transparent',
-              // fontWeight: 'bold',
-              // width: '100%',
+              // backgroundClip: 'text',
+              // color: 'transparent',
+              // color: '#c98a92',
+              // color: '#3a0711',
+              // color: '#874b57',
+              fontFamily: 'inter',
             }}
+            tw='text-white opacity-85'
           >
-            {profile?.fullname || 'Evy Pitt-Stoller'}
+            {title}
           </div>
+        ) : null}
+        {subtitle ? <div>{subtitle}</div> : null}
+      </div>
+    )
 
-          {/* Headline */}
-          {profile?.headline ? (
+    return new ImageResponse(
+      (
+        <div
+          style={{
+            // backgroundImage:
+            //   'linear-gradient(to bottom right, #c98a92, #874b57)',
+            backgroundImage:
+              'linear-gradient(to bottom right, #d7c4b9, #c98a92)',
+          }}
+          tw='flex items-end h-full w-full'
+        >
+          {/* Profile photo */}
+          {profile?.photo ? (
             <div
               style={{
-                fontFamily: 'inter',
-                fontSize: '28px',
-                color: '#fcf9f7',
-                opacity: 0.7,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                justifyItems: 'center',
               }}
-              tw='text-3xl mt-4'
             >
-              {profile?.headline}
+              <img
+                alt={profile?.photo?.alt}
+                src={profile?.photo?.url}
+                width={(profile?.photo?.dimensions?.width || 0) * 0.75}
+                height={(profile?.photo?.dimensions?.height || 0) * 0.75}
+                style={{
+                  objectFit: 'contain',
+                }}
+              />
             </div>
           ) : null}
-
-          {/* Separator */}
-          {title ? (
-            <div
-              style={{
-                height: '1px',
-                width: '40%',
-                border: '1px solid #c98a92',
-                borderRadius: '4px',
-                marginTop: '48px',
-              }}
-            />
-          ) : null}
-
-          {/* Title */}
-          {title ? (
-            <div
-              style={{
-                fontSize: 36,
-                fontStyle: 'normal',
-                letterSpacing: '-0.025em',
-                marginTop: 64,
-                padding: '0 120px',
-                lineHeight: 1.4,
-                whiteSpace: 'pre-wrap',
-                // backgroundImage:
-                //   'linear-gradient(to bottom right, #874b57, #c98a92)',
-                // backgroundClip: 'text',
-                // color: 'transparent',
-                // color: '#c98a92',
-                // color: '#3a0711',
-                // color: '#874b57',
-                fontFamily: 'inter',
-              }}
-              tw='text-white opacity-85'
-            >
-              {title}
-            </div>
-          ) : null}
-          {subtitle ? <div>{subtitle}</div> : null}
+          <div
+            style={{
+              backgroundImage:
+                'linear-gradient(to bottom right, #c98a92, #874b57)',
+            }}
+            tw='flex items-center justify-center flex-auto h-full'
+          >
+            {base}
+          </div>
         </div>
       ),
       {
