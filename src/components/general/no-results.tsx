@@ -3,13 +3,14 @@ import { FC } from 'react'
 import { cn } from '@/utils/style'
 
 type Props = {
+  text?: string
   /** Display name of results item(s) (e.g. "posts"). */
-  item: string
+  item?: string
   className?: string
 }
 
-const NoResults: FC<Props> = ({ item, className }) => {
-  const text = item ? `No ${item} added yet` : 'Nothing added yet'
+const NoResults: FC<Props> = ({ text, item, className }) => {
+  const message = item ? `No ${item} added yet` : 'Nothing added yet'
 
   return (
     <div
@@ -19,7 +20,7 @@ const NoResults: FC<Props> = ({ item, className }) => {
         className,
       )}
     >
-      <p>{`${text}, but please check back soon!`}</p>
+      <p>{text || `${message}, but please check back soon!`}</p>
     </div>
   )
 }
