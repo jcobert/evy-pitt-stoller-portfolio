@@ -1,13 +1,15 @@
 /* eslint-disable @next/next/no-img-element */
 import { ImageResponse } from 'next/og'
 
+import { getSanityImageUrl } from '@/utils/media'
+import { getFullName } from '@/utils/string'
 import { cn } from '@/utils/style'
 
-import { siteConfig } from '@/configuration/site'
+import { getProfile } from '@/sanity/lib/fetch'
 
 export const runtime = 'edge'
 
-async function loadGoogleFont(font: string) {
+const loadGoogleFont = async (font: string) => {
   const url = `https://fonts.googleapis.com/css2?family=${font}`
   const css = await (await fetch(url)).text()
   const resource = css.match(/src: url\((.+)\) format\('(opentype|truetype)'\)/)
@@ -22,23 +24,34 @@ async function loadGoogleFont(font: string) {
   throw new Error('failed to load font data')
 }
 
+const loadContent = async () => {
+  const { firstName, lastName, titles, photo } = (await getProfile()) || {}
+  const fullname = getFullName(firstName, lastName)
+  const imageUrl = getSanityImageUrl(photo, { format: 'png' })
+  const headline = titles?.join(' | ')
+
+  return {
+    fullname,
+    headline,
+    photo: {
+      url: imageUrl,
+      dimensions: photo?.asset?.metadata?.dimensions,
+      alt: photo?.asset?.altText,
+    },
+  }
+}
+
 export const GET = async (request: Request) => {
   try {
     const { searchParams } = new URL(request?.url)
 
-    // Base logo image
-    // const logoData = await fetch(
-    //   new URL(
-    //     `${process.env.NEXT_PUBLIC_SITE_BASE_URL}/jc-website-logo.png`,
-    //     import.meta.url,
-    //   ),
-    // ).then((res) => res?.arrayBuffer())
+    // const profile = await loadContent()
 
-    // if (!Object.keys(logoData)?.length) {
-    //   // eslint-disable-next-line no-console
-    //   console.error('Image not found.')
-    //   return Response.json({}, { status: 404 })
-    // }
+    const [profile, fontDisplay, fontBody] = await Promise.all([
+      loadContent(),
+      loadGoogleFont('Bodoni+Moda'),
+      loadGoogleFont('Inter'),
+    ])
 
     // Dynamic data
     const title = searchParams?.get('title')?.slice(0, 100) || ''
@@ -66,6 +79,7 @@ export const GET = async (request: Request) => {
             justifyContent: 'center',
             flexDirection: 'column',
             flexWrap: 'nowrap',
+            // gap: '12px'
           }}
         >
           {/* Dynamic image */}
@@ -90,62 +104,68 @@ export const GET = async (request: Request) => {
             </div>
           ) : null}
 
-          {/* Logo */}
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              justifyItems: 'center',
-            }}
-          >
-            {/* <img
-              alt={siteConfig?.title}
-              src={logoData as unknown as string}
-              style={{ width: '20%' }}
-            /> */}
-          </div>
+          {/* Profile photo */}
+          {/* {profile?.photo ? (
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                justifyItems: 'center',
+                // width: '200px',
+              }}
+            >
+              <img
+                alt={profile?.photo?.alt}
+                src={profile?.photo?.url}
+                width={(profile?.photo?.dimensions?.width || 0) / 4}
+                height={(profile?.photo?.dimensions?.height || 0) / 4}
+                style={{
+                  objectFit: 'contain',
+                }}
+              />
+            </div>
+          ) : null} */}
 
           {/* Logo */}
           <div
             style={{
-              // width: '48px',
-              // height: '48px',
               backgroundColor: '#fcf9f7',
-              // border:
-              //   '1px solid border-color: color-mix(in oklab, var(--primary) 50%, transparent);',
-              // display: 'flex',
-              // alignItems: 'center',
-              // justifyContent: 'center',
             }}
             tw={cn(
-              'w-24 h-24 bg-primary-light border border-primary/50',
+              'w-32 h-32 border border-primary/50',
               'flex items-center justify-center',
             )}
           >
             <div
               style={{
-                // flex: 'auto',
-                // marginInline: '-4px',
                 backgroundColor: '#874b57',
-                // paddingTop: '1px',
-                // textAlign: 'center',
-                // color: 'white',
-                // fontFamily: 'var(--font-bodoni-moda)',
               }}
-              tw='flex-auto h-12 w-full flex justify-center items-center text-3xl -mx-2 bg-secondary pt-px text-center text-white font-display'
+              tw='flex-auto h-18 w-full flex justify-center items-center text-5xl -mx-3 pt-px text-center text-white font-display'
             >
               EPS
             </div>
           </div>
 
+          {/* Separator */}
+          <div
+            style={{
+              height: '1px',
+              width: '40%',
+              border: '1px solid #c98a92',
+              borderRadius: '4px',
+              marginTop: '48px',
+            }}
+          />
+
+          {/* Name */}
           <div
             style={{
               padding: '24px 0 0 0',
-              fontSize: '64px',
+              fontSize: '80px',
               // color: '#c98a92',
               backgroundImage:
-                'linear-gradient(to bottom right, #f4efea 60%, #c98a92)',
+                'linear-gradient(to bottom right, #f4efea 50%, #c98a92)',
               // backgroundImage:
               //   'linear-gradient(to bottom right, #874b57, #c98a92)',
               backgroundClip: 'text',
@@ -154,27 +174,45 @@ export const GET = async (request: Request) => {
               // width: '100%',
             }}
           >
-            Evy Pitt-Stoller
+            {profile?.fullname || 'Evy Pitt-Stoller'}
           </div>
 
-          <div
-            style={{
-              height: '1px',
-              width: '20%',
-              border: '1px solid #d7c4b9',
-              borderRadius: '4px',
-              marginTop: '36px',
-            }}
-          />
+          {/* Headline */}
+          {profile?.headline ? (
+            <div
+              style={{
+                fontFamily: 'inter',
+                fontSize: '28px',
+                color: '#fcf9f7',
+                opacity: 0.7,
+              }}
+              tw='text-3xl mt-4'
+            >
+              {profile?.headline}
+            </div>
+          ) : null}
+
+          {/* Separator */}
+          {title ? (
+            <div
+              style={{
+                height: '1px',
+                width: '40%',
+                border: '1px solid #c98a92',
+                borderRadius: '4px',
+                marginTop: '48px',
+              }}
+            />
+          ) : null}
 
           {/* Title */}
           {title ? (
             <div
               style={{
-                fontSize: 48,
+                fontSize: 36,
                 fontStyle: 'normal',
                 letterSpacing: '-0.025em',
-                marginTop: 24,
+                marginTop: 64,
                 padding: '0 120px',
                 lineHeight: 1.4,
                 whiteSpace: 'pre-wrap',
@@ -184,9 +222,10 @@ export const GET = async (request: Request) => {
                 // color: 'transparent',
                 // color: '#c98a92',
                 // color: '#3a0711',
-                color: '#874b57',
+                // color: '#874b57',
                 fontFamily: 'inter',
               }}
+              tw='text-white opacity-85'
             >
               {title}
             </div>
@@ -200,13 +239,13 @@ export const GET = async (request: Request) => {
         fonts: [
           {
             name: 'bodoni-moda',
-            data: await loadGoogleFont('Bodoni+Moda'),
+            data: fontDisplay,
             style: 'normal',
             weight: 600,
           },
           {
             name: 'inter',
-            data: await loadGoogleFont('Inter'),
+            data: fontBody,
             style: 'normal',
             weight: 400,
           },

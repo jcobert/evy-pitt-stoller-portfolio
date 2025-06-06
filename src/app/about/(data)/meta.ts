@@ -15,11 +15,11 @@ export const aboutPageMeta = (data: AboutPageData): Metadata => {
     title,
     description: seo?.description,
     url: '/about',
-    images: [
-      getSanityImageUrl(profile?.photo, {
-        ratio: 'square',
-        crop: 'top',
-      }),
-    ],
+    // images: [
+    //   getSanityImageUrl(profile?.photo, {
+    //     ratio: 'square',
+    //     crop: 'top',
+    //   }),
+    // ],
   })
 }
