@@ -15,7 +15,7 @@ export const writingSlugPageMeta = (data: WritingSlugPageData): Metadata => {
   })
 
   return generatePageMeta({
-    title: `Writing - ${project?.title}`,
+    title: `Writing - ${project?.title || 'Not found'}`,
     description: seo?.description,
     url: `/portfolio/writing/${slug}`,
     // images: image ? [image] : undefined,

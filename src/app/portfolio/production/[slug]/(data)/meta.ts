@@ -16,7 +16,7 @@ export const productionSlugPageMeta = (
   })?.thumbnailUrl
 
   return generatePageMeta({
-    title: `Production - ${project?.title}`,
+    title: `Production - ${project?.title || 'Not found'}`,
     description: seo?.description,
     url: `/portfolio/production/${slug}`,
     // images: thumbnail ? [thumbnail] : undefined,
