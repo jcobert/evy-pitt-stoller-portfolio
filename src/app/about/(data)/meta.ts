@@ -1,12 +1,10 @@
 import { AboutPageData } from '../page'
 import { Metadata } from 'next'
 
-import { getSanityImageUrl } from '@/utils/media'
-
 import { generatePageMeta } from '@/configuration/seo'
 
 export const aboutPageMeta = (data: AboutPageData): Metadata => {
-  const { profile, aboutPage } = data
+  const { aboutPage } = data
   const { heading, seo } = aboutPage || {}
 
   const title = heading?.mainHeading
@@ -15,11 +13,11 @@ export const aboutPageMeta = (data: AboutPageData): Metadata => {
     title,
     description: seo?.description,
     url: '/about',
-    images: [
-      getSanityImageUrl(profile?.photo, {
-        ratio: 'square',
-        crop: 'top',
-      }),
-    ],
+    // images: [
+    //   getSanityImageUrl(profile?.photo, {
+    //     ratio: 'square',
+    //     crop: 'top',
+    //   }),
+    // ],
   })
 }
