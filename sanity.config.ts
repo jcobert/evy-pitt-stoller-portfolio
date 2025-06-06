@@ -7,8 +7,10 @@
 import { apiVersion, dataset, projectId } from './src/sanity/env'
 import { schemaTypes } from './src/sanity/schema-types'
 import { structure } from './src/sanity/structure'
+import { dashboardTool } from '@sanity/dashboard'
 import { visionTool } from '@sanity/vision'
-import { DocumentActionComponent, defineConfig } from 'sanity'
+import { DocumentActionComponent, defineConfig, isDev } from 'sanity'
+import { vercelWidget } from 'sanity-plugin-dashboard-widget-vercel'
 import { vimeoField } from 'sanity-plugin-vimeo-field'
 import { youtubeInput } from 'sanity-plugin-youtube-input'
 import { structureTool } from 'sanity/structure'
@@ -49,8 +51,15 @@ export default defineConfig({
   studio: { components: { navbar: StudioNavbar } },
   icon: StudioLogo,
   plugins: [
-    structureTool({ structure }),
-    visionTool({ defaultApiVersion: apiVersion }),
+    structureTool({ structure, title: 'Editor' }),
+    dashboardTool({
+      widgets: [
+        vercelWidget({
+          layout: { width: 'full' },
+        }),
+      ],
+    }),
+    ...(isDev ? [visionTool({ defaultApiVersion: apiVersion })] : []),
     youtubeInput({
       apiKey: process.env.NEXT_PUBLIC_SANITY_STUDIO_YOUTUBE_DATA_API_KEY || '',
     }),
