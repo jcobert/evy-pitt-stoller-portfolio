@@ -3,7 +3,7 @@ import { Metadata } from 'next'
 
 import { getSanityImageUrl } from '@/utils/media'
 
-import { generatePageMeta } from '@/configuration/seo'
+import { buildOgImage, generatePageMeta } from '@/configuration/seo'
 
 export const writingSlugPageMeta = (data: WritingSlugPageData): Metadata => {
   const { project, slug } = data
@@ -18,6 +18,14 @@ export const writingSlugPageMeta = (data: WritingSlugPageData): Metadata => {
     title: `Writing - ${project?.title}`,
     description: seo?.description,
     url: `/portfolio/writing/${slug}`,
-    images: image ? [image] : undefined,
+    // images: image ? [image] : undefined,
+    // images: [
+    //   buildOgImage({
+    //     url: image,
+    //     alt: project?.title,
+    //     width: 533,
+    //     height: 400,
+    //   }),
+    // ],
   })
 }

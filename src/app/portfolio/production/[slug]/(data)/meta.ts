@@ -19,6 +19,6 @@ export const productionSlugPageMeta = (
     title: `Production - ${project?.title}`,
     description: seo?.description,
     url: `/portfolio/production/${slug}`,
-    images: thumbnail ? [thumbnail] : undefined,
+    // images: thumbnail ? [thumbnail] : undefined,
   })
 }

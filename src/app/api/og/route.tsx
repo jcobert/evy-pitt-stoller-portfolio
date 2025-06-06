@@ -102,29 +102,6 @@ export const GET = async (request: Request) => {
           </div>
         ) : null}
 
-        {/* Profile photo */}
-        {/* {profile?.photo ? (
-            <div
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                justifyItems: 'center',
-                // width: '200px',
-              }}
-            >
-              <img
-                alt={profile?.photo?.alt}
-                src={profile?.photo?.url}
-                width={(profile?.photo?.dimensions?.width || 0) / 4}
-                height={(profile?.photo?.dimensions?.height || 0) / 4}
-                style={{
-                  objectFit: 'contain',
-                }}
-              />
-            </div>
-          ) : null} */}
-
         {/* Logo */}
         <div
           style={{
