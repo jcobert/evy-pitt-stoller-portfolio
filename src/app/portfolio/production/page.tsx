@@ -4,6 +4,7 @@ import { Metadata } from 'next'
 import { FC } from 'react'
 
 import ProductionCard from '@/components/features/portfolio/production/production-card'
+import AnimateOnScroll from '@/components/general/animate-on-scroll'
 import NoResults from '@/components/general/no-results'
 import Heading from '@/components/layout/heading'
 import Main from '@/components/layout/main'
@@ -52,7 +53,12 @@ const Page: FC<Props> = async () => {
           ) : (
             <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 grid-flow-row gap-x-6 gap-y-10'>
               {projects?.map((proj, i) => (
-                <div key={proj?._id}>
+                <AnimateOnScroll
+                  key={proj?._id}
+                  animations={['slideInFromBottom', 'fadeIn']}
+                  className='duration-500'
+                  threshold={0.1}
+                >
                   <ProductionCard production={proj} />
                   {i < projects.length - 1 ? (
                     <div
@@ -60,7 +66,7 @@ const Page: FC<Props> = async () => {
                       className='sm:hidden h-px bg-gradient-to-r from-accent/10 via-primary-foreground/10 to-accent/10 mt-6'
                     />
                   ) : null}
-                </div>
+                </AnimateOnScroll>
               ))}
             </div>
           )}

@@ -4,6 +4,7 @@ import { FC } from 'react'
 
 import { cn } from '@/utils/style'
 
+import AnimateOnScroll from '@/components/general/animate-on-scroll'
 import NoResults from '@/components/general/no-results'
 import { Button } from '@/components/ui/button'
 
@@ -25,14 +26,16 @@ const ProductionsSection: FC<Props> = ({ productions, heading }) => {
   return (
     <section className='bg-gradient-to-br from-secondary/90 to-secondary-light relative max-sm:z-50__ py-16'>
       <div className='layout px-4 md:px-12 flex flex-col gap-12'>
-        <div className='max-w-prose flex flex-col gap-2'>
-          <h3 className='text-3xl sm:text-4xl font-semibold font-display text-balance text-primary-light'>
-            {heading?.mainHeading}
-          </h3>
-          <p className='text-balance text-lg text-primary/70 md:max-w-xs'>
-            {heading?.subheading}
-          </p>
-        </div>
+        <AnimateOnScroll animations={['fadeIn', 'blurIn', 'slideInFromLeft']}>
+          <div className='max-w-prose flex flex-col gap-2'>
+            <h3 className='text-3xl sm:text-4xl font-semibold font-display text-balance text-primary-light'>
+              {heading?.mainHeading}
+            </h3>
+            <p className='text-balance text-lg text-primary/70 md:max-w-xs'>
+              {heading?.subheading}
+            </p>
+          </div>
+        </AnimateOnScroll>
 
         {noProjects ? (
           <NoResults

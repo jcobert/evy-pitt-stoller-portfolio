@@ -1,3 +1,4 @@
+import AnimateOnScroll from './animate-on-scroll'
 import { FC, ReactNode } from 'react'
 
 import { cn } from '@/utils/style'
@@ -22,24 +23,30 @@ const CardStack: FC<Props> = ({ children, className }) => {
       >
         {children}
       </div>
-      <div
+      <AnimateOnScroll
         className={cn(
           'absolute z-20',
           'bg-primary rounded-md shadow-md',
-          '-rotate-3',
           'w-full h-48 bottom-2',
           'sm:w-84 sm:h-42 sm:right-2 sm:bottom-8',
           'md:w-[26rem] md:h-56 md:right-0 md:bottom-4',
+          // animation
+          'rotate-0',
+          'data-[visible=true]:-rotate-3',
+          'duration-2000',
         )}
       />
-      <div
+      <AnimateOnScroll
         className={cn(
           'relative z-10',
           'bg-secondary rounded-md shadow-2xl',
-          'rotate-1 sm:rotate-3',
           'w-full h-42 -bottom-4',
           'sm:w-80 sm:h-42 sm:bottom-4',
           'md:w-96 md:h-64 md:top-2',
+          // animation
+          'rotate-0 sm:rotate-0',
+          'data-[visible=true]:rotate-1 data-[visible=true]:sm:rotate-3',
+          'duration-2000',
         )}
       />
     </div>
