@@ -53,7 +53,8 @@ export const getContactLinksArray = (
   if (!isObject(links)) return []
   const filtered = Object.entries(links)
     ?.filter(
-      ([name]) =>
+      ([name, value]) =>
+        value &&
         Object.keys(Contacts)?.includes(name) &&
         (options?.include?.length
           ? options?.include?.includes(name as keyof typeof links)

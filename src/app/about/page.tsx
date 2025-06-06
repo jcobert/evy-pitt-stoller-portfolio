@@ -66,14 +66,16 @@ const Page: FC<Props> = async () => {
           <PortableBlockContent value={bio} />
 
           <div className='mx-auto flex flex-col gap-3'>
-            <div className='w-3/5 lg:w-full sm:w-1/2__ h-fit max-w-2xs md:min-w-60 max-lg:aspect-square mx-auto border-4 border-white/80 rounded-md bg-secondary-light pointer-events-none'>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={image}
-                alt={name}
-                className='size-full rounded-sm object-cover object-top max-lg:aspect-square'
-              />
-            </div>
+            {image ? (
+              <div className='w-3/5 lg:w-full sm:w-1/2__ h-fit max-w-2xs md:min-w-60 max-lg:aspect-square mx-auto border-4 border-white/80 rounded-md bg-secondary-light pointer-events-none'>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={image}
+                  alt={name}
+                  className='size-full rounded-sm object-cover object-top max-lg:aspect-square'
+                />
+              </div>
+            ) : null}
 
             <div className='flex flex-col items-center'>
               <p className='text-secondary-light font-medium text-xl'>{name}</p>
@@ -82,30 +84,30 @@ const Page: FC<Props> = async () => {
           </div>
         </section>
 
-        <section className='mt-12 max-lg:mx-auto max-w-prose flex flex-col gap-8 w-full'>
-          <div className='flex flex-col gap-6'>
-            <h3 className='font-semibold text-lg__ text-secondary'>
-              Featured In
-            </h3>
-            <BrandsList
-              brands={profile?.companies}
-              className={cn(
-                'gap-y-6 gap-x-6 overflow-auto',
-                'grid grid-flow-row max-md:grid-cols-3',
-                'md:grid-cols-4 lg:grid-cols-6',
-              )}
-              imageClassName={cn(
-                'col-span-1 mx-auto',
-                'pointer-events-none',
-                'size-20 max-w-none rounded-full border border-primary p-2',
-              )}
-            />
-          </div>
+        {profile?.companies?.length ? (
+          <section className='mt-12 max-lg:mx-auto max-w-prose flex flex-col gap-8 w-full'>
+            <div className='flex flex-col gap-6'>
+              <h3 className='font-semibold text-secondary'>Featured In</h3>
+              <BrandsList
+                brands={profile?.companies}
+                className={cn(
+                  'gap-y-6 gap-x-6 overflow-auto',
+                  'grid grid-flow-row max-md:grid-cols-3',
+                  'md:grid-cols-4 lg:grid-cols-6',
+                )}
+                imageClassName={cn(
+                  'col-span-1 mx-auto',
+                  'pointer-events-none',
+                  'size-20 max-w-none rounded-full border border-primary p-2',
+                )}
+              />
+            </div>
 
-          <Button asChild variant='outline' className='mx-auto self-center'>
-            <Link href='/portfolio'>View my portfolio</Link>
-          </Button>
-        </section>
+            <Button asChild variant='outline' className='mx-auto self-center'>
+              <Link href='/portfolio'>View my portfolio</Link>
+            </Button>
+          </section>
+        ) : null}
       </PageLayout>
 
       <script

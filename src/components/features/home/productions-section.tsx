@@ -26,21 +26,23 @@ const ProductionsSection: FC<Props> = ({ productions, heading }) => {
   return (
     <section className='bg-gradient-to-br from-secondary/90 to-secondary-light relative max-sm:z-50__ py-16'>
       <div className='layout px-4 md:px-12 flex flex-col gap-12'>
-        <AnimateOnScroll animations={['fadeIn', 'blurIn', 'slideInFromLeft']}>
-          <div className='max-w-prose flex flex-col gap-2'>
-            <h3 className='text-3xl sm:text-4xl font-semibold font-display text-balance text-primary-light'>
-              {heading?.mainHeading}
-            </h3>
-            <p className='text-balance text-lg text-primary/70 md:max-w-xs'>
-              {heading?.subheading}
-            </p>
-          </div>
-        </AnimateOnScroll>
+        {heading ? (
+          <AnimateOnScroll animations={['fadeIn', 'blurIn', 'slideInFromLeft']}>
+            <div className='max-w-prose flex flex-col gap-2'>
+              <h3 className='text-3xl sm:text-4xl font-semibold font-display text-balance text-primary-light'>
+                {heading?.mainHeading}
+              </h3>
+              <p className='text-balance text-lg text-primary/70 md:max-w-xs'>
+                {heading?.subheading}
+              </p>
+            </div>
+          </AnimateOnScroll>
+        ) : null}
 
         {noProjects ? (
           <NoResults
             item='projects'
-            className='bg-white/50 border-secondary-light/40'
+            className='bg-white/85 border-secondary-light'
           />
         ) : (
           <div className='flex flex-col gap-12 items-center'>

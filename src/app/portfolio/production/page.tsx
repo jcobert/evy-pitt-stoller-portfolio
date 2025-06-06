@@ -37,9 +37,7 @@ const Page: FC<Props> = async () => {
   const { heading } = productionPage || {}
 
   const mainHeading = heading?.mainHeading || 'Production'
-  const subheading =
-    heading?.subheading ||
-    "Check out some of the awesome projects I've worked on!"
+  const subheading = heading?.subheading
 
   const jsonLd = await productionPageJsonLd(data)
 
