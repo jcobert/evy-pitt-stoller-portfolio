@@ -1,8 +1,6 @@
 import { ProductionSlugPageData } from '../page'
 import { Metadata } from 'next'
 
-import { getSanityVideo } from '@/utils/media'
-
 import { generatePageMeta } from '@/configuration/seo'
 
 export const productionSlugPageMeta = (
@@ -11,9 +9,9 @@ export const productionSlugPageMeta = (
   const { project, slug } = data
   const { seo } = project || {}
 
-  const thumbnail = getSanityVideo(project?.mainVideo, {
-    thumbnailImage: project?.mainImage,
-  })?.thumbnailUrl
+  // const thumbnail = getSanityVideo(project?.mainVideo, {
+  //   thumbnailImage: project?.mainImage,
+  // })?.thumbnailUrl
 
   return generatePageMeta({
     title: `Production - ${project?.title || 'Not found'}`,
