@@ -1,6 +1,6 @@
 'use client'
 
-import { FC, ReactNode } from 'react'
+import { FC, ReactNode, useEffect, useState } from 'react'
 
 import { cn } from '@/utils/style'
 
@@ -19,12 +19,12 @@ type Props = UseIntersectionOptions & {
 
 const animationStyles = {
   fadeIn: cn(
-    'opacity-0 blur-lg',
-    'data-[visible=true]:opacity-100 data-[visible=true]:blur-none',
+    'data-[visible=false]:opacity-0 data-[visible=false]:blur-lg',
+    'opacity-100 blur-none',
   ),
   slideInFromLeft: cn(
-    'opacity-0 blur-lg -translate-x-20',
-    'data-[visible=true]:opacity-100 data-[visible=true]:blur-none data-[visible=true]:translate-x-0',
+    'data-[visible=false]:opacity-0 data-[visible=false]:blur-lg data-[visible=false]:-translate-x-20',
+    'opacity-100 blur-none translate-x-0',
   ),
 } satisfies { [x in Animation]?: string }
 
@@ -36,15 +36,28 @@ const AnimateOnScroll: FC<Props> = ({
   repeat = false,
   ...options
 }) => {
+  const [isMounted, setIsMounted] = useState(false)
   const [containerRef, isVisible] = useIntersection({
     threshold,
     repeat,
     ...options,
   })
 
+  useEffect(() => {
+    setIsMounted(true)
+  }, [])
+
   const presetAnimations = (animations || [])?.map(
     (ani) => animationStyles?.[ani],
   )
+
+  if (!isMounted) {
+    return (
+      <div data-visible={true} className={cn(className)}>
+        {children}
+      </div>
+    )
+  }
 
   return (
     <div

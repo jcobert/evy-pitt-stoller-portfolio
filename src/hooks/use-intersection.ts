@@ -12,18 +12,6 @@ export const useIntersection = (
   const [isVisible, setIsVisible] = useState(false)
   const { repeat = false } = options || {}
 
-  // const makeAppear: IntersectionObserverCallback = (entries) => {
-  //   const [entry] = entries
-  //   if (entry?.isIntersecting) setIsVisible(true)
-  // }
-
-  // const makeAppearRepeating: IntersectionObserverCallback = (entries) => {
-  //   const [entry] = entries
-  //   setIsVisible(!!entry?.isIntersecting)
-  // }
-
-  // const callBack = options.reappear ? makeAppearRepeating : makeAppear
-
   const callBack: IntersectionObserverCallback = useCallback(
     (entries) => {
       const [entry] = entries
