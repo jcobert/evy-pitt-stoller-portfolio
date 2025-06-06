@@ -51,7 +51,7 @@ const Page: FC<Props> = async () => {
       <PageLayout>
         <Heading text={mainHeading} description={subheading} />
 
-        <section className='mt-8 flex flex-col gap-4 md:gap-8 border-2 border-secondary-light/20 p-4 pb-6 sm:p-6 sm:pb-12 rounded-sm bg-secondary-extra-light/5'>
+        <section className='mt-8 flex flex-col gap-4 md:gap-8 border-2 border-secondary-light/20 p-4 pb-6 sm:p-6 sm:pb-12 mb-16 rounded-sm bg-secondary-extra-light/5'>
           <div>
             <h3 className='text-2xl md:text-3xl font-medium text-primary-foreground'>
               {getFullName(profile?.firstName, profile?.lastName)}

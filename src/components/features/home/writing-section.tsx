@@ -26,7 +26,7 @@ const WritingSection: FC<Props> = ({ writing, heading }) => {
   return (
     <section className='bg-gradient-to-bl from-secondary-light/20 to-primary relative py-16'>
       <div className='layout px-4 md:px-12 flex flex-col gap-12'>
-        <AnimateOnScroll animations={['fadeIn', 'slideInFromLeft']}>
+        <AnimateOnScroll animations={['fadeIn', 'blurIn', 'slideInFromLeft']}>
           <div className='max-w-prose flex flex-col gap-2'>
             <h3 className='text-3xl sm:text-4xl font-semibold font-display text-balance text-secondary'>
               {heading?.mainHeading}

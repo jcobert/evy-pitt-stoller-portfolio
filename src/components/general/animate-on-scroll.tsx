@@ -9,7 +9,13 @@ import {
   useIntersection,
 } from '@/hooks/use-intersection'
 
-type Animation = 'fadeIn' | 'slideInFromLeft'
+type Animation =
+  | 'fadeIn'
+  | 'blurIn'
+  | 'slideInFromLeft'
+  | 'slideInFromRight'
+  | 'slideInFromTop'
+  | 'slideInFromBottom'
 
 type Props = UseIntersectionOptions & {
   children?: ReactNode
@@ -18,21 +24,19 @@ type Props = UseIntersectionOptions & {
 }
 
 const animationStyles = {
-  fadeIn: cn(
-    'data-[visible=false]:opacity-0 data-[visible=false]:blur-lg',
-    'opacity-100 blur-none',
-  ),
-  slideInFromLeft: cn(
-    'data-[visible=false]:opacity-0 data-[visible=false]:blur-lg data-[visible=false]:-translate-x-20',
-    'opacity-100 blur-none translate-x-0',
-  ),
+  fadeIn: cn('data-[visible=false]:opacity-0', 'opacity-100'),
+  blurIn: cn('data-[visible=false]:blur-lg', 'blur-none'),
+  slideInFromLeft: cn('data-[visible=false]:-translate-x-20', 'translate-x-0'),
+  slideInFromRight: cn('data-[visible=false]:translate-x-20', 'translate-x-0'),
+  slideInFromTop: cn('data-[visible=false]:-translate-y-5', 'translate-y-0'),
+  slideInFromBottom: cn('data-[visible=false]:translate-y-5', 'translate-y-0'),
 } satisfies { [x in Animation]?: string }
 
 const AnimateOnScroll: FC<Props> = ({
   children,
   className,
   animations,
-  threshold = 0.5,
+  threshold = 0.25,
   repeat = false,
   ...options
 }) => {

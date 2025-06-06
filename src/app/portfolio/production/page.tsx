@@ -55,8 +55,9 @@ const Page: FC<Props> = async () => {
               {projects?.map((proj, i) => (
                 <AnimateOnScroll
                   key={proj?._id}
-                  animations={['fadeIn']}
-                  className='duration-1000'
+                  animations={['slideInFromBottom', 'fadeIn']}
+                  className='duration-500'
+                  threshold={0.1}
                 >
                   <ProductionCard production={proj} />
                   {i < projects.length - 1 ? (
