@@ -4,7 +4,7 @@ import { Metadata } from 'next'
 import { FC } from 'react'
 
 import ProductionCard from '@/components/features/portfolio/production/production-card'
-import AnimateOnScroll from '@/components/general/animate-on-scroll'
+import AnimateOnScroll from '@/components/animation/animate-on-scroll'
 import NoResults from '@/components/general/no-results'
 import Heading from '@/components/layout/heading'
 import Main from '@/components/layout/main'

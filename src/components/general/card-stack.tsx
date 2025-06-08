@@ -1,4 +1,4 @@
-import AnimateOnScroll from './animate-on-scroll'
+import AnimateOnScroll from '../animation/animate-on-scroll'
 import { FC, ReactNode } from 'react'
 
 import { cn } from '@/utils/style'

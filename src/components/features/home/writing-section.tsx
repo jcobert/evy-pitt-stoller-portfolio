@@ -4,7 +4,7 @@ import { FC } from 'react'
 
 import { cn } from '@/utils/style'
 
-import AnimateOnScroll from '@/components/general/animate-on-scroll'
+import AnimateOnScroll from '@/components/animation/animate-on-scroll'
 import NoResults from '@/components/general/no-results'
 import { Button } from '@/components/ui/button'
 
