@@ -1,3 +1,5 @@
+import WritingCard from '../writing/writing-card'
+import ProductionCard from './production-card'
 import { FC } from 'react'
 
 import { formatDate } from '@/utils/date'
@@ -5,19 +7,28 @@ import { getSanityVideo } from '@/utils/media'
 import { cn } from '@/utils/style'
 
 import PortableBlockContent from '@/components/general/portable/portable-block-content'
+import Separator from '@/components/general/separator'
 import VideoPlayer from '@/components/media/video-player'
 import VideoThumbnail from '@/components/media/video-thumbnail'
 
-import { PROJECT_BY_SLUG_QUERYResult } from '@/sanity/types/generated/types'
+import {
+  PROJECTS_BY_SERIES_QUERYResult,
+  PROJECT_BY_SLUG_QUERYResult,
+} from '@/sanity/types/generated/types'
 
 type Props = {
   production: PROJECT_BY_SLUG_QUERYResult | undefined
+  seriesProjects: PROJECTS_BY_SERIES_QUERYResult | null | undefined
 }
 
-const ProductionPost: FC<Props> = ({ production }) => {
-  const { datePublished, mainVideo, mainImage } = production || {}
+const ProductionPost: FC<Props> = ({ production, seriesProjects }) => {
+  const { datePublished, mainVideo, mainImage, series } = production || {}
 
   const video = getSanityVideo(mainVideo, { thumbnailImage: mainImage })
+
+  const otherProjects = seriesProjects?.filter(
+    (proj) => proj?._id !== production?._id,
+  )
 
   return (
     <div className='flex flex-col gap-4 sm:gap-8 items-center'>
@@ -46,6 +57,47 @@ const ProductionPost: FC<Props> = ({ production }) => {
       ) : null}
 
       <PortableBlockContent value={production?.description} />
+
+      {series ? <Separator className='w-1/2 mt-4 mb-6' /> : null}
+
+      {series ? (
+        <div className='flex flex-col items-center gap-2 w-full'>
+          <p className='text-center'>This project is part of a series.</p>
+
+          <div className='flex flex-col gap-3 border p-4 rounded'>
+            {series?.title ? (
+              <h5 className='text-secondary font-medium text-lg text-center'>
+                {series?.title}
+              </h5>
+            ) : null}
+            {/* <PortableBlockContent value={series?.description} /> */}
+            {otherProjects?.length ? (
+              <div
+                className={cn(
+                  'grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 grid-flow-row',
+                  'gap-x-6 lg:gap-x-10 xl:gap-x-16 gap-y-10',
+                  'px-4 sm:px-12',
+                )}
+              >
+                {otherProjects?.map((proj) => {
+                  if (proj?.projectType === 'production')
+                    return (
+                      <ProductionCard
+                        key={proj?._id}
+                        production={proj}
+                        showDescription={false}
+                        showDate={false}
+                      />
+                    )
+                  if (proj?.projectType === 'writing')
+                    return <WritingCard key={proj?._id} writing={proj} />
+                  return null
+                })}
+              </div>
+            ) : null}
+          </div>
+        </div>
+      ) : null}
     </div>
   )
 }

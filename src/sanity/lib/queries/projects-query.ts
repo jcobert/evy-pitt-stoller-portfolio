@@ -7,4 +7,6 @@ export const PROJECTS_QUERY = groq`*[_type=='project' && defined(slug)]{ ..., "t
 
 export const PROJECTS_BY_TYPE_QUERY = groq`*[_type=='project' && projectType==$projectType && defined(slug)]{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ ..., videoUpload{ ..., file{ ..., asset-> } } }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } }, series->{ ..., mainImage{ ..., asset-> }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } } } }`
 
+export const PROJECTS_BY_SERIES_QUERY = groq`*[_type=='project' && series._ref==$seriesId]{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ ..., videoUpload{ ..., file{ ..., asset-> } } }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } }, series->{ ..., mainImage{ ..., asset-> }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } } } }`
+
 export const PROJECT_BY_SLUG_QUERY = groq`*[_type=='project' && slug.current==$slug]{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ ..., videoUpload{ ..., file{ ..., asset-> } } }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } }, series->{ ..., mainImage{ ..., asset-> }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } } } }[0]`
