@@ -5,7 +5,6 @@ import { getSanityImageUrl } from '@/utils/media'
 import { getFullName } from '@/utils/string'
 import { cn } from '@/utils/style'
 
-import { RotateWords } from '@/components/animation/rotate-words'
 import CardStack from '@/components/general/card-stack'
 import ContactLinks from '@/components/general/contact-links'
 
@@ -71,18 +70,7 @@ const HereoSection: FC<Props> = ({ profile, welcomeBlurb }) => {
           ))}
         </h2> */}
 
-        {/* <JobTitles titles={titles} /> */}
-        <RotateWords
-          // text='Accomplished'
-          text='The'
-          words={titles}
-          initial={false}
-          className={cn(
-            'flex items-start gap-2 text-xl sm:text-2xl text-balance flex-wrap',
-            'text-primary-foreground/65',
-            'self-start',
-          )}
-        />
+        <JobTitles titles={titles} />
       </div>
 
       <div className='flex items-end max-sm:flex-col shrink-0'>

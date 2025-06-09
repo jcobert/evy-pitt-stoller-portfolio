@@ -6,15 +6,17 @@ import { FC, useEffect, useState } from 'react'
 import { cn } from '@/utils/style'
 
 type Props = {
-  text?: string
   words: string[]
+  text?: string
   className?: string
+  wordClassName?: string
 } & AnimatePresenceProps
 
 export const RotateWords: FC<Props> = ({
   text,
   words = [],
   className,
+  wordClassName,
   ...presenceProps
 }) => {
   const [index, setIndex] = useState(0)
@@ -23,9 +25,11 @@ export const RotateWords: FC<Props> = ({
     const interval = setInterval(() => {
       setIndex((prevIndex) => (prevIndex + 1) % words.length)
     }, 3000)
-    // Clean up interval on unmount
+
     return () => clearInterval(interval)
   }, [words?.length])
+
+  if (!words?.length) return null
 
   return (
     <h2
@@ -40,8 +44,9 @@ export const RotateWords: FC<Props> = ({
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: 40 }}
           transition={{ duration: 0.5 }}
+          className={wordClassName}
         >
-          {words[index]}
+          {words?.[index]}
         </motion.span>
       </AnimatePresence>
     </h2>
