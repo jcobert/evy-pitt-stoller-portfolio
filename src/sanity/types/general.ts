@@ -7,6 +7,7 @@ import {
   Profile,
   Project,
   ProjectCategory,
+  ProjectCollection,
   ProjectRole,
   ProjectSeries,
   WritingPage,
@@ -15,6 +16,7 @@ import {
 /** Union of all document type schemas. */
 export type DocumentSchema =
   | Project
+  | ProjectCollection
   | ProjectSeries
   | ProjectCategory
   | ProjectRole

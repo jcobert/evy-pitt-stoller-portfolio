@@ -13,7 +13,10 @@ const defaultSlugify = (value: string) => {
   return value ? speakingurl(value, slugifyOpts) : ''
 }
 
-const documentsToSlugify: string[] = ['project'] satisfies DocumentType[]
+const documentsToSlugify: string[] = [
+  'project',
+  'projectCollection',
+] satisfies DocumentType[]
 
 export const slugOnPublish = (
   originalPublishAction: DocumentActionComponent,

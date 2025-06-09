@@ -36,7 +36,10 @@ const singletonActions = new Set<string>([
   'restore',
 ] satisfies DocumentActionComponent['action'][])
 
-const documentsToSlugify = new Set<string>(['project'] satisfies DocumentType[])
+const documentsToSlugify = new Set<string>([
+  'project',
+  'projectCollection',
+] satisfies DocumentType[])
 
 export default defineConfig({
   basePath: '/studio',

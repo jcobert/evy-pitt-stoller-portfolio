@@ -18,7 +18,10 @@ export const structure: StructureResolver = (S) =>
       // Portfolio
       S.divider({ id: 'portfolio', type: 'divider', title: 'Portfolio' }),
       S.documentTypeListItem('project' satisfies DocumentType).title(
-        'Projects',
+        'All Projects',
+      ),
+      S.documentTypeListItem('projectCollection' satisfies DocumentType).title(
+        'Collections',
       ),
       S.documentTypeListItem('projectSeries' satisfies DocumentType).title(
         'Series',
@@ -77,6 +80,7 @@ export const structure: StructureResolver = (S) =>
           !(
             [
               'project',
+              'projectCollection',
               'projectSeries',
               'projectCategory',
               'projectRole',

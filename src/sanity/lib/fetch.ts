@@ -10,9 +10,12 @@ import {
   PROJECTS_BY_TYPE_QUERYResult,
   PROJECTS_QUERYResult,
   PROJECT_BY_SLUG_QUERYResult,
+  PROJECT_COLLECTIONS_QUERYResult,
+  PROJECT_COLLECTION_BY_ID_QUERYResult,
   PROJECT_SERIES_BY_ID_QUERYResult,
   PROJECT_SERIES_QUERYResult,
   Project,
+  ProjectCollection,
   ProjectSeries,
   Slug,
   WRITING_PAGE_QUERYResult,
@@ -27,6 +30,11 @@ import {
   WRITING_PAGE_QUERY,
 } from './queries/page-query'
 import { PROFILE_QUERY } from './queries/profile-query'
+import {
+  PROJECT_COLLECTIONS_QUERY,
+  PROJECT_COLLECTION_BY_ID_QUERY,
+  PROJECT_COLLECTION_BY_SLUG_QUERY,
+} from './queries/project-collection-query'
 import {
   PROJECT_SERIES_BY_ID_QUERY,
   PROJECT_SERIES_QUERY,
@@ -116,6 +124,30 @@ export const getProjectSeriesById = async (params: {
     queryParams,
   )
   return series
+}
+
+/** Gets all project collections. */
+export const getAllProjectCollections = async () => {
+  const collections = await client.fetch<PROJECT_COLLECTIONS_QUERYResult>(
+    PROJECT_COLLECTIONS_QUERY,
+  )
+  return collections
+}
+
+/** Gets a single project collection by id. */
+export const getProjectCollection = async (params: {
+  id?: ProjectCollection['_id']
+  slug?: NonNullable<ProjectCollection['slug']>['current']
+}) => {
+  const { id, slug } = params || {}
+
+  if (!id && !slug) return null
+
+  const collection = await client.fetch<PROJECT_COLLECTION_BY_ID_QUERYResult>(
+    slug ? PROJECT_COLLECTION_BY_SLUG_QUERY : PROJECT_COLLECTION_BY_ID_QUERY,
+    slug ? { slug } : { id },
+  )
+  return collection
 }
 
 /** Gets profile. */
