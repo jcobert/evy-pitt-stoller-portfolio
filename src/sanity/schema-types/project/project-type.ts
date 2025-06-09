@@ -2,10 +2,13 @@ import {
   InfoFilledIcon,
   ProjectsIcon,
   SearchIcon,
+  TagsIcon,
   VideoIcon,
 } from '@sanity/icons'
 import { upperFirst } from 'lodash'
 import { defineField, defineType } from 'sanity'
+
+import { getSanityImageUrl, getSanityVideo } from '@/utils/media'
 
 import {
   SanityTextAreaInput,
@@ -36,6 +39,7 @@ export const projectType = defineType({
   groups: [
     { name: 'info', icon: InfoFilledIcon },
     { name: 'media', icon: VideoIcon },
+    { name: 'classification', title: 'Classification', icon: TagsIcon },
     { name: 'seo', title: 'SEO', icon: SearchIcon },
   ],
   fields: [
@@ -170,6 +174,30 @@ export const projectType = defineType({
       description:
         'Provide some background or introduction to the work - things you learned, problems you solved, etc.',
     }),
+
+    // CLASSIFICATION
+    // roles
+    defineField({
+      name: 'roles',
+      type: 'array',
+      of: [{ type: 'reference', to: { type: 'projectRole' } }],
+      title: 'Roles',
+      description:
+        'Your involvement in the project (e.g. Marketing, Project Management).',
+      options: { sortable: true },
+      group: 'classification',
+    }),
+    // category
+    defineField({
+      name: 'category',
+      // type: 'array',
+      // of: [{ type: 'reference', to: { type: 'projectCategory' } }],
+      type: 'reference',
+      to: { type: 'projectCategory' },
+      title: 'Category',
+      description: 'The type of work (e.g. Feature Film).',
+      group: 'classification',
+    }),
     // series
     defineField({
       name: 'series',
@@ -177,7 +205,8 @@ export const projectType = defineType({
       to: { type: 'projectSeries' },
       title: 'Project Series',
       description:
-        'Use if project is part of a series. Select an existing or create a new series.',
+        'If project is part of a series add it here. Select from existing series or create a new one.',
+      group: 'classification',
     }),
     // tags
     defineField({
@@ -186,9 +215,12 @@ export const projectType = defineType({
       type: 'array',
       of: [{ type: 'string' }],
       description:
-        'Any relevant categories (e.g. "Climate change, Documentary, Soft-core porn")',
+        'Any additional categories/relevant keywords (e.g. "Climate change, Soft-core porn")',
       options: { layout: 'tags' },
+      group: 'classification',
     }),
+
+    // SEO
     defineField({
       name: 'seo',
       type: 'seo',
@@ -197,9 +229,21 @@ export const projectType = defineType({
     }),
   ],
   preview: {
-    select: { title: 'title', projectType: 'projectType' },
-    prepare: ({ title, projectType }) => {
-      return { title, subtitle: upperFirst((projectType as string) || '') }
+    select: {
+      title: 'title',
+      projectType: 'projectType',
+      media: 'mainImage',
+      video: 'mainVideo',
+    },
+    prepare: ({ title, projectType, media, video }) => {
+      const img = getSanityImageUrl(media)
+      const videoThumbnail = getSanityVideo(video)?.thumbnailUrl
+
+      return {
+        title,
+        subtitle: upperFirst((projectType as string) || ''),
+        imageUrl: img || videoThumbnail || undefined,
+      }
     },
   },
 })

@@ -6,6 +6,8 @@ import {
   ProductionPage,
   Profile,
   Project,
+  ProjectCategory,
+  ProjectRole,
   ProjectSeries,
   WritingPage,
 } from './generated/types'
@@ -14,6 +16,8 @@ import {
 export type DocumentSchema =
   | Project
   | ProjectSeries
+  | ProjectCategory
+  | ProjectRole
   | Profile
   | HomePage
   | AboutPage

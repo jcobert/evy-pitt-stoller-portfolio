@@ -23,6 +23,12 @@ export const structure: StructureResolver = (S) =>
       S.documentTypeListItem('projectSeries' satisfies DocumentType).title(
         'Series',
       ),
+      S.documentTypeListItem('projectCategory' satisfies DocumentType).title(
+        'Categories',
+      ),
+      S.documentTypeListItem('projectRole' satisfies DocumentType).title(
+        'Your Roles',
+      ),
 
       // Pages
       S.divider({ id: 'pages', type: 'divider', title: 'Pages' }),
@@ -72,6 +78,8 @@ export const structure: StructureResolver = (S) =>
             [
               'project',
               'projectSeries',
+              'projectCategory',
+              'projectRole',
               'profile',
               'homePage',
               'aboutPage',

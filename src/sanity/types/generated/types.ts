@@ -49,6 +49,15 @@ export type Geopoint = {
   alt?: number
 }
 
+export type ProjectRole = {
+  _id: string
+  _type: 'projectRole'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  name?: string
+}
+
 export type Project = {
   _id: string
   _type: 'project'
@@ -112,6 +121,19 @@ export type Project = {
         _key: string
       } & Video)
   >
+  roles?: Array<{
+    _ref: string
+    _type: 'reference'
+    _weak?: boolean
+    _key: string
+    [internalGroqTypeReferenceTo]?: 'projectRole'
+  }>
+  category?: {
+    _ref: string
+    _type: 'reference'
+    _weak?: boolean
+    [internalGroqTypeReferenceTo]?: 'projectCategory'
+  }
   series?: {
     _ref: string
     _type: 'reference'
@@ -179,6 +201,15 @@ export type ProjectSeries = {
         _key: string
       } & Video)
   >
+}
+
+export type ProjectCategory = {
+  _id: string
+  _type: 'projectCategory'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  name?: string
 }
 
 export type Slug = {
@@ -524,8 +555,10 @@ export type AllSanitySchemaTypes =
   | SanityImagePalette
   | SanityImageDimensions
   | Geopoint
+  | ProjectRole
   | Project
   | ProjectSeries
+  | ProjectCategory
   | Slug
   | WritingPage
   | ProductionPage
@@ -929,7 +962,7 @@ export type PROJECT_SERIES_BY_ID_QUERYResult = {
 
 // Source: ./src/sanity/lib/queries/projects-query.ts
 // Variable: PROJECTS_QUERY
-// Query: *[_type=='project' && defined(slug)]{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ ..., videoUpload{ ..., file{ ..., asset-> } } }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } }, series->{ ..., mainImage{ ..., asset-> }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } } } }
+// Query: *[_type=='project' && defined(slug)]{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ ..., videoUpload{ ..., file{ ..., asset-> } } }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } }, series->{ ..., mainImage{ ..., asset-> }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } } }, roles[]->, category-> }
 export type PROJECTS_QUERYResult = Array<{
   _id: string
   _type: 'project'
@@ -1055,6 +1088,22 @@ export type PROJECTS_QUERYResult = Array<{
         alt?: string
       }
   > | null
+  roles: Array<{
+    _id: string
+    _type: 'projectRole'
+    _createdAt: string
+    _updatedAt: string
+    _rev: string
+    name?: string
+  }> | null
+  category: {
+    _id: string
+    _type: 'projectCategory'
+    _createdAt: string
+    _updatedAt: string
+    _rev: string
+    name?: string
+  } | null
   series: {
     _id: string
     _type: 'projectSeries'
@@ -1145,7 +1194,7 @@ export type PROJECTS_QUERYResult = Array<{
   seo?: Seo
 }>
 // Variable: PROJECTS_BY_TYPE_QUERY
-// Query: *[_type=='project' && projectType==$projectType && defined(slug)]{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ ..., videoUpload{ ..., file{ ..., asset-> } } }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } }, series->{ ..., mainImage{ ..., asset-> }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } } } }
+// Query: *[_type=='project' && projectType==$projectType && defined(slug)]{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ ..., videoUpload{ ..., file{ ..., asset-> } } }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } }, series->{ ..., mainImage{ ..., asset-> }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } } }, roles[]->, category-> }
 export type PROJECTS_BY_TYPE_QUERYResult = Array<{
   _id: string
   _type: 'project'
@@ -1271,6 +1320,22 @@ export type PROJECTS_BY_TYPE_QUERYResult = Array<{
         alt?: string
       }
   > | null
+  roles: Array<{
+    _id: string
+    _type: 'projectRole'
+    _createdAt: string
+    _updatedAt: string
+    _rev: string
+    name?: string
+  }> | null
+  category: {
+    _id: string
+    _type: 'projectCategory'
+    _createdAt: string
+    _updatedAt: string
+    _rev: string
+    name?: string
+  } | null
   series: {
     _id: string
     _type: 'projectSeries'
@@ -1361,7 +1426,7 @@ export type PROJECTS_BY_TYPE_QUERYResult = Array<{
   seo?: Seo
 }>
 // Variable: PROJECTS_BY_SERIES_QUERY
-// Query: *[_type=='project' && series._ref==$seriesId]{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ ..., videoUpload{ ..., file{ ..., asset-> } } }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } }, series->{ ..., mainImage{ ..., asset-> }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } } } }
+// Query: *[_type=='project' && series._ref==$seriesId]{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ ..., videoUpload{ ..., file{ ..., asset-> } } }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } }, series->{ ..., mainImage{ ..., asset-> }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } } }, roles[]->, category-> }
 export type PROJECTS_BY_SERIES_QUERYResult = Array<{
   _id: string
   _type: 'project'
@@ -1487,6 +1552,22 @@ export type PROJECTS_BY_SERIES_QUERYResult = Array<{
         alt?: string
       }
   > | null
+  roles: Array<{
+    _id: string
+    _type: 'projectRole'
+    _createdAt: string
+    _updatedAt: string
+    _rev: string
+    name?: string
+  }> | null
+  category: {
+    _id: string
+    _type: 'projectCategory'
+    _createdAt: string
+    _updatedAt: string
+    _rev: string
+    name?: string
+  } | null
   series: {
     _id: string
     _type: 'projectSeries'
@@ -1577,7 +1658,7 @@ export type PROJECTS_BY_SERIES_QUERYResult = Array<{
   seo?: Seo
 }>
 // Variable: PROJECT_BY_SLUG_QUERY
-// Query: *[_type=='project' && slug.current==$slug]{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ ..., videoUpload{ ..., file{ ..., asset-> } } }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } }, series->{ ..., mainImage{ ..., asset-> }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } } } }[0]
+// Query: *[_type=='project' && slug.current==$slug]{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ ..., videoUpload{ ..., file{ ..., asset-> } } }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } }, series->{ ..., mainImage{ ..., asset-> }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } } }, roles[]->, category-> }[0]
 export type PROJECT_BY_SLUG_QUERYResult = {
   _id: string
   _type: 'project'
@@ -1703,6 +1784,22 @@ export type PROJECT_BY_SLUG_QUERYResult = {
         alt?: string
       }
   > | null
+  roles: Array<{
+    _id: string
+    _type: 'projectRole'
+    _createdAt: string
+    _updatedAt: string
+    _rev: string
+    name?: string
+  }> | null
+  category: {
+    _id: string
+    _type: 'projectCategory'
+    _createdAt: string
+    _updatedAt: string
+    _rev: string
+    name?: string
+  } | null
   series: {
     _id: string
     _type: 'projectSeries'
@@ -1807,9 +1904,9 @@ declare module '@sanity/client' {
     '*[_type==\'profile\' && _id=="profile"]{ ..., photo{ ..., asset-> }, companies[]{ ..., logo{ ..., asset-> } } }[0]': PROFILE_QUERYResult
     '*[_type==\'projectSeries\']{ ..., mainImage{ ..., asset-> }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } } }': PROJECT_SERIES_QUERYResult
     '*[_type==\'projectSeries\' && _id==$id]{ ..., mainImage{ ..., asset-> }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } } }[0]': PROJECT_SERIES_BY_ID_QUERYResult
-    '*[_type==\'project\' && defined(slug)]{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ ..., videoUpload{ ..., file{ ..., asset-> } } }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } }, series->{ ..., mainImage{ ..., asset-> }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } } } }': PROJECTS_QUERYResult
-    '*[_type==\'project\' && projectType==$projectType && defined(slug)]{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ ..., videoUpload{ ..., file{ ..., asset-> } } }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } }, series->{ ..., mainImage{ ..., asset-> }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } } } }': PROJECTS_BY_TYPE_QUERYResult
-    '*[_type==\'project\' && series._ref==$seriesId]{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ ..., videoUpload{ ..., file{ ..., asset-> } } }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } }, series->{ ..., mainImage{ ..., asset-> }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } } } }': PROJECTS_BY_SERIES_QUERYResult
-    '*[_type==\'project\' && slug.current==$slug]{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ ..., videoUpload{ ..., file{ ..., asset-> } } }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } }, series->{ ..., mainImage{ ..., asset-> }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } } } }[0]': PROJECT_BY_SLUG_QUERYResult
+    '*[_type==\'project\' && defined(slug)]{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ ..., videoUpload{ ..., file{ ..., asset-> } } }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } }, series->{ ..., mainImage{ ..., asset-> }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } } }, roles[]->, category-> }': PROJECTS_QUERYResult
+    '*[_type==\'project\' && projectType==$projectType && defined(slug)]{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ ..., videoUpload{ ..., file{ ..., asset-> } } }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } }, series->{ ..., mainImage{ ..., asset-> }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } } }, roles[]->, category-> }': PROJECTS_BY_TYPE_QUERYResult
+    '*[_type==\'project\' && series._ref==$seriesId]{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ ..., videoUpload{ ..., file{ ..., asset-> } } }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } }, series->{ ..., mainImage{ ..., asset-> }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } } }, roles[]->, category-> }': PROJECTS_BY_SERIES_QUERYResult
+    '*[_type==\'project\' && slug.current==$slug]{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ ..., videoUpload{ ..., file{ ..., asset-> } } }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } }, series->{ ..., mainImage{ ..., asset-> }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } } }, roles[]->, category-> }[0]': PROJECT_BY_SLUG_QUERYResult
   }
 }
