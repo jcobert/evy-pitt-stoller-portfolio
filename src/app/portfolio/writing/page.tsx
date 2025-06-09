@@ -49,7 +49,7 @@ const Page: FC<Props> = async () => {
           {!projects?.length ? (
             <NoResults item='writing' />
           ) : (
-            <div className='grid grid-cols-1 lg:grid-cols-2 grid-flow-row gap-x-6 gap-y-10 lg:gap-x-12'>
+            <div className='grid grid-cols-1 xl:grid-cols-2 grid-flow-row gap-x-6 gap-y-10 lg:gap-x-12'>
               {projects?.map((proj) => (
                 <AnimateOnScroll
                   key={proj?._id}

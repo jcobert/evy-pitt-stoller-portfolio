@@ -5,6 +5,7 @@ import { formatDate } from '@/utils/date'
 import { getSanityImageUrl } from '@/utils/media'
 import { cn } from '@/utils/style'
 
+import Logo from '@/components/general/logo'
 import { Button } from '@/components/ui/button'
 
 import { PROJECTS_BY_TYPE_QUERYResult } from '@/sanity/types/generated/types'
@@ -12,9 +13,10 @@ import { PROJECTS_BY_TYPE_QUERYResult } from '@/sanity/types/generated/types'
 type Props = {
   writing: PROJECTS_BY_TYPE_QUERYResult[number]
   className?: string
+  titleClassName?: string
 }
 
-const WritingCard: FC<Props> = ({ writing, className }) => {
+const WritingCard: FC<Props> = ({ writing, className, titleClassName }) => {
   const { title, datePublished, mainImage, slug, description } = writing || {}
 
   const pageUrl = `/portfolio/writing/${slug?.current}`
@@ -37,11 +39,13 @@ const WritingCard: FC<Props> = ({ writing, className }) => {
         className,
       )}
     >
-      {imageSquare ? (
+      {mainImage ? (
         <div
           className={cn(
-            'aspect-square self-center max-w-1/3 sm:max-w-48 min-w-24 flex-none rounded-sm sm:rounded-r-none border-4 border-white/80',
+            'rounded-sm border-4 border-white/80',
             'max-sm:aspect-video max-sm:max-w-full max-sm:w-full max-sm:rounded-b-none max-sm:max-h-7/12',
+            'aspect-square self-start max-w-1/3 sm:max-w-48 min-w-24 flex-none sm:rounded-r-none',
+            // 'lg:max-w-24',
           )}
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -49,8 +53,8 @@ const WritingCard: FC<Props> = ({ writing, className }) => {
             src={imageSquare}
             alt={mainImage?.alt}
             className={cn(
-              'aspect-square object-cover rounded-sm rounded-r-none h-auto',
               'max-sm:hidden',
+              'aspect-square object-cover rounded-sm rounded-r-none h-auto',
             )}
           />
           {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -58,12 +62,38 @@ const WritingCard: FC<Props> = ({ writing, className }) => {
             src={imageWide}
             alt={mainImage?.alt}
             className={cn(
-              'aspect-video object-cover rounded-sm rounded-b-none size-full',
               'sm:hidden',
+              'aspect-video object-cover rounded-sm rounded-b-none size-full',
             )}
           />
         </div>
-      ) : null}
+      ) : (
+        <div
+          className={cn(
+            'aspect-square self-start max-w-1/3 sm:max-w-48 min-w-24 flex-none rounded-sm sm:rounded-r-none border-4 border-white/80',
+            'max-sm:aspect-video max-sm:max-w-full max-sm:w-full max-sm:rounded-b-none max-sm:max-h-7/12',
+          )}
+        >
+          <div
+            className={cn(
+              'max-sm:hidden',
+              'aspect-square object-cover rounded-sm rounded-r-none h-auto',
+              'w-[11.5rem] flex justify-center items-center bg-secondary-light/10',
+            )}
+          >
+            <Logo className='opacity-70 size-16 text-xl' />
+          </div>
+          <div
+            className={cn(
+              'sm:hidden',
+              'aspect-video object-cover rounded-sm rounded-b-none size-full',
+              'flex justify-center items-center bg-secondary-light/10',
+            )}
+          >
+            <Logo className='opacity-70 size-20 text-2xl' />
+          </div>
+        </div>
+      )}
 
       <div className={cn('w-full flex flex-col items-start gap-3 p-4 flex-1')}>
         <div
@@ -78,7 +108,12 @@ const WritingCard: FC<Props> = ({ writing, className }) => {
               'max-sm:w-full max-sm:items-center max-sm:justify-center',
             )}
           >
-            <span className='text-primary-foreground group-hover:text-primary-foreground/80 transition md:text-lg font-medium leading-snug'>
+            <span
+              className={cn(
+                'text-primary-foreground group-hover:text-primary-foreground/80 transition md:text-lg font-medium leading-snug',
+                titleClassName,
+              )}
+            >
               {title}
             </span>
             {datePublished ? (
