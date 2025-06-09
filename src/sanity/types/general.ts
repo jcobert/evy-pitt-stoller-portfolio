@@ -6,12 +6,14 @@ import {
   ProductionPage,
   Profile,
   Project,
+  ProjectSeries,
   WritingPage,
 } from './generated/types'
 
 /** Union of all document type schemas. */
 export type DocumentSchema =
   | Project
+  | ProjectSeries
   | Profile
   | HomePage
   | AboutPage

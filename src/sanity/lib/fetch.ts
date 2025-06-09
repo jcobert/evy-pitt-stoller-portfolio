@@ -6,10 +6,14 @@ import {
   PORTFOLIO_PAGE_QUERYResult,
   PRODUCTION_PAGE_QUERYResult,
   PROFILE_QUERYResult,
+  PROJECTS_BY_SERIES_QUERYResult,
   PROJECTS_BY_TYPE_QUERYResult,
   PROJECTS_QUERYResult,
   PROJECT_BY_SLUG_QUERYResult,
+  PROJECT_SERIES_BY_ID_QUERYResult,
+  PROJECT_SERIES_QUERYResult,
   Project,
+  ProjectSeries,
   Slug,
   WRITING_PAGE_QUERYResult,
 } from '../types/generated/types'
@@ -24,6 +28,11 @@ import {
 } from './queries/page-query'
 import { PROFILE_QUERY } from './queries/profile-query'
 import {
+  PROJECT_SERIES_BY_ID_QUERY,
+  PROJECT_SERIES_QUERY,
+} from './queries/project-series-query'
+import {
+  PROJECTS_BY_SERIES_QUERY,
   PROJECTS_BY_TYPE_QUERY,
   PROJECTS_QUERY,
   PROJECT_BY_SLUG_QUERY,
@@ -64,8 +73,49 @@ export const getProject = async (params: { slug: Slug['current'] }) => {
     PROJECT_BY_SLUG_QUERY,
     queryParams,
   )
-
   return project
+}
+
+/** Gets a single project by slug. */
+export const getProjectsBySeries = async (params: {
+  seriesId: ProjectSeries['_id'] | undefined
+}) => {
+  const { seriesId } = params || {}
+
+  if (!seriesId) return null
+
+  const queryParams = { seriesId }
+
+  const projects = await client.fetch<PROJECTS_BY_SERIES_QUERYResult>(
+    PROJECTS_BY_SERIES_QUERY,
+    queryParams,
+  )
+  return projects
+}
+
+/** Gets many project series. */
+export const getAllProjectSeries = async () => {
+  const series =
+    await client.fetch<PROJECT_SERIES_QUERYResult>(PROJECT_SERIES_QUERY)
+  return series
+}
+
+/** Gets a single project series by id. */
+export const getProjectSeriesById = async (params: {
+  id: ProjectSeries['_id'] | undefined
+}) => {
+  const { id } = params || {}
+
+  // if (!id) throw new Error('Missing id.')
+  if (!id) return null
+
+  const queryParams = { id }
+
+  const series = await client.fetch<PROJECT_SERIES_BY_ID_QUERYResult>(
+    PROJECT_SERIES_BY_ID_QUERY,
+    queryParams,
+  )
+  return series
 }
 
 /** Gets profile. */

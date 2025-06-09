@@ -13,13 +13,20 @@ import { Button } from '@/components/ui/button'
 
 import { PageParams } from '@/types/general'
 
-import { getProject, getProjects } from '@/sanity/lib/fetch'
+import {
+  getProject,
+  getProjects,
+  getProjectsBySeries,
+} from '@/sanity/lib/fetch'
 
 type Props = PageParams<{ slug: string }>
 
 const loadContent = async (slug: Awaited<Props['params']>['slug']) => {
   const project = await getProject({ slug })
-  return { project }
+  const seriesProjects = await getProjectsBySeries({
+    seriesId: project?.series?._id,
+  })
+  return { project, seriesProjects }
 }
 
 export type WritingSlugPageData = Awaited<ReturnType<typeof loadContent>> &
@@ -29,8 +36,8 @@ export const generateMetadata = async ({
   params,
 }: Props): Promise<Metadata> => {
   const { slug } = await params
-  const { project } = await loadContent(slug)
-  return writingSlugPageMeta({ project, slug })
+  const { project, seriesProjects } = await loadContent(slug)
+  return writingSlugPageMeta({ project, slug, seriesProjects })
 }
 
 export const generateStaticParams = async () => {
@@ -41,11 +48,11 @@ export const generateStaticParams = async () => {
 const Page: FC<Props> = async ({ params }) => {
   const slug = (await params)?.slug
 
-  const { project } = await loadContent(slug)
+  const { project, seriesProjects } = await loadContent(slug)
 
   const backLink = '/portfolio/writing'
 
-  const jsonLd = await writingSlugPageJsonLd({ project, slug })
+  const jsonLd = await writingSlugPageJsonLd({ project, slug, seriesProjects })
 
   return (
     <Main>
@@ -54,7 +61,7 @@ const Page: FC<Props> = async ({ params }) => {
           <>
             <Heading text={project?.title} />
             <section>
-              <WritingPost writing={project} />
+              <WritingPost writing={project} seriesProjects={seriesProjects} />
             </section>
           </>
         ) : (
