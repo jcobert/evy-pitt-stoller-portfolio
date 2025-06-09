@@ -170,6 +170,15 @@ export const projectType = defineType({
       description:
         'Provide some background or introduction to the work - things you learned, problems you solved, etc.',
     }),
+    // series
+    defineField({
+      name: 'series',
+      type: 'reference',
+      to: { type: 'projectSeries' },
+      title: 'Project Series',
+      description:
+        'Use if project is part of a series. Select an existing or create a new series.',
+    }),
     // tags
     defineField({
       name: 'tags',
