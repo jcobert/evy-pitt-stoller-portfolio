@@ -1,3 +1,4 @@
+import JobTitles from './job-titles'
 import { FC } from 'react'
 
 import { getSanityImageUrl } from '@/utils/media'
@@ -48,7 +49,7 @@ const HereoSection: FC<Props> = ({ profile, welcomeBlurb }) => {
           {/* <span>{firstName}</span>
           <span>{`${lastName}.`}</span> */}
         </h1>
-        <h2
+        {/* <h2
           className={cn(
             'flex items-start gap-2 text-xl sm:text-2xl text-balance flex-wrap',
             // 'text-secondary',
@@ -67,7 +68,9 @@ const HereoSection: FC<Props> = ({ profile, welcomeBlurb }) => {
               ) : null}
             </div>
           ))}
-        </h2>
+        </h2> */}
+
+        <JobTitles titles={titles} />
       </div>
 
       <div className='flex items-end max-sm:flex-col shrink-0'>
@@ -102,7 +105,9 @@ const HereoSection: FC<Props> = ({ profile, welcomeBlurb }) => {
                 'justify-center mx-auto',
               )}
             >
-              {welcomeBlurb ? <p className='text-primary-foreground'>{welcomeBlurb}</p> : null}
+              {welcomeBlurb ? (
+                <p className='text-primary-foreground'>{welcomeBlurb}</p>
+              ) : null}
               <ContactLinks
                 className='mx-auto'
                 links={{
