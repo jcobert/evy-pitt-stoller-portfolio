@@ -1,14 +1,15 @@
 import { MetadataRoute } from 'next'
 
 import { siteConfig } from '@/configuration/site'
-import { getProjects } from '@/sanity/lib/fetch'
+import { getAllProjectCollections, getProjects } from '@/sanity/lib/fetch'
 
 const sitemap = async (): Promise<MetadataRoute.Sitemap> => {
   const BASE_URL = siteConfig.url
 
-  const [productions, writing] = await Promise.all([
+  const [productions, writing, collections] = await Promise.all([
     getProjects({ projectType: 'production' }),
     getProjects({ projectType: 'writing' }),
+    getAllProjectCollections(),
   ])
 
   // Dynamic project routes
@@ -26,6 +27,15 @@ const sitemap = async (): Promise<MetadataRoute.Sitemap> => {
       ({
         url: `${BASE_URL}/portfolio/writing/${proj?.slug?.current}`,
         lastModified: proj?._updatedAt || new Date(),
+        changeFrequency: 'monthly',
+      }) satisfies MetadataRoute.Sitemap[number],
+  )
+
+  const collectionRoutes = (collections || [])?.map(
+    (col) =>
+      ({
+        url: `${BASE_URL}/portfolio/collections/${col?.slug?.current}`,
+        lastModified: col?._updatedAt || new Date(),
         changeFrequency: 'monthly',
       }) satisfies MetadataRoute.Sitemap[number],
   )
@@ -63,6 +73,7 @@ const sitemap = async (): Promise<MetadataRoute.Sitemap> => {
     },
     ...productionRoutes,
     ...writingRoutes,
+    ...collectionRoutes,
   ]
 }
 

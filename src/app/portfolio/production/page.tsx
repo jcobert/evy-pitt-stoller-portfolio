@@ -6,7 +6,7 @@ import { FC } from 'react'
 import { cn } from '@/utils/style'
 
 import AnimateOnScroll from '@/components/animation/animate-on-scroll'
-import CollectionCard from '@/components/features/portfolio/collection-card'
+import CollectionCard from '@/components/features/portfolio/collection/collection-card'
 import ProductionCard from '@/components/features/portfolio/production/production-card'
 import NoResults from '@/components/general/no-results'
 import Separator from '@/components/general/separator'
