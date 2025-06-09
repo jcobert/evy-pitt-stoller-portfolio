@@ -1,5 +1,4 @@
-import WritingCard from '../writing/writing-card'
-import ProductionCard from './production-card'
+import ProjectCard from '../project-card'
 import { FC } from 'react'
 
 import { formatDate } from '@/utils/date'
@@ -80,18 +79,26 @@ const ProductionPost: FC<Props> = ({ production, seriesProjects }) => {
                 )}
               >
                 {otherProjects?.map((proj) => {
-                  if (proj?.projectType === 'production')
-                    return (
-                      <ProductionCard
-                        key={proj?._id}
-                        production={proj}
-                        showDescription={false}
-                        showDate={false}
-                      />
-                    )
-                  if (proj?.projectType === 'writing')
-                    return <WritingCard key={proj?._id} writing={proj} />
-                  return null
+                  return (
+                    <ProjectCard
+                      key={proj?._id}
+                      project={proj}
+                      showDescription={false}
+                      showDate={false}
+                    />
+                  )
+                  // if (proj?.projectType === 'production')
+                  //   return (
+                  //     <ProductionCard
+                  //       key={proj?._id}
+                  //       production={proj}
+                  //       showDescription={false}
+                  //       showDate={false}
+                  //     />
+                  //   )
+                  // if (proj?.projectType === 'writing')
+                  //   return <WritingCard key={proj?._id} writing={proj} />
+                  // return null
                 })}
               </div>
             ) : null}
