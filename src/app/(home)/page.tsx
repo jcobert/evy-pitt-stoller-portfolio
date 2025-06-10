@@ -57,6 +57,8 @@ const Page: FC = async () => {
 
   const jsonLd = await homePageJsonLd(homePage)
 
+  const brandRowCutoff = (profile?.companies?.length || 0) / 2
+
   return (
     <Main className='bg-gradient-to-br from-primary/90 from-20% to-primary pb-0'>
       <PageLayout wrapperClassName='max-sm:w-full' className='max-md:px-0'>
@@ -75,13 +77,13 @@ const Page: FC = async () => {
         >
           <Ticker duration={18}>
             <BrandsList
-              brands={profile?.companies?.slice(0, 6)}
+              brands={profile?.companies?.slice(0, brandRowCutoff)}
               className='grid-rows-1 !gap-0 -mr-10'
             />
           </Ticker>
           <Ticker duration={22}>
             <BrandsList
-              brands={profile?.companies?.slice(6)}
+              brands={profile?.companies?.slice(brandRowCutoff)}
               className='grid-rows-1 !gap-0 -mr-10'
             />
           </Ticker>
