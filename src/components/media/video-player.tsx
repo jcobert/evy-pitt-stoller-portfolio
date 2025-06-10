@@ -39,10 +39,21 @@ const VideoPlayer: FC<Props> = ({ video, className, ...props }) => {
   const [isMounted, setIsMounted] = useState(false)
   const [isReady, setIsReady] = useState(false)
   const [isError, setIsError] = useState(false)
+  const [isFailed, setIsFailed] = useState(false)
 
   useEffect(() => {
     setIsMounted(true)
   }, [])
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      if (isMounted && !isError && !isReady) setIsFailed(true)
+    }, 3000)
+
+    if (isReady && !isError) setIsFailed(false)
+
+    return () => clearTimeout(timeout)
+  }, [isMounted, isReady, isError])
 
   if (!isMounted)
     return (
@@ -52,31 +63,50 @@ const VideoPlayer: FC<Props> = ({ video, className, ...props }) => {
       </>
     )
 
-  if (isError)
-    return (
-      <div className='w-full relative flex justify-center items-center'>
-        <VideoThumbnail
-          video={video}
-          className='animate-none bg-accent'
-          icon={false}
-        />
-        <div className='absolute top-3/4_ flex flex-col gap-3 items-center bg-black/60 size-full justify-center rounded'>
-          {/* <p className='text-sm text-white'>
-            Unable to load video preview.
-          </p> */}
-          <Button asChild variant='outline'>
-            <a href={video?.url} rel='noreferrer nofollow'>
-              <FaRegCirclePlay className={cn('text-5xl text-black/30')} />
-              Click here to watch
-            </a>
-          </Button>
-        </div>
-      </div>
-    )
+  // if (isError || isFailed)
+  //   return (
+  //     <div className='w-full relative flex justify-center items-center'>
+  //       <VideoThumbnail
+  //         video={video}
+  //         className='animate-none bg-accent'
+  //         icon={false}
+  //       />
+  //       <div className='absolute top-3/4_ flex flex-col gap-3 items-center bg-black/60 size-full justify-center rounded'>
+  //         {/* <p className='text-sm text-white'>
+  //           Unable to load video preview.
+  //         </p> */}
+  //         <Button asChild variant='outline'>
+  //           <a href={video?.url} rel='noreferrer nofollow'>
+  //             <FaRegCirclePlay className={cn('text-5xl text-black/30')} />
+  //             Click here to watch
+  //           </a>
+  //         </Button>
+  //       </div>
+  //     </div>
+  //   )
 
   return (
     <>
-      {!isReady ? <Spinner /> : null}
+      {!isReady && !isFailed ? <Spinner /> : null}
+
+      {isError || isFailed ? (
+        <div className='size-full aspect-video absolute flex justify-center items-center z-10'>
+          <VideoThumbnail
+            video={video}
+            className='animate-none bg-accent'
+            icon={false}
+          />
+          <div className='absolute flex flex-col gap-3 items-center bg-black/60 size-full justify-center rounded'>
+            <Button asChild variant='outline'>
+              <a href={video?.url} rel='noreferrer nofollow'>
+                <FaRegCirclePlay className={cn('text-5xl text-black/30')} />
+                Click here to watch
+              </a>
+            </Button>
+          </div>
+        </div>
+      ) : null}
+
       <ReactPlayer
         controls
         width='100%'
