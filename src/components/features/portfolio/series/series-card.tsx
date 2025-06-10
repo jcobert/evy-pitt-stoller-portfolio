@@ -11,6 +11,7 @@ import { Button } from '@/components/ui/button'
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -82,9 +83,12 @@ const SeriesCard: FC<Props> = ({ series, className }) => {
         </div>
       </DialogTrigger>
 
-      <DialogContent className='z-9999 sm:max-w-4xl max-h-10/12 overflow-auto py-8 flex flex-col gap-8'>
+      <DialogContent className='z-9999 sm:max-w-4xl max-h-11/12 sm:max-h-10/12 overflow-auto py-8 flex flex-col gap-8'>
         <DialogHeader className='flex flex-col gap-3'>
           <DialogTitle className='text-primary-foreground'>{title}</DialogTitle>
+          <DialogDescription className='sr-only'>
+            View the projects in the series below.
+          </DialogDescription>
           <PortableBlockContent value={description} />
         </DialogHeader>
 
@@ -96,7 +100,11 @@ const SeriesCard: FC<Props> = ({ series, className }) => {
           )}
         >
           {projects?.map((proj) => (
-            <ProjectCard key={proj?._id} project={proj} />
+            <ProjectCard
+              key={proj?._id}
+              project={proj}
+              showDescription={false}
+            />
           ))}
         </div>
       </DialogContent>

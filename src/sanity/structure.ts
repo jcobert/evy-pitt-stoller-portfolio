@@ -23,9 +23,9 @@ export const structure: StructureResolver = (S) =>
       S.documentTypeListItem('projectCollection' satisfies DocumentType).title(
         'Collections',
       ),
-      S.documentTypeListItem('projectSeries' satisfies DocumentType).title(
-        'Series',
-      ),
+      // S.documentTypeListItem('projectSeries' satisfies DocumentType).title(
+      //   'Series',
+      // ),
       S.documentTypeListItem('projectCategory' satisfies DocumentType).title(
         'Categories',
       ),
