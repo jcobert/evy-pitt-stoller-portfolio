@@ -94,17 +94,20 @@ export const getVimeoData = (
 export const getSanityVideo = (
   video: PROJECTS_BY_TYPE_QUERYResult[number]['mainVideo'] | undefined,
   options?: {
-    thumbnailImage?: PROJECTS_BY_TYPE_QUERYResult[number]['mainImage']
+    thumbnailImage?: PROJECTS_BY_TYPE_QUERYResult[number]['mainImage'] | string
     youtube?: Parameters<typeof getYoutubeData>['1']
     vimeo?: Parameters<typeof getVimeoData>['1']
   },
 ): SanityVideo => {
   const { videoUpload, youtube, otherLink } = video || {}
 
-  const customThumbnailUrl = getSanityImageUrl(options?.thumbnailImage, {
-    ratio: '16/9',
-    width: 600,
-  })
+  const customThumbnailUrl =
+    typeof options?.thumbnailImage === 'string'
+      ? options?.thumbnailImage
+      : getSanityImageUrl(options?.thumbnailImage, {
+          ratio: '16/9',
+          width: 600,
+        })
 
   const fileData = videoUpload?.file?.asset
   const youtubeData = getYoutubeData(youtube, options?.youtube)
@@ -114,9 +117,9 @@ export const getSanityVideo = (
     fileData?.url || youtubeData?.url || vimeoData?.url || otherLink || ''
 
   const thumbnailUrl =
-    customThumbnailUrl ||
     youtubeData?.thumbnailUrl ||
     vimeoData?.thumbnailUrl ||
+    customThumbnailUrl ||
     ''
 
   const title = fileData?.title || youtubeData?.title || vimeoData?.title || ''

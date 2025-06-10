@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { FC } from 'react'
 
-import { getSanityImageUrl } from '@/utils/media'
+import { getSanityImageUrl, getSanityVideo } from '@/utils/media'
 import { cn } from '@/utils/style'
 
 import Logo from '@/components/general/logo'
@@ -14,13 +14,22 @@ type Props = {
 }
 
 const CollectionCard: FC<Props> = ({ collection, className }) => {
-  const { title, mainImage, projects, slug } = collection || {}
-
+  const { title, mainImage, projects, slug, series } = collection || {}
   const pageUrl = `/portfolio/collections/${slug?.current}`
 
-  const coverPhoto = mainImage || projects?.[0]?.mainImage
+  const imageAsset =
+    mainImage ||
+    projects?.[0]?.mainImage ||
+    series?.[0]?.mainImage ||
+    series?.[0]?.projects?.[0]?.mainImage
 
-  const imageWide = getSanityImageUrl(coverPhoto, { ratio: '16/9', width: 400 })
+  const imageUrl =
+    getSanityImageUrl(imageAsset, {
+      ratio: '16/9',
+      width: 400,
+    }) || getSanityVideo(projects?.[0]?.mainVideo)?.thumbnailUrl
+
+  const projectCount = (projects?.length || 0) + (series?.length || 0)
 
   return (
     <Link
@@ -33,11 +42,11 @@ const CollectionCard: FC<Props> = ({ collection, className }) => {
     >
       <div className='p-2 w-full bg-gradient-to-tl from-secondary to-secondary-light rounded-t-lg'>
         <div className='w-full rounded-t-md overflow-hidden relative aspect-video flex items-center justify-center'>
-          {coverPhoto ? (
+          {imageUrl ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img
-              src={imageWide}
-              alt={coverPhoto?.alt}
+              src={imageUrl}
+              alt={imageAsset?.alt || collection?.title}
               className='w-full object-cover'
             />
           ) : (
@@ -56,7 +65,7 @@ const CollectionCard: FC<Props> = ({ collection, className }) => {
           {title}
         </div>
 
-        <span className='text-xs text-accent-foreground'>{`${projects?.length} projects`}</span>
+        <span className='text-xs text-accent-foreground'>{`${projectCount} project${projectCount === 1 ? '' : 's'}`}</span>
 
         {/* <Button asChild variant='outline' className='px-8'>
           <span>View</span>

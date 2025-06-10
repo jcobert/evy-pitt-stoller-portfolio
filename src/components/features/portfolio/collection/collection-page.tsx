@@ -1,4 +1,5 @@
 import ProjectCard from '../project-card'
+import SeriesCard from '../series/series-card'
 import { FC } from 'react'
 
 import { cn } from '@/utils/style'
@@ -11,8 +12,8 @@ type Props = {
   collection: PROJECT_COLLECTION_BY_SLUG_QUERYResult | undefined
 }
 
-const CollectionPage: FC<Props> = ({ collection }) => {
-  const { description, projects } = collection || {}
+const CollectionPage: FC<Props> = async ({ collection }) => {
+  const { description, projects, series } = collection || {}
 
   // const coverPhoto = mainImage || projects?.[0]?.mainImage
   // const imageUrl = getSanityImageUrl(coverPhoto)
@@ -32,6 +33,7 @@ const CollectionPage: FC<Props> = ({ collection }) => {
         {projects?.map((proj) => (
           <ProjectCard key={proj?._id} project={proj} />
         ))}
+        {series?.map((s) => <SeriesCard key={s?._id} series={s} />)}
       </div>
     </div>
   )

@@ -114,6 +114,13 @@ export type ProjectCollection = {
     _key: string
     [internalGroqTypeReferenceTo]?: 'project'
   }>
+  series?: Array<{
+    _ref: string
+    _type: 'reference'
+    _weak?: boolean
+    _key: string
+    [internalGroqTypeReferenceTo]?: 'projectSeries'
+  }>
 }
 
 export type ProjectRole = {
@@ -852,7 +859,7 @@ export type PROFILE_QUERYResult = {
 
 // Source: ./src/sanity/lib/queries/project-collection-query.ts
 // Variable: PROJECT_COLLECTIONS_QUERY
-// Query: *[_type=='projectCollection']{ ..., slug, mainImage{ ..., asset-> }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } }, projects[]->{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ ..., videoUpload{ ..., file{ ..., asset-> } } }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } }, series->{ ..., mainImage{ ..., asset-> }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } } }, roles[]->, category-> } }
+// Query: *[_type=='projectCollection']{ ..., slug, mainImage{ ..., asset-> }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } }, projects[]->{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ ..., videoUpload{ ..., file{ ..., asset-> } } }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } }, series->{ ..., mainImage{ ..., asset-> }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } } }, roles[]->, category-> }, series[]->{ ..., mainImage{ ..., asset-> }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } }, "projects": *[_type == "project" && series._ref == ^._id]{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ ..., videoUpload{ ..., file{ ..., asset-> } } }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } }, roles[]->, category-> } } }
 export type PROJECT_COLLECTIONS_QUERYResult = Array<{
   _id: string
   _type: 'projectCollection'
@@ -1169,9 +1176,245 @@ export type PROJECT_COLLECTIONS_QUERYResult = Array<{
     tags: Array<string> | Array<never>
     seo?: Seo
   }> | null
+  series: Array<{
+    _id: string
+    _type: 'projectSeries'
+    _createdAt: string
+    _updatedAt: string
+    _rev: string
+    title?: string
+    mainImage: {
+      asset: {
+        _id: string
+        _type: 'sanity.imageAsset'
+        _createdAt: string
+        _updatedAt: string
+        _rev: string
+        originalFilename?: string
+        label?: string
+        title?: string
+        description?: string
+        altText?: string
+        sha1hash?: string
+        extension?: string
+        mimeType?: string
+        size?: number
+        assetId?: string
+        uploadId?: string
+        path?: string
+        url?: string
+        metadata?: SanityImageMetadata
+        source?: SanityAssetSourceData
+      } | null
+      media?: unknown
+      hotspot?: SanityImageHotspot
+      crop?: SanityImageCrop
+      alt?: string
+      _type: 'image'
+    } | null
+    description: Array<
+      | {
+          children?: Array<{
+            marks?: Array<string>
+            text?: string
+            _type: 'span'
+            _key: string
+          }>
+          style?: 'blockquote' | 'h2' | 'h3' | 'h4' | 'normal'
+          listItem?: 'bullet' | 'number'
+          markDefs?: Array<{
+            url?: string
+            _type: 'link'
+            _key: string
+          }>
+          level?: number
+          _type: 'block'
+          _key: string
+        }
+      | {
+          asset?: {
+            _ref: string
+            _type: 'reference'
+            _weak?: boolean
+            [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+          }
+          media?: unknown
+          hotspot?: SanityImageHotspot
+          crop?: SanityImageCrop
+          alt?: string
+          _type: 'image'
+          _key: string
+        }
+      | {
+          _key: string
+          _type: 'video'
+          file?: {
+            asset?: {
+              _ref: string
+              _type: 'reference'
+              _weak?: boolean
+              [internalGroqTypeReferenceTo]?: 'sanity.fileAsset'
+            }
+            media?: unknown
+            _type: 'file'
+          }
+          alt?: string
+        }
+    > | null
+    projects: Array<{
+      _id: string
+      _type: 'project'
+      _createdAt: string
+      _updatedAt: string
+      _rev: string
+      title?: string
+      slug?: Slug
+      datePublished?: string
+      projectType?: 'production' | 'writing'
+      mainVideo: {
+        _type: 'videoGroup'
+        youtube?: YoutubeVideo
+        vimeo?: Vimeo
+        otherLink?: string
+        videoUpload: {
+          _type: 'video'
+          file: {
+            asset: {
+              _id: string
+              _type: 'sanity.fileAsset'
+              _createdAt: string
+              _updatedAt: string
+              _rev: string
+              originalFilename?: string
+              label?: string
+              title?: string
+              description?: string
+              altText?: string
+              sha1hash?: string
+              extension?: string
+              mimeType?: string
+              size?: number
+              assetId?: string
+              uploadId?: string
+              path?: string
+              url?: string
+              source?: SanityAssetSourceData
+            } | null
+            media?: unknown
+            _type: 'file'
+          } | null
+          alt?: string
+        } | null
+      } | null
+      mainImage: {
+        asset: {
+          _id: string
+          _type: 'sanity.imageAsset'
+          _createdAt: string
+          _updatedAt: string
+          _rev: string
+          originalFilename?: string
+          label?: string
+          title?: string
+          description?: string
+          altText?: string
+          sha1hash?: string
+          extension?: string
+          mimeType?: string
+          size?: number
+          assetId?: string
+          uploadId?: string
+          path?: string
+          url?: string
+          metadata?: SanityImageMetadata
+          source?: SanityAssetSourceData
+        } | null
+        media?: unknown
+        hotspot?: SanityImageHotspot
+        crop?: SanityImageCrop
+        alt?: string
+        _type: 'image'
+      } | null
+      articleLink?: string
+      articlePreview?: string
+      description: Array<
+        | {
+            children?: Array<{
+              marks?: Array<string>
+              text?: string
+              _type: 'span'
+              _key: string
+            }>
+            style?: 'blockquote' | 'h2' | 'h3' | 'h4' | 'normal'
+            listItem?: 'bullet' | 'number'
+            markDefs?: Array<{
+              url?: string
+              _type: 'link'
+              _key: string
+            }>
+            level?: number
+            _type: 'block'
+            _key: string
+          }
+        | {
+            asset?: {
+              _ref: string
+              _type: 'reference'
+              _weak?: boolean
+              [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+            }
+            media?: unknown
+            hotspot?: SanityImageHotspot
+            crop?: SanityImageCrop
+            alt?: string
+            _type: 'image'
+            _key: string
+          }
+        | {
+            _key: string
+            _type: 'video'
+            file?: {
+              asset?: {
+                _ref: string
+                _type: 'reference'
+                _weak?: boolean
+                [internalGroqTypeReferenceTo]?: 'sanity.fileAsset'
+              }
+              media?: unknown
+              _type: 'file'
+            }
+            alt?: string
+          }
+      > | null
+      roles: Array<{
+        _id: string
+        _type: 'projectRole'
+        _createdAt: string
+        _updatedAt: string
+        _rev: string
+        name?: string
+      }> | null
+      category: {
+        _id: string
+        _type: 'projectCategory'
+        _createdAt: string
+        _updatedAt: string
+        _rev: string
+        name?: string
+      } | null
+      series?: {
+        _ref: string
+        _type: 'reference'
+        _weak?: boolean
+        [internalGroqTypeReferenceTo]?: 'projectSeries'
+      }
+      tags: Array<string> | Array<never>
+      seo?: Seo
+    }>
+  }> | null
 }>
 // Variable: PROJECT_COLLECTION_BY_ID_QUERY
-// Query: *[_type=='projectCollection' && _id==$id]{ ..., mainImage{ ..., asset-> }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } }, projects[]->{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ ..., videoUpload{ ..., file{ ..., asset-> } } }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } }, series->{ ..., mainImage{ ..., asset-> }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } } }, roles[]->, category-> } }[0]
+// Query: *[_type=='projectCollection' && _id==$id]{ ..., mainImage{ ..., asset-> }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } }, projects[]->{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ ..., videoUpload{ ..., file{ ..., asset-> } } }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } }, series->{ ..., mainImage{ ..., asset-> }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } } }, roles[]->, category-> }, series[]->{ ..., mainImage{ ..., asset-> }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } }, "projects": *[_type == "project" && series._ref == ^._id]{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ ..., videoUpload{ ..., file{ ..., asset-> } } }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } }, roles[]->, category-> } } }[0]
 export type PROJECT_COLLECTION_BY_ID_QUERYResult = {
   _id: string
   _type: 'projectCollection'
@@ -1488,9 +1731,245 @@ export type PROJECT_COLLECTION_BY_ID_QUERYResult = {
     tags: Array<string> | Array<never>
     seo?: Seo
   }> | null
+  series: Array<{
+    _id: string
+    _type: 'projectSeries'
+    _createdAt: string
+    _updatedAt: string
+    _rev: string
+    title?: string
+    mainImage: {
+      asset: {
+        _id: string
+        _type: 'sanity.imageAsset'
+        _createdAt: string
+        _updatedAt: string
+        _rev: string
+        originalFilename?: string
+        label?: string
+        title?: string
+        description?: string
+        altText?: string
+        sha1hash?: string
+        extension?: string
+        mimeType?: string
+        size?: number
+        assetId?: string
+        uploadId?: string
+        path?: string
+        url?: string
+        metadata?: SanityImageMetadata
+        source?: SanityAssetSourceData
+      } | null
+      media?: unknown
+      hotspot?: SanityImageHotspot
+      crop?: SanityImageCrop
+      alt?: string
+      _type: 'image'
+    } | null
+    description: Array<
+      | {
+          children?: Array<{
+            marks?: Array<string>
+            text?: string
+            _type: 'span'
+            _key: string
+          }>
+          style?: 'blockquote' | 'h2' | 'h3' | 'h4' | 'normal'
+          listItem?: 'bullet' | 'number'
+          markDefs?: Array<{
+            url?: string
+            _type: 'link'
+            _key: string
+          }>
+          level?: number
+          _type: 'block'
+          _key: string
+        }
+      | {
+          asset?: {
+            _ref: string
+            _type: 'reference'
+            _weak?: boolean
+            [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+          }
+          media?: unknown
+          hotspot?: SanityImageHotspot
+          crop?: SanityImageCrop
+          alt?: string
+          _type: 'image'
+          _key: string
+        }
+      | {
+          _key: string
+          _type: 'video'
+          file?: {
+            asset?: {
+              _ref: string
+              _type: 'reference'
+              _weak?: boolean
+              [internalGroqTypeReferenceTo]?: 'sanity.fileAsset'
+            }
+            media?: unknown
+            _type: 'file'
+          }
+          alt?: string
+        }
+    > | null
+    projects: Array<{
+      _id: string
+      _type: 'project'
+      _createdAt: string
+      _updatedAt: string
+      _rev: string
+      title?: string
+      slug?: Slug
+      datePublished?: string
+      projectType?: 'production' | 'writing'
+      mainVideo: {
+        _type: 'videoGroup'
+        youtube?: YoutubeVideo
+        vimeo?: Vimeo
+        otherLink?: string
+        videoUpload: {
+          _type: 'video'
+          file: {
+            asset: {
+              _id: string
+              _type: 'sanity.fileAsset'
+              _createdAt: string
+              _updatedAt: string
+              _rev: string
+              originalFilename?: string
+              label?: string
+              title?: string
+              description?: string
+              altText?: string
+              sha1hash?: string
+              extension?: string
+              mimeType?: string
+              size?: number
+              assetId?: string
+              uploadId?: string
+              path?: string
+              url?: string
+              source?: SanityAssetSourceData
+            } | null
+            media?: unknown
+            _type: 'file'
+          } | null
+          alt?: string
+        } | null
+      } | null
+      mainImage: {
+        asset: {
+          _id: string
+          _type: 'sanity.imageAsset'
+          _createdAt: string
+          _updatedAt: string
+          _rev: string
+          originalFilename?: string
+          label?: string
+          title?: string
+          description?: string
+          altText?: string
+          sha1hash?: string
+          extension?: string
+          mimeType?: string
+          size?: number
+          assetId?: string
+          uploadId?: string
+          path?: string
+          url?: string
+          metadata?: SanityImageMetadata
+          source?: SanityAssetSourceData
+        } | null
+        media?: unknown
+        hotspot?: SanityImageHotspot
+        crop?: SanityImageCrop
+        alt?: string
+        _type: 'image'
+      } | null
+      articleLink?: string
+      articlePreview?: string
+      description: Array<
+        | {
+            children?: Array<{
+              marks?: Array<string>
+              text?: string
+              _type: 'span'
+              _key: string
+            }>
+            style?: 'blockquote' | 'h2' | 'h3' | 'h4' | 'normal'
+            listItem?: 'bullet' | 'number'
+            markDefs?: Array<{
+              url?: string
+              _type: 'link'
+              _key: string
+            }>
+            level?: number
+            _type: 'block'
+            _key: string
+          }
+        | {
+            asset?: {
+              _ref: string
+              _type: 'reference'
+              _weak?: boolean
+              [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+            }
+            media?: unknown
+            hotspot?: SanityImageHotspot
+            crop?: SanityImageCrop
+            alt?: string
+            _type: 'image'
+            _key: string
+          }
+        | {
+            _key: string
+            _type: 'video'
+            file?: {
+              asset?: {
+                _ref: string
+                _type: 'reference'
+                _weak?: boolean
+                [internalGroqTypeReferenceTo]?: 'sanity.fileAsset'
+              }
+              media?: unknown
+              _type: 'file'
+            }
+            alt?: string
+          }
+      > | null
+      roles: Array<{
+        _id: string
+        _type: 'projectRole'
+        _createdAt: string
+        _updatedAt: string
+        _rev: string
+        name?: string
+      }> | null
+      category: {
+        _id: string
+        _type: 'projectCategory'
+        _createdAt: string
+        _updatedAt: string
+        _rev: string
+        name?: string
+      } | null
+      series?: {
+        _ref: string
+        _type: 'reference'
+        _weak?: boolean
+        [internalGroqTypeReferenceTo]?: 'projectSeries'
+      }
+      tags: Array<string> | Array<never>
+      seo?: Seo
+    }>
+  }> | null
 } | null
 // Variable: PROJECT_COLLECTION_BY_SLUG_QUERY
-// Query: *[_type=='projectCollection' && slug.current==$slug]{ ..., mainImage{ ..., asset-> }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } }, projects[]->{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ ..., videoUpload{ ..., file{ ..., asset-> } } }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } }, series->{ ..., mainImage{ ..., asset-> }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } } }, roles[]->, category-> } }[0]
+// Query: *[_type=='projectCollection' && slug.current==$slug]{ ..., mainImage{ ..., asset-> }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } }, projects[]->{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ ..., videoUpload{ ..., file{ ..., asset-> } } }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } }, series->{ ..., mainImage{ ..., asset-> }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } } }, roles[]->, category-> }, series[]->{ ..., mainImage{ ..., asset-> }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } }, "projects": *[_type == "project" && series._ref == ^._id]{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ ..., videoUpload{ ..., file{ ..., asset-> } } }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } }, roles[]->, category-> } } }[0]
 export type PROJECT_COLLECTION_BY_SLUG_QUERYResult = {
   _id: string
   _type: 'projectCollection'
@@ -1806,6 +2285,242 @@ export type PROJECT_COLLECTION_BY_SLUG_QUERYResult = {
     } | null
     tags: Array<string> | Array<never>
     seo?: Seo
+  }> | null
+  series: Array<{
+    _id: string
+    _type: 'projectSeries'
+    _createdAt: string
+    _updatedAt: string
+    _rev: string
+    title?: string
+    mainImage: {
+      asset: {
+        _id: string
+        _type: 'sanity.imageAsset'
+        _createdAt: string
+        _updatedAt: string
+        _rev: string
+        originalFilename?: string
+        label?: string
+        title?: string
+        description?: string
+        altText?: string
+        sha1hash?: string
+        extension?: string
+        mimeType?: string
+        size?: number
+        assetId?: string
+        uploadId?: string
+        path?: string
+        url?: string
+        metadata?: SanityImageMetadata
+        source?: SanityAssetSourceData
+      } | null
+      media?: unknown
+      hotspot?: SanityImageHotspot
+      crop?: SanityImageCrop
+      alt?: string
+      _type: 'image'
+    } | null
+    description: Array<
+      | {
+          children?: Array<{
+            marks?: Array<string>
+            text?: string
+            _type: 'span'
+            _key: string
+          }>
+          style?: 'blockquote' | 'h2' | 'h3' | 'h4' | 'normal'
+          listItem?: 'bullet' | 'number'
+          markDefs?: Array<{
+            url?: string
+            _type: 'link'
+            _key: string
+          }>
+          level?: number
+          _type: 'block'
+          _key: string
+        }
+      | {
+          asset?: {
+            _ref: string
+            _type: 'reference'
+            _weak?: boolean
+            [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+          }
+          media?: unknown
+          hotspot?: SanityImageHotspot
+          crop?: SanityImageCrop
+          alt?: string
+          _type: 'image'
+          _key: string
+        }
+      | {
+          _key: string
+          _type: 'video'
+          file?: {
+            asset?: {
+              _ref: string
+              _type: 'reference'
+              _weak?: boolean
+              [internalGroqTypeReferenceTo]?: 'sanity.fileAsset'
+            }
+            media?: unknown
+            _type: 'file'
+          }
+          alt?: string
+        }
+    > | null
+    projects: Array<{
+      _id: string
+      _type: 'project'
+      _createdAt: string
+      _updatedAt: string
+      _rev: string
+      title?: string
+      slug?: Slug
+      datePublished?: string
+      projectType?: 'production' | 'writing'
+      mainVideo: {
+        _type: 'videoGroup'
+        youtube?: YoutubeVideo
+        vimeo?: Vimeo
+        otherLink?: string
+        videoUpload: {
+          _type: 'video'
+          file: {
+            asset: {
+              _id: string
+              _type: 'sanity.fileAsset'
+              _createdAt: string
+              _updatedAt: string
+              _rev: string
+              originalFilename?: string
+              label?: string
+              title?: string
+              description?: string
+              altText?: string
+              sha1hash?: string
+              extension?: string
+              mimeType?: string
+              size?: number
+              assetId?: string
+              uploadId?: string
+              path?: string
+              url?: string
+              source?: SanityAssetSourceData
+            } | null
+            media?: unknown
+            _type: 'file'
+          } | null
+          alt?: string
+        } | null
+      } | null
+      mainImage: {
+        asset: {
+          _id: string
+          _type: 'sanity.imageAsset'
+          _createdAt: string
+          _updatedAt: string
+          _rev: string
+          originalFilename?: string
+          label?: string
+          title?: string
+          description?: string
+          altText?: string
+          sha1hash?: string
+          extension?: string
+          mimeType?: string
+          size?: number
+          assetId?: string
+          uploadId?: string
+          path?: string
+          url?: string
+          metadata?: SanityImageMetadata
+          source?: SanityAssetSourceData
+        } | null
+        media?: unknown
+        hotspot?: SanityImageHotspot
+        crop?: SanityImageCrop
+        alt?: string
+        _type: 'image'
+      } | null
+      articleLink?: string
+      articlePreview?: string
+      description: Array<
+        | {
+            children?: Array<{
+              marks?: Array<string>
+              text?: string
+              _type: 'span'
+              _key: string
+            }>
+            style?: 'blockquote' | 'h2' | 'h3' | 'h4' | 'normal'
+            listItem?: 'bullet' | 'number'
+            markDefs?: Array<{
+              url?: string
+              _type: 'link'
+              _key: string
+            }>
+            level?: number
+            _type: 'block'
+            _key: string
+          }
+        | {
+            asset?: {
+              _ref: string
+              _type: 'reference'
+              _weak?: boolean
+              [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+            }
+            media?: unknown
+            hotspot?: SanityImageHotspot
+            crop?: SanityImageCrop
+            alt?: string
+            _type: 'image'
+            _key: string
+          }
+        | {
+            _key: string
+            _type: 'video'
+            file?: {
+              asset?: {
+                _ref: string
+                _type: 'reference'
+                _weak?: boolean
+                [internalGroqTypeReferenceTo]?: 'sanity.fileAsset'
+              }
+              media?: unknown
+              _type: 'file'
+            }
+            alt?: string
+          }
+      > | null
+      roles: Array<{
+        _id: string
+        _type: 'projectRole'
+        _createdAt: string
+        _updatedAt: string
+        _rev: string
+        name?: string
+      }> | null
+      category: {
+        _id: string
+        _type: 'projectCategory'
+        _createdAt: string
+        _updatedAt: string
+        _rev: string
+        name?: string
+      } | null
+      series?: {
+        _ref: string
+        _type: 'reference'
+        _weak?: boolean
+        [internalGroqTypeReferenceTo]?: 'projectSeries'
+      }
+      tags: Array<string> | Array<never>
+      seo?: Seo
+    }>
   }> | null
 } | null
 
@@ -2929,9 +3644,9 @@ declare module '@sanity/client' {
     '*[_type==\'productionPage\' && _id=="productionPage"]{ ... }[0]': PRODUCTION_PAGE_QUERYResult
     '*[_type==\'writingPage\' && _id=="writingPage"]{ ... }[0]': WRITING_PAGE_QUERYResult
     '*[_type==\'profile\' && _id=="profile"]{ ..., photo{ ..., asset-> }, companies[]{ ..., logo{ ..., asset-> } } }[0]': PROFILE_QUERYResult
-    '*[_type==\'projectCollection\']{ ..., slug, mainImage{ ..., asset-> }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } }, projects[]->{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ ..., videoUpload{ ..., file{ ..., asset-> } } }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } }, series->{ ..., mainImage{ ..., asset-> }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } } }, roles[]->, category-> } }': PROJECT_COLLECTIONS_QUERYResult
-    '*[_type==\'projectCollection\' && _id==$id]{ ..., mainImage{ ..., asset-> }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } }, projects[]->{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ ..., videoUpload{ ..., file{ ..., asset-> } } }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } }, series->{ ..., mainImage{ ..., asset-> }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } } }, roles[]->, category-> } }[0]': PROJECT_COLLECTION_BY_ID_QUERYResult
-    '*[_type==\'projectCollection\' && slug.current==$slug]{ ..., mainImage{ ..., asset-> }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } }, projects[]->{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ ..., videoUpload{ ..., file{ ..., asset-> } } }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } }, series->{ ..., mainImage{ ..., asset-> }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } } }, roles[]->, category-> } }[0]': PROJECT_COLLECTION_BY_SLUG_QUERYResult
+    '*[_type==\'projectCollection\']{ ..., slug, mainImage{ ..., asset-> }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } }, projects[]->{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ ..., videoUpload{ ..., file{ ..., asset-> } } }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } }, series->{ ..., mainImage{ ..., asset-> }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } } }, roles[]->, category-> }, series[]->{ ..., mainImage{ ..., asset-> }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } }, "projects": *[_type == "project" && series._ref == ^._id]{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ ..., videoUpload{ ..., file{ ..., asset-> } } }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } }, roles[]->, category-> } } }': PROJECT_COLLECTIONS_QUERYResult
+    '*[_type==\'projectCollection\' && _id==$id]{ ..., mainImage{ ..., asset-> }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } }, projects[]->{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ ..., videoUpload{ ..., file{ ..., asset-> } } }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } }, series->{ ..., mainImage{ ..., asset-> }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } } }, roles[]->, category-> }, series[]->{ ..., mainImage{ ..., asset-> }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } }, "projects": *[_type == "project" && series._ref == ^._id]{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ ..., videoUpload{ ..., file{ ..., asset-> } } }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } }, roles[]->, category-> } } }[0]': PROJECT_COLLECTION_BY_ID_QUERYResult
+    '*[_type==\'projectCollection\' && slug.current==$slug]{ ..., mainImage{ ..., asset-> }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } }, projects[]->{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ ..., videoUpload{ ..., file{ ..., asset-> } } }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } }, series->{ ..., mainImage{ ..., asset-> }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } } }, roles[]->, category-> }, series[]->{ ..., mainImage{ ..., asset-> }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } }, "projects": *[_type == "project" && series._ref == ^._id]{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ ..., videoUpload{ ..., file{ ..., asset-> } } }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } }, roles[]->, category-> } } }[0]': PROJECT_COLLECTION_BY_SLUG_QUERYResult
     '*[_type==\'projectSeries\']{ ..., mainImage{ ..., asset-> }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } } }': PROJECT_SERIES_QUERYResult
     '*[_type==\'projectSeries\' && _id==$id]{ ..., mainImage{ ..., asset-> }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } } }[0]': PROJECT_SERIES_BY_ID_QUERYResult
     '*[_type==\'project\' && defined(slug)]{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ ..., videoUpload{ ..., file{ ..., asset-> } } }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } }, series->{ ..., mainImage{ ..., asset-> }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } } }, roles[]->, category-> }': PROJECTS_QUERYResult

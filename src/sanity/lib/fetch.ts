@@ -84,7 +84,7 @@ export const getProject = async (params: { slug: Slug['current'] }) => {
   return project
 }
 
-/** Gets a single project by slug. */
+/** Gets all projects within the given series. */
 export const getProjectsBySeries = async (params: {
   seriesId: ProjectSeries['_id'] | undefined
 }) => {
@@ -101,7 +101,7 @@ export const getProjectsBySeries = async (params: {
   return projects
 }
 
-/** Gets many project series. */
+/** Gets all project series. */
 export const getAllProjectSeries = async () => {
   const series =
     await client.fetch<PROJECT_SERIES_QUERYResult>(PROJECT_SERIES_QUERY)
