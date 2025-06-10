@@ -122,14 +122,16 @@ const Page: FC<Props> = async () => {
             <div className='flex flex-col gap-16 items-center'>
               <div
                 className={cn(
-                  'grid grid-cols-1 lg:grid-cols-2 grid-flow-row',
+                  'grid grid-cols-1 xl:grid-cols-2 grid-flow-row',
                   'gap-x-6 lg:gap-x-10 xl:gap-x-16 gap-y-10',
                   'w-full px-4 lg:px-10__',
                 )}
               >
-                {writing?.map((prod) => (
-                  <WritingCard key={prod?._id} writing={prod} className='' />
-                ))}
+                {writing
+                  ?.slice(0, 2)
+                  ?.map((prod) => (
+                    <WritingCard key={prod?._id} writing={prod} className='' />
+                  ))}
               </div>
 
               <Button asChild className='w-fit' variant='outline'>

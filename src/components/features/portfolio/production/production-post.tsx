@@ -7,6 +7,7 @@ import { cn } from '@/utils/style'
 
 import PortableBlockContent from '@/components/general/portable/portable-block-content'
 import Separator from '@/components/general/separator'
+import Tag from '@/components/general/tag'
 import VideoPlayer from '@/components/media/video-player'
 import VideoThumbnail from '@/components/media/video-thumbnail'
 
@@ -21,7 +22,8 @@ type Props = {
 }
 
 const ProductionPost: FC<Props> = ({ production, seriesProjects }) => {
-  const { datePublished, mainVideo, mainImage, series } = production || {}
+  const { datePublished, mainVideo, mainImage, series, roles, category } =
+    production || {}
 
   const video = getSanityVideo(mainVideo, { thumbnailImage: mainImage })
 
@@ -31,6 +33,12 @@ const ProductionPost: FC<Props> = ({ production, seriesProjects }) => {
 
   return (
     <div className='flex flex-col gap-4 sm:gap-8 items-center'>
+      {category?.name ? (
+        <Tag className='text-secondary border-secondary mb-2 rounded'>
+          {category?.name}
+        </Tag>
+      ) : null}
+
       {video?.url ? (
         <div
           className={cn(
@@ -49,11 +57,32 @@ const ProductionPost: FC<Props> = ({ production, seriesProjects }) => {
           <VideoPlayer video={video} className='animate-fade-in' />
         </div>
       ) : null}
+
       {datePublished ? (
         <span className='text-sm text-muted-foreground'>
           {formatDate(datePublished)}
         </span>
       ) : null}
+
+      {roles?.length ? (
+        <div className='w-full max-w-prose flex gap-2 items-center max-sm:flex-col'>
+          <h2 className='font-medium text-primary-foreground flex-none'>
+            My Roles
+          </h2>
+          <div className='flex flex-wrap gap-1 max-sm:self-start'>
+            {roles?.map((r) => (
+              <Tag
+                key={r?._id}
+                className='text-primary-light bg-secondary max-sm:text-xs'
+              >
+                {r?.name}
+              </Tag>
+            ))}
+          </div>
+        </div>
+      ) : null}
+
+      {roles?.length ? <Separator className='w-1/2 my-2' /> : null}
 
       <PortableBlockContent value={production?.description} />
 
@@ -87,18 +116,6 @@ const ProductionPost: FC<Props> = ({ production, seriesProjects }) => {
                       showDate={false}
                     />
                   )
-                  // if (proj?.projectType === 'production')
-                  //   return (
-                  //     <ProductionCard
-                  //       key={proj?._id}
-                  //       production={proj}
-                  //       showDescription={false}
-                  //       showDate={false}
-                  //     />
-                  //   )
-                  // if (proj?.projectType === 'writing')
-                  //   return <WritingCard key={proj?._id} writing={proj} />
-                  // return null
                 })}
               </div>
             ) : null}

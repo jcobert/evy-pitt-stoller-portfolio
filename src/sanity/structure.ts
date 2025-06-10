@@ -18,10 +18,19 @@ export const structure: StructureResolver = (S) =>
       // Portfolio
       S.divider({ id: 'portfolio', type: 'divider', title: 'Portfolio' }),
       S.documentTypeListItem('project' satisfies DocumentType).title(
-        'Projects',
+        'All Projects',
       ),
-      S.documentTypeListItem('projectSeries' satisfies DocumentType).title(
-        'Series',
+      S.documentTypeListItem('projectCollection' satisfies DocumentType).title(
+        'Collections',
+      ),
+      // S.documentTypeListItem('projectSeries' satisfies DocumentType).title(
+      //   'Series',
+      // ),
+      S.documentTypeListItem('projectCategory' satisfies DocumentType).title(
+        'Categories',
+      ),
+      S.documentTypeListItem('projectRole' satisfies DocumentType).title(
+        'Your Roles',
       ),
 
       // Pages
@@ -71,7 +80,10 @@ export const structure: StructureResolver = (S) =>
           !(
             [
               'project',
+              'projectCollection',
               'projectSeries',
+              'projectCategory',
+              'projectRole',
               'profile',
               'homePage',
               'aboutPage',

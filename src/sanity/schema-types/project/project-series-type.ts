@@ -1,11 +1,11 @@
-import { ListIcon } from '@sanity/icons'
+import { BsCollectionPlay } from 'react-icons/bs'
 import { defineField, defineType } from 'sanity'
 
 export const projectSeriesType = defineType({
   name: 'projectSeries',
   title: 'Project Series',
   type: 'document',
-  icon: ListIcon,
+  icon: BsCollectionPlay,
   fields: [
     defineField({
       name: 'title',
