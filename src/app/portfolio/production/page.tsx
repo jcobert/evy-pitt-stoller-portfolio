@@ -58,7 +58,7 @@ const Page: FC<Props> = async () => {
           {!projects?.length ? (
             <NoResults item='productions' />
           ) : (
-            <div className='flex flex-col gap-16'>
+            <div className='flex flex-col gap-10 md:gap-16'>
               <section className={cn('flex flex-col gap-4')}>
                 <h2 className='font-display text-2xl sm:text-3xl font-medium text-primary-foreground'>
                   Collections
@@ -81,7 +81,7 @@ const Page: FC<Props> = async () => {
                 </div>
               </section>
 
-              <Separator />
+              <Separator className='-mb-4' />
 
               <ProductionGroups projects={projects} />
 
