@@ -1,12 +1,20 @@
-import Link from 'next/link'
+import ProjectCard from '../project-card'
 import { FC } from 'react'
 
 import { getSanityImageUrl, getSanityVideo } from '@/utils/media'
 import { cn } from '@/utils/style'
 
+import PortableBlockContent from '@/components/general/portable/portable-block-content'
 import Tag from '@/components/general/tag'
 import VideoThumbnail from '@/components/media/video-thumbnail'
 import { Button } from '@/components/ui/button'
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog'
 
 import { PROJECT_COLLECTION_BY_SLUG_QUERYResult } from '@/sanity/types/generated/types'
 
@@ -20,11 +28,11 @@ type Props = {
 }
 
 const SeriesCard: FC<Props> = ({ series, className }) => {
-  const { title, description, mainImage, projects } = series || {}
+  const { title, description, projects } = series || {}
 
   const keyProject = projects?.find((proj) => proj?.mainVideo)
 
-  const imageAsset = mainImage || keyProject?.mainImage
+  // const imageAsset = mainImage || keyProject?.mainImage
 
   const video = getSanityVideo(keyProject?.mainVideo, {
     thumbnailImage: getSanityImageUrl(keyProject?.mainImage, {
@@ -40,85 +48,59 @@ const SeriesCard: FC<Props> = ({ series, className }) => {
   //   }) || video?.thumbnailUrl
 
   return (
-    <div
-      className={cn('group w-full flex flex-col items-center gap-3', className)}
-    >
-      <VideoThumbnail
-        video={video}
-        className='group-hover:shadow-md shadow transition animate-none border-secondary/75'
-      />
-      <Tag className='bg-secondary text-primary-light text-xs px-4 py-0.5'>
-        Series
-      </Tag>
-      <div className='flex flex-col items-center text-pretty gap-4'>
-        <div className='flex flex-col gap-2 items-center text-pretty'>
-          <span
-            className={cn(
-              'transition text-lg_ font-medium leading-snug',
-              'text-primary-foreground group-hover:text-primary-foreground/80',
-            )}
-          >
-            {title}
-          </span>
+    <Dialog>
+      <DialogTrigger className='self-start'>
+        <div
+          className={cn(
+            'group w-full flex flex-col items-center gap-3',
+            className,
+          )}
+        >
+          <VideoThumbnail
+            video={video}
+            className='group-hover:shadow-md shadow transition animate-none border-secondary/75'
+          />
+          <Tag className='bg-secondary text-primary-light text-xs px-4 py-0.5'>
+            Series
+          </Tag>
+          <div className='flex flex-col items-center text-pretty gap-4'>
+            <div className='flex flex-col gap-2 items-center text-pretty'>
+              <span
+                className={cn(
+                  'transition text-lg_ font-medium leading-snug',
+                  'text-primary-foreground group-hover:text-primary-foreground/80',
+                )}
+              >
+                {title}
+              </span>
+            </div>
 
-          {/* <PortableBlockContent
-            value={description}
-            prose={false}
-            preview
-            className='text-sm text-pretty fade-out-b max-h-16 overflow-hidden group-hover:text-primary-foreground/80 transition'
-          /> */}
+            <Button variant='outline' asChild>
+              <span>View series</span>
+            </Button>
+          </div>
         </div>
+      </DialogTrigger>
 
-        <Button variant='outline'>View series</Button>
-      </div>
-    </div>
+      <DialogContent className='z-9999 sm:max-w-4xl max-h-10/12 overflow-auto py-8 flex flex-col gap-8'>
+        <DialogHeader className='flex flex-col gap-3'>
+          <DialogTitle className='text-primary-foreground'>{title}</DialogTitle>
+          <PortableBlockContent value={description} />
+        </DialogHeader>
 
-    // <div
-    //   className={cn(
-    //     'group rounded-xl bg-primary-light overflow-hidden pb-3 border border-secondary-light',
-    //     'transition hover:shadow-lg hover:border-secondary',
-    //     className,
-    //   )}
-    // >
-    //   <div className='p-2 w-full bg-gradient-to-tl from-secondary to-secondary-light rounded-t-lg'>
-    //     <div className='w-full rounded-t-md overflow-hidden relative aspect-video flex items-center justify-center'>
-    //       {imageUrl ? (
-    //         // eslint-disable-next-line @next/next/no-img-element
-    //         <img
-    //           src={imageUrl}
-    //           alt={imageAsset?.alt || series?.title}
-    //           className='w-full object-cover'
-    //         />
-    //       ) : (
-    //         <Logo className='opacity-70 size-16 text-xl' />
-    //       )}
-    //     </div>
-    //   </div>
-
-    //   <div className='flex flex-col gap-2 justify-center items-center py-2'>
-    //     <div
-    //       className={cn(
-    //         'text-xl leading-tight font-medium font-display text-center text-balance text-primary-foreground w-full',
-    //         'transition group-hover:text-secondary',
-    //       )}
-    //     >
-    //       {title}
-    //     </div>
-
-    //     <PortableBlockContent
-    //       value={description}
-    //       prose={false}
-    //       preview
-    //       className='text-sm text-pretty fade-out-b max-h-16 overflow-hidden group-hover:text-primary-foreground/80 transition'
-    //     />
-
-    //     <span className='text-xs text-accent-foreground'>{`${projects?.length} project${(projects?.length || 0) === 1 ? '' : 's'}`}</span>
-
-    //     {/* <Button asChild variant='outline' className='px-8'>
-    //       <span>View</span>
-    //     </Button> */}
-    //   </div>
-    // </div>
+        <div
+          className={cn(
+            'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 grid-flow-row',
+            'gap-x-6 lg:gap-x-10 xl:gap-x-16 gap-y-10',
+            'px-4 sm:px-12',
+          )}
+        >
+          {projects?.map((proj) => (
+            <ProjectCard key={proj?._id} project={proj} />
+          ))}
+        </div>
+      </DialogContent>
+    </Dialog>
   )
 }
 

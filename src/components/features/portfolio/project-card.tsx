@@ -9,10 +9,18 @@ import PortableBlockContent from '@/components/general/portable/portable-block-c
 import VideoThumbnail from '@/components/media/video-thumbnail'
 import { Button } from '@/components/ui/button'
 
-import { PROJECTS_BY_TYPE_QUERYResult } from '@/sanity/types/generated/types'
+import {
+  PROJECTS_BY_TYPE_QUERYResult,
+  PROJECT_COLLECTION_BY_SLUG_QUERYResult,
+} from '@/sanity/types/generated/types'
 
 type Props = {
-  project: PROJECTS_BY_TYPE_QUERYResult[number]
+  project:
+    | PROJECTS_BY_TYPE_QUERYResult[number]
+    | NonNullable<
+        NonNullable<PROJECT_COLLECTION_BY_SLUG_QUERYResult>['series']
+      >[number]['projects'][number]
+
   className?: string
   showDescription?: boolean
   showDate?: boolean
