@@ -106,7 +106,7 @@ const HereoSection: FC<Props> = ({ profile, welcomeBlurb }) => {
               )}
             >
               {welcomeBlurb ? (
-                <p className='text-primary-foreground'>{welcomeBlurb}</p>
+                <p className='text-primary-foreground max-w-prose mx-auto'>{welcomeBlurb}</p>
               ) : null}
               <ContactLinks
                 className='mx-auto'

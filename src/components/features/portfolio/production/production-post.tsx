@@ -1,5 +1,6 @@
 import ProjectCard from '../project-card'
 import { FC } from 'react'
+import { FaRegCirclePlay } from 'react-icons/fa6'
 
 import { formatDate } from '@/utils/date'
 import { getSanityVideo } from '@/utils/media'
@@ -10,6 +11,7 @@ import Separator from '@/components/general/separator'
 import Tag from '@/components/general/tag'
 import VideoPlayer from '@/components/media/video-player'
 import VideoThumbnail from '@/components/media/video-thumbnail'
+import { Button } from '@/components/ui/button'
 
 import {
   PROJECTS_BY_SERIES_QUERYResult,
@@ -86,7 +88,21 @@ const ProductionPost: FC<Props> = ({ production, seriesProjects }) => {
 
       <PortableBlockContent value={production?.description} />
 
-      {series ? <Separator className='w-1/2 mt-4 mb-6' /> : null}
+      {video?.url ? (
+        <div className='flex flex-col items-center mt-8 sm:mt-2'>
+          <p className='text-xs text-muted-foreground'>
+            Trouble loading video?
+          </p>
+          <Button asChild variant='link' className='text-secondary'>
+            <a href={video?.url} rel='noreferrer nofollow'>
+              <FaRegCirclePlay className={cn('text-5xl')} />
+              Watch here
+            </a>
+          </Button>
+        </div>
+      ) : null}
+
+      {series ? <Separator className='w-3/4 sm:w-1/2 mt-4 mb-6' /> : null}
 
       {series ? (
         <div className='flex flex-col items-center gap-2 w-full'>

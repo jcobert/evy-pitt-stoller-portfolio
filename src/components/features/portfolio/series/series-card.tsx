@@ -89,7 +89,7 @@ const SeriesCard: FC<Props> = ({ series, className }) => {
           <DialogDescription className='sr-only'>
             View the projects in the series below.
           </DialogDescription>
-          <PortableBlockContent value={description} />
+          <PortableBlockContent value={description} className='text-left' />
         </DialogHeader>
 
         <div

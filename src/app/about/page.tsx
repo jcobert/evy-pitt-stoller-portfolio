@@ -98,7 +98,8 @@ const Page: FC<Props> = async () => {
                 imageClassName={cn(
                   'col-span-1 mx-auto',
                   'pointer-events-none',
-                  'size-20 max-w-none rounded-full border border-primary p-2',
+                  'size-16 max-w-none',
+                  // 'rounded-full border border-primary p-2',
                 )}
               />
             </div>
