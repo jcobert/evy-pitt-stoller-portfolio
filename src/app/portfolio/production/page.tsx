@@ -5,9 +5,8 @@ import { FC } from 'react'
 
 import { cn } from '@/utils/style'
 
-import AnimateOnScroll from '@/components/animation/animate-on-scroll'
 import CollectionCard from '@/components/features/portfolio/collection/collection-card'
-import ProductionCard from '@/components/features/portfolio/production/production-card'
+import ProductionGroups from '@/components/features/portfolio/production/production-groups'
 import NoResults from '@/components/general/no-results'
 import Separator from '@/components/general/separator'
 import Heading from '@/components/layout/heading'
@@ -60,13 +59,16 @@ const Page: FC<Props> = async () => {
             <NoResults item='productions' />
           ) : (
             <div className='flex flex-col gap-16'>
-              {/* <ProjectsToolbar /> */}
-
               <section className={cn('flex flex-col gap-4')}>
                 <h2 className='font-display text-2xl sm:text-3xl font-medium text-primary-foreground'>
                   Collections
                 </h2>
-                <div className={cn('bg-accent border rounded', 'p-8')}>
+                <div
+                  className={cn(
+                    'bg-secondary-light/5 border border-secondary-light/20 rounded',
+                    'p-8',
+                  )}
+                >
                   <div
                     className={cn(
                       'grid grid-flow-row grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-6 gap-y-10',
@@ -81,7 +83,9 @@ const Page: FC<Props> = async () => {
 
               <Separator />
 
-              <section className='flex flex-col gap-6'>
+              <ProductionGroups projects={projects} />
+
+              {/* <section className='flex flex-col gap-6'>
                 <h2 className='font-display text-2xl sm:text-3xl font-medium text-primary-foreground'>
                   All Projects
                 </h2>
@@ -103,7 +107,7 @@ const Page: FC<Props> = async () => {
                     </AnimateOnScroll>
                   ))}
                 </div>
-              </section>
+              </section> */}
             </div>
           )}
         </div>
