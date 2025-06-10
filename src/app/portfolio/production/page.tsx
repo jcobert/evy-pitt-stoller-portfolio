@@ -62,31 +62,27 @@ const Page: FC<Props> = async () => {
             <div className='flex flex-col gap-16'>
               {/* <ProjectsToolbar /> */}
 
-              <section
-                className={cn(
-                  'bg-accent border rounded',
-                  'p-8',
-                  'flex flex-col gap-8',
-                )}
-              >
-                <h2 className='font-display text-3xl font-medium'>
+              <section className={cn('flex flex-col gap-4')}>
+                <h2 className='font-display text-2xl sm:text-3xl font-medium text-primary-foreground'>
                   Collections
                 </h2>
-                <div
-                  className={cn(
-                    'grid grid-flow-row grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-6 gap-y-10',
-                  )}
-                >
-                  {collections?.map((col) => (
-                    <CollectionCard key={col?._id} collection={col} />
-                  ))}
+                <div className={cn('bg-accent border rounded', 'p-8')}>
+                  <div
+                    className={cn(
+                      'grid grid-flow-row grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-6 gap-y-10',
+                    )}
+                  >
+                    {collections?.map((col) => (
+                      <CollectionCard key={col?._id} collection={col} />
+                    ))}
+                  </div>
                 </div>
               </section>
 
               <Separator />
 
               <section className='flex flex-col gap-6'>
-                <h2 className='font-display text-3xl font-medium'>
+                <h2 className='font-display text-2xl sm:text-3xl font-medium text-primary-foreground'>
                   All Projects
                 </h2>
                 <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 grid-flow-row gap-x-6 gap-y-10'>
