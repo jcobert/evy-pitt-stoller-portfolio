@@ -56,7 +56,7 @@ const Page: FC<Props> = async ({ params }) => {
   return (
     <Main>
       <PageLayout
-        back={collection ? { href: backLink, text: 'Back' } : undefined}
+        back={collection ? { href: backLink, text: 'Production' } : undefined}
       >
         {collection ? (
           <>

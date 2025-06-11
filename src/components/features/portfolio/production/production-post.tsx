@@ -106,7 +106,7 @@ const ProductionPost: FC<Props> = ({ production, seriesProjects }) => {
 
       {series ? (
         <div className='flex flex-col items-center gap-2 w-full'>
-          <p className='text-center'>This project is part of a series.</p>
+          <p className='text-center text-sm'>This project is part of a series.</p>
 
           <div className='flex flex-col gap-3 border p-4 rounded'>
             {series?.title ? (
@@ -130,6 +130,7 @@ const ProductionPost: FC<Props> = ({ production, seriesProjects }) => {
                       project={proj}
                       showDescription={false}
                       showDate={false}
+                      className='text-sm'
                     />
                   )
                 })}

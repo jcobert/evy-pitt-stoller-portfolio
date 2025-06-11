@@ -68,7 +68,7 @@ const ProductionCard: FC<Props> = ({
               value={description}
               prose={false}
               preview
-              className='text-sm text-pretty fade-out-b max-h-16 overflow-hidden group-hover:text-primary-foreground/80 transition'
+              className='text-xs text-pretty fade-out-b max-h-16 overflow-hidden group-hover:text-primary-foreground/80 transition'
             />
           ) : null}
         </div>
