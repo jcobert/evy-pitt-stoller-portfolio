@@ -3364,7 +3364,7 @@ export type PROJECTS_BY_SERIES_QUERYResult = Array<{
   category: null
 }>
 // Variable: PROJECT_BY_SLUG_QUERY
-// Query: *[_type=='project' && slug.current==$slug]{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ ..., videoUpload{ ..., file{ ..., asset-> } } }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } }, series->{ ..., mainImage{ ..., asset-> }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } } }, roles[]->, category-> }[0]
+// Query: *[_type=='project' && slug.current==$slug]{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ ..., videoUpload{ ..., file{ ..., asset-> } } }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } }, series->{ ..., mainImage{ ..., asset-> }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } } }, roles[]->, "category": *[_type == "projectCollection" && references(^._id)]{ _id, title, "subcategory": *[_type == "projectCollection" && references(^.^._id)][0].sections[]{_key, title, "projects": projects[^.^.^._id == _ref]}[length(projects) > 0][0].title }[0] }[0]
 export type PROJECT_BY_SLUG_QUERYResult = {
   _id: string
   _type: 'project'
@@ -3586,7 +3586,11 @@ export type PROJECT_BY_SLUG_QUERYResult = {
   } | null
   tags: Array<string> | Array<never>
   seo?: Seo
-  category: null
+  category: {
+    _id: string
+    title: string | null
+    subcategory: string | null
+  } | null
 } | null
 
 declare module '@sanity/client' {
@@ -3609,6 +3613,6 @@ declare module '@sanity/client' {
     '*[_type==\'project\' && defined(slug)]{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ ..., videoUpload{ ..., file{ ..., asset-> } } }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } }, series->{ ..., mainImage{ ..., asset-> }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } } }, roles[]->, category-> }': PROJECTS_QUERYResult
     '*[_type==\'project\' && projectType==$projectType && defined(slug)]{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ ..., videoUpload{ ..., file{ ..., asset-> } } }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } }, series->{ ..., mainImage{ ..., asset-> }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } } }, roles[]->, category-> }': PROJECTS_BY_TYPE_QUERYResult
     '*[_type==\'project\' && series._ref==$seriesId]{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ ..., videoUpload{ ..., file{ ..., asset-> } } }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } }, series->{ ..., mainImage{ ..., asset-> }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } } }, roles[]->, category-> }': PROJECTS_BY_SERIES_QUERYResult
-    '*[_type==\'project\' && slug.current==$slug]{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ ..., videoUpload{ ..., file{ ..., asset-> } } }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } }, series->{ ..., mainImage{ ..., asset-> }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } } }, roles[]->, category-> }[0]': PROJECT_BY_SLUG_QUERYResult
+    '*[_type==\'project\' && slug.current==$slug]{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ ..., videoUpload{ ..., file{ ..., asset-> } } }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } }, series->{ ..., mainImage{ ..., asset-> }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } } }, roles[]->, "category": *[_type == "projectCollection" && references(^._id)]{ _id, title, "subcategory": *[_type == "projectCollection" && references(^.^._id)][0].sections[]{_key, title, "projects": projects[^.^.^._id == _ref]}[length(projects) > 0][0].title }[0] }[0]': PROJECT_BY_SLUG_QUERYResult
   }
 }

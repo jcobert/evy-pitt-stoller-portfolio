@@ -18,7 +18,6 @@ import { getAllProjectCollections, getPage } from '@/sanity/lib/fetch'
 const loadContent = async () => {
   const [productionPage, collections] = await Promise.all([
     getPage('productionPage'),
-    // getProjects({ projectType: 'production' }),
     getAllProjectCollections(),
   ])
   return { productionPage, collections }
@@ -58,10 +57,11 @@ const Page: FC<Props> = async () => {
                   Collections
                 </h2> */}
                 <div
-                  className={cn(
+                  className={
+                    cn()
                     // 'bg-secondary-light/5 border border-secondary-light/20 rounded',
                     // 'p-8',
-                  )}
+                  }
                 >
                   <div
                     className={cn(
@@ -74,34 +74,6 @@ const Page: FC<Props> = async () => {
                   </div>
                 </div>
               </section>
-
-              {/* <Separator className='-mb-4' /> */}
-
-              {/* <ProductionGroups projects={projects} /> */}
-
-              {/* <section className='flex flex-col gap-6'>
-                <h2 className='font-display text-2xl sm:text-3xl font-medium text-primary-foreground'>
-                  All Projects
-                </h2>
-                <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 grid-flow-row gap-x-6 gap-y-10'>
-                  {projects?.map((proj, i) => (
-                    <AnimateOnScroll
-                      key={proj?._id}
-                      animations={['slideInFromBottom', 'fadeIn']}
-                      className='duration-500'
-                      threshold={0.1}
-                    >
-                      <ProductionCard production={proj} />
-                      {i < projects.length - 1 ? (
-                        <div
-                          aria-hidden
-                          className='sm:hidden h-px bg-gradient-to-r from-accent/10 via-primary-foreground/10 to-accent/10 mt-6'
-                        />
-                      ) : null}
-                    </AnimateOnScroll>
-                  ))}
-                </div>
-              </section> */}
             </div>
           )}
         </div>

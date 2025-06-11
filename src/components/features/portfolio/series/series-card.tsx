@@ -22,7 +22,9 @@ import { PROJECT_COLLECTION_BY_SLUG_QUERYResult } from '@/sanity/types/generated
 type Props = {
   series:
     | NonNullable<
-        NonNullable<PROJECT_COLLECTION_BY_SLUG_QUERYResult>['series']
+        NonNullable<
+          NonNullable<PROJECT_COLLECTION_BY_SLUG_QUERYResult>['sections']
+        >[number]['series']
       >[number]
     | undefined
   className?: string
