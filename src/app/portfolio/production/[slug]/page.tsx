@@ -60,7 +60,9 @@ const Page: FC<Props> = async ({ params }) => {
 
   return (
     <Main>
-      <PageLayout back={project ? { href: backLink, text: 'Back' } : undefined}>
+      <PageLayout
+        back={project ? { href: backLink, text: 'Production' } : undefined}
+      >
         {project ? (
           <>
             <Heading text={project?.title} />
