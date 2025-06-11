@@ -11,9 +11,26 @@ export const projectCategoryType = defineType({
   fields: [
     defineField({
       name: 'name',
+      title: 'Name',
       type: 'string',
       validation: (rules) => rules?.required(),
     }),
+    defineField({
+      name: 'subcategories',
+      type: 'array',
+      of: [{ type: 'reference', to: { type: 'projectSubcategory' } }],
+      title: 'Subcategories',
+      description: 'Multiple nested categories to further organize projects.',
+      options: { sortable: true, layout: 'list' },
+    }),
+    // defineField({
+    //   name: 'subcategories',
+    //   type: 'array',
+    //   of: [{ type: 'string' }],
+    //   title: 'Subcategories',
+    //   description: 'Multiple nested categories to further organize projects.',
+    //   options: { sortable: true, layout: 'list' },
+    // }),
   ],
   preview: {
     select: { title: 'name' },

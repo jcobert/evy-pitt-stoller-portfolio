@@ -10,7 +10,7 @@ export const projectCollectionType = defineType({
     defineField({
       name: 'title',
       title: 'Title',
-      description: 'Name of the collection',
+      description: 'Name of the collection (e.g. Film).',
       type: 'string',
       // validation: (rules) => rules?.required(),
     }),
@@ -52,23 +52,63 @@ export const projectCollectionType = defineType({
       title: 'Description',
       description: 'Overview of the collection.',
     }),
+    // sections
     defineField({
-      name: 'projects',
-      type: 'array',
-      of: [{ type: 'reference', to: { type: 'project' } }],
-      title: 'Projects',
+      name: 'sections',
+      title: 'Sections',
       description:
-        'All projects that are part of this collection. Note: If adding a series, use the series field below. Do not add the individual projects here.',
-      options: { sortable: true, layout: 'grid' },
-    }),
-    defineField({
-      name: 'series',
+        'Add projects here. Group them into sections to further organize projects within this collection.',
       type: 'array',
-      of: [{ type: 'reference', to: { type: 'projectSeries' } }],
-      title: 'Series',
-      description: 'All series that are part of this collection.',
-      options: { sortable: true, layout: 'list' },
+      of: [
+        {
+          type: 'object',
+          fields: [
+            defineField({
+              name: 'title',
+              type: 'string',
+              title: 'Title',
+              description: 'The title of the section (e.g. Scripted).',
+            }),
+            defineField({
+              name: 'projects',
+              type: 'array',
+              of: [{ type: 'reference', to: { type: 'project' } }],
+              title: 'Projects',
+              description:
+                'All projects that are part of this collection. Note: If adding a series, use the series field below. Do not add the individual projects here.',
+              options: { sortable: true, layout: 'list' },
+            }),
+            defineField({
+              name: 'series',
+              type: 'array',
+              of: [{ type: 'reference', to: { type: 'projectSeries' } }],
+              title: 'Series',
+              description: 'All series that are part of this collection.',
+              options: { sortable: true, layout: 'list' },
+            }),
+          ],
+        },
+      ],
+
+      options: { sortable: true, layout: 'list', modal: { type: 'dialog' } },
     }),
+    // defineField({
+    //   name: 'projects',
+    //   type: 'array',
+    //   of: [{ type: 'reference', to: { type: 'project' } }],
+    //   title: 'Projects',
+    //   description:
+    //     'All projects that are part of this collection. Note: If adding a series, use the series field below. Do not add the individual projects here.',
+    //   options: { sortable: true, layout: 'grid' },
+    // }),
+    // defineField({
+    //   name: 'series',
+    //   type: 'array',
+    //   of: [{ type: 'reference', to: { type: 'projectSeries' } }],
+    //   title: 'Series',
+    //   description: 'All series that are part of this collection.',
+    //   options: { sortable: true, layout: 'list' },
+    // }),
   ],
   preview: {
     select: { title: 'title' },
