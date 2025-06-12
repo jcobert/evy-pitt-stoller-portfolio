@@ -78,7 +78,7 @@ export const structure: StructureResolver = (S) =>
             [
               'project',
               'projectCollection',
-              // 'projectSeries',
+              'projectSeries',
               'projectRole',
               'profile',
               'homePage',
