@@ -44,7 +44,7 @@ export const projectCollectionType = defineType({
               of: [{ type: 'reference', to: { type: 'project' } }],
               title: 'Projects',
               description:
-                'All projects that are part of this collection. Note: If adding a series, use the series field below. Do not add the individual projects here.',
+                'All projects that are part of this collection. Note: If adding a series (e.g. Tonic Says), use the series field below. Do not add the individual projects here.',
               options: { sortable: true, layout: 'list' },
             }),
             defineField({
@@ -52,7 +52,8 @@ export const projectCollectionType = defineType({
               type: 'array',
               of: [{ type: 'reference', to: { type: 'projectSeries' } }],
               title: 'Series',
-              description: 'All series that are part of this collection.',
+              description:
+                'All series that are part of this collection (e.g. Tonic Says).',
               options: { sortable: true, layout: 'list' },
             }),
           ],
