@@ -187,17 +187,36 @@ export const projectType = defineType({
       options: { sortable: true },
       group: 'classification',
     }),
-    // category
-    defineField({
-      name: 'category',
-      // type: 'array',
-      // of: [{ type: 'reference', to: { type: 'projectCategory' } }],
-      type: 'reference',
-      to: { type: 'projectCategory' },
-      title: 'Category',
-      description: 'The type of work (e.g. Feature Film).',
-      group: 'classification',
-    }),
+    // // category
+    // defineField({
+    //   name: 'category',
+    //   type: 'reference',
+    //   to: { type: 'projectCategory' },
+    //   title: 'Category',
+    //   description: 'The top-level classification (e.g. Film).',
+    //   group: 'classification',
+    // }),
+    // // subcategory
+    // defineField({
+    //   name: 'subcategory',
+    //   type: 'reference',
+    //   to: { type: 'projectSubcategory' },
+    //   title: 'Subcategory',
+    //   description:
+    //     'Further classification within the specified category (e.g. Scripted).',
+    //   group: 'classification',
+    //   options: {
+    //     filter: `*[_type=="projectCategory" && _id==^.category._ref][0]`,
+    //   },
+    // }),
+    // joint category/subcateory selector.
+    // defineField({
+    //   name: 'category',
+    //   type: 'reference',
+    //   to: [{ type: 'projectSubcategory' }],
+    //   title: 'Category',
+    //   group: 'classification',
+    // }),
     // series
     defineField({
       name: 'series',

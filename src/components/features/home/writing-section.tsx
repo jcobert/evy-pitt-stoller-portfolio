@@ -19,7 +19,7 @@ type Props = {
 }
 
 const WritingSection: FC<Props> = ({ writing, heading }) => {
-  const projects = (writing || [])?.slice(0, 4)
+  const projects = (writing || [])?.slice(0, 2)
 
   const noProjects = !projects?.length
 

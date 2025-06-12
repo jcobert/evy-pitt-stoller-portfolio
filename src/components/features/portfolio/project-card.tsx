@@ -18,9 +18,10 @@ type Props = {
   project:
     | PROJECTS_BY_TYPE_QUERYResult[number]
     | NonNullable<
-        NonNullable<PROJECT_COLLECTION_BY_SLUG_QUERYResult>['series']
+        NonNullable<
+          NonNullable<PROJECT_COLLECTION_BY_SLUG_QUERYResult>['sections']
+        >[number]['series']
       >[number]['projects'][number]
-
   className?: string
   showDescription?: boolean
   showDate?: boolean

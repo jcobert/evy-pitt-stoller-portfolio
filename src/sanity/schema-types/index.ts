@@ -13,7 +13,6 @@ import { writingPageType } from './pages/writing-page-type'
 import { contactInfoType } from './profile/contact-info-type'
 import { profileType } from './profile/profile-type'
 import { socialLinksType } from './profile/social-links-type'
-import { projectCategoryType } from './project/project-category-type'
 import { projectCollectionType } from './project/project-collection-type'
 import { projectRoleType } from './project/project-role-type'
 import { projectSeriesType } from './project/project-series-type'
@@ -43,7 +42,6 @@ export const schemaTypes: SchemaTypeDefinition[] = [
   // Portfolio
   projectType,
   projectSeriesType,
-  projectCategoryType,
   projectRoleType,
   projectCollectionType,
 ]

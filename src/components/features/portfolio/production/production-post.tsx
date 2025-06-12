@@ -33,13 +33,23 @@ const ProductionPost: FC<Props> = ({ production, seriesProjects }) => {
     (proj) => proj?._id !== production?._id,
   )
 
+  const { title: mainCategory, subcategory } = category || {}
+
   return (
     <div className='flex flex-col gap-4 sm:gap-8 items-center'>
-      {category?.name ? (
-        <Tag className='text-secondary border-secondary mb-2 rounded'>
-          {category?.name}
-        </Tag>
-      ) : null}
+      <div className='flex gap-2 items-center flex-wrap'>
+        {mainCategory ? (
+          <Tag className='text-secondary border-secondary mb-2 rounded max-sm:text-xs'>
+            {mainCategory}
+          </Tag>
+        ) : null}
+        {/* <LuChevronRight className='flex-none mb-2 text-xs text-secondary' /> */}
+        {subcategory ? (
+          <Tag className='text-secondary border-secondary mb-2 rounded max-sm:text-xs'>
+            {subcategory}
+          </Tag>
+        ) : null}
+      </div>
 
       {video?.url ? (
         <div
@@ -106,7 +116,9 @@ const ProductionPost: FC<Props> = ({ production, seriesProjects }) => {
 
       {series ? (
         <div className='flex flex-col items-center gap-2 w-full'>
-          <p className='text-center'>This project is part of a series.</p>
+          <p className='text-center text-sm'>
+            This project is part of a series.
+          </p>
 
           <div className='flex flex-col gap-3 border p-4 rounded'>
             {series?.title ? (
@@ -130,6 +142,7 @@ const ProductionPost: FC<Props> = ({ production, seriesProjects }) => {
                       project={proj}
                       showDescription={false}
                       showDate={false}
+                      className='text-sm'
                     />
                   )
                 })}

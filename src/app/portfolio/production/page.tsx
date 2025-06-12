@@ -6,28 +6,21 @@ import { FC } from 'react'
 import { cn } from '@/utils/style'
 
 import CollectionCard from '@/components/features/portfolio/collection/collection-card'
-import ProductionGroups from '@/components/features/portfolio/production/production-groups'
 import NoResults from '@/components/general/no-results'
-import Separator from '@/components/general/separator'
 import Heading from '@/components/layout/heading'
 import Main from '@/components/layout/main'
 import PageLayout from '@/components/layout/page-layout'
 
 import { PageParams } from '@/types/general'
 
-import {
-  getAllProjectCollections,
-  getPage,
-  getProjects,
-} from '@/sanity/lib/fetch'
+import { getAllProjectCollections, getPage } from '@/sanity/lib/fetch'
 
 const loadContent = async () => {
-  const [productionPage, projects, collections] = await Promise.all([
+  const [productionPage, collections] = await Promise.all([
     getPage('productionPage'),
-    getProjects({ projectType: 'production' }),
     getAllProjectCollections(),
   ])
-  return { productionPage, projects, collections }
+  return { productionPage, collections }
 }
 
 export type ProductionPageData = Awaited<ReturnType<typeof loadContent>>
@@ -41,7 +34,7 @@ type Props = PageParams
 
 const Page: FC<Props> = async () => {
   const data = await loadContent()
-  const { projects, productionPage, collections } = data
+  const { productionPage, collections } = data
   const { heading } = productionPage || {}
 
   const mainHeading = heading?.mainHeading || 'Production'
@@ -55,19 +48,20 @@ const Page: FC<Props> = async () => {
         <Heading text={mainHeading} description={subheading} />
 
         <div className='my-4'>
-          {!projects?.length ? (
+          {!collections?.length ? (
             <NoResults item='productions' />
           ) : (
             <div className='flex flex-col gap-10 md:gap-16'>
               <section className={cn('flex flex-col gap-4')}>
-                <h2 className='font-display text-2xl sm:text-3xl font-medium text-primary-foreground'>
+                {/* <h2 className='font-display text-2xl sm:text-3xl font-medium text-primary-foreground'>
                   Collections
-                </h2>
+                </h2> */}
                 <div
-                  className={cn(
-                    'bg-secondary-light/5 border border-secondary-light/20 rounded',
-                    'p-8',
-                  )}
+                  className={
+                    cn()
+                    // 'bg-secondary-light/5 border border-secondary-light/20 rounded',
+                    // 'p-8',
+                  }
                 >
                   <div
                     className={cn(
@@ -80,34 +74,6 @@ const Page: FC<Props> = async () => {
                   </div>
                 </div>
               </section>
-
-              <Separator className='-mb-4' />
-
-              <ProductionGroups projects={projects} />
-
-              {/* <section className='flex flex-col gap-6'>
-                <h2 className='font-display text-2xl sm:text-3xl font-medium text-primary-foreground'>
-                  All Projects
-                </h2>
-                <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 grid-flow-row gap-x-6 gap-y-10'>
-                  {projects?.map((proj, i) => (
-                    <AnimateOnScroll
-                      key={proj?._id}
-                      animations={['slideInFromBottom', 'fadeIn']}
-                      className='duration-500'
-                      threshold={0.1}
-                    >
-                      <ProductionCard production={proj} />
-                      {i < projects.length - 1 ? (
-                        <div
-                          aria-hidden
-                          className='sm:hidden h-px bg-gradient-to-r from-accent/10 via-primary-foreground/10 to-accent/10 mt-6'
-                        />
-                      ) : null}
-                    </AnimateOnScroll>
-                  ))}
-                </div>
-              </section> */}
             </div>
           )}
         </div>
