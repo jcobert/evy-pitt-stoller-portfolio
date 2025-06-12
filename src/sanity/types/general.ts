@@ -6,7 +6,6 @@ import {
   ProductionPage,
   Profile,
   Project,
-  ProjectCategory,
   ProjectCollection,
   ProjectRole,
   ProjectSeries,
@@ -18,7 +17,6 @@ export type DocumentSchema =
   | Project
   | ProjectCollection
   | ProjectSeries
-  | ProjectCategory
   | ProjectRole
   | Profile
   | HomePage
