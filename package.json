@@ -29,6 +29,8 @@
     "@sanity/vision": "^3.88.3",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "embla-carousel-autoplay": "^8.6.0",
+    "embla-carousel-react": "^8.6.0",
     "lodash": "^4.17.21",
     "lucide-react": "^0.511.0",
     "motion": "^12.16.0",

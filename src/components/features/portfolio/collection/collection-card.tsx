@@ -12,9 +12,14 @@ import { PROJECT_COLLECTIONS_QUERYResult } from '@/sanity/types/generated/types'
 type Props = {
   collection: PROJECT_COLLECTIONS_QUERYResult[number]
   className?: string
+  animate?: boolean
 }
 
-const CollectionCard: FC<Props> = ({ collection, className }) => {
+const CollectionCard: FC<Props> = ({
+  collection,
+  className,
+  animate = true,
+}) => {
   const { title, mainImage, slug, sections } = collection || {}
   const pageUrl = `/portfolio/collections/${slug?.current}`
 
@@ -37,7 +42,7 @@ const CollectionCard: FC<Props> = ({ collection, className }) => {
 
   return (
     <AnimateOnScroll
-      animations={['slideInFromBottom', 'fadeIn']}
+      animations={animate ? ['slideInFromBottom', 'fadeIn'] : undefined}
       className={cn(
         'duration-500',
         'group rounded-xl bg-primary-light overflow-hidden pb-3 border border-secondary-light',
