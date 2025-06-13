@@ -102,7 +102,7 @@ const HereoSection: FC<Props> = ({ profile, welcomeBlurb, className }) => {
           >
             <div
               className={cn(
-                'p-4 md:p-6 text-pretty flex flex-col gap-6 sm:gap-8 pb-8',
+                'p-4 md:p-6 text-pretty flex flex-col gap-6 pb-8',
                 'justify-center mx-auto',
               )}
             >

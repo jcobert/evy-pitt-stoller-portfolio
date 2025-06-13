@@ -39,7 +39,7 @@ const CollectionPage: FC<Props> = async ({ collection }) => {
                 <AccordionTrigger className='font-display text-2xl sm:text-3xl font-medium text-primary-foreground hover:text-secondary transition capitalize'>
                   {sec?.title}
                 </AccordionTrigger>
-                <AccordionContent className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 grid-flow-row gap-x-6 gap-y-10 pb-6'>
+                <AccordionContent className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 grid-flow-row gap-x-6 gap-y-10 pb-6 pt-4'>
                   {sec?.projects?.map((proj, i) => (
                     <AnimateOnScroll
                       key={proj?._id}
