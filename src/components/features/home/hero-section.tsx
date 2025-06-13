@@ -41,6 +41,7 @@ const HereoSection: FC<Props> = ({
 
   const photo = getSanityImageUrl(profile?.photo, {
     ratio: 'original',
+    quality: 85,
   })
 
   return (

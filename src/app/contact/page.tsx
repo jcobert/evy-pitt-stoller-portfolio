@@ -54,9 +54,9 @@ const Page: FC<Props> = async () => {
         {profile?.contactInfo || fullName ? (
           <section className='mt-8 flex flex-col gap-4 md:gap-8 border-2 border-secondary-light/20 p-4 pb-6 sm:p-6 sm:pb-12 mb-16 rounded-sm bg-secondary-extra-light/5'>
             <div>
-              <h3 className='text-2xl md:text-3xl font-medium text-primary-foreground'>
+              <h2 className='text-2xl md:text-3xl font-medium text-primary-foreground'>
                 {fullName}
-              </h3>
+              </h2>
               {/* <span className='text-lg text-muted-foreground'>
               {profile?.locations?.join(' | ')}
             </span> */}
@@ -93,7 +93,7 @@ const Page: FC<Props> = async () => {
                 />
 
                 <div className='flex flex-col gap-6 sm:w-fit'>
-                  <h3 className='text-secondary/80 font-medium text-lg'>
+                  <h3 className='text-primary-foreground font-medium text-lg'>
                     Connect with Me
                   </h3>
                   <ContactLinks

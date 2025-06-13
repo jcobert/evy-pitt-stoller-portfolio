@@ -49,7 +49,7 @@ const Page: FC<Props> = async () => {
 
   const locale = locations?.join(' | ')
 
-  const image = getSanityImageUrl(photo, { ratio: 'original', width: 400 })
+  const image = getSanityImageUrl(photo, { ratio: 'original', width: 400, quality: 85 })
 
   const jsonLd = await aboutPageJsonLd(data)
 

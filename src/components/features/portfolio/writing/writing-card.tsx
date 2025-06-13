@@ -27,6 +27,8 @@ const WritingCard: FC<Props> = ({ writing, className, titleClassName }) => {
   })
   const imageWide = getSanityImageUrl(mainImage, { ratio: '16/9', width: 400 })
 
+  const altText = mainImage?.alt
+
   return (
     <Link
       href={pageUrl}
@@ -47,11 +49,12 @@ const WritingCard: FC<Props> = ({ writing, className, titleClassName }) => {
             'aspect-square self-start max-w-1/3 sm:max-w-48 min-w-24 flex-none sm:rounded-r-none',
             // 'lg:max-w-24',
           )}
+          aria-hidden={!altText}
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={imageSquare}
-            alt={mainImage?.alt}
+            alt={altText}
             className={cn(
               'max-sm:hidden',
               'aspect-square object-cover rounded-sm rounded-r-none h-auto',
@@ -60,7 +63,7 @@ const WritingCard: FC<Props> = ({ writing, className, titleClassName }) => {
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={imageWide}
-            alt={mainImage?.alt}
+            alt={altText}
             className={cn(
               'sm:hidden',
               'aspect-video object-cover rounded-sm rounded-b-none size-full',

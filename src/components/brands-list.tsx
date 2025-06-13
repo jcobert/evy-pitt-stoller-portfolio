@@ -20,6 +20,7 @@ const BrandLogo: FC<{ brand: Brand; className?: string }> = ({
   const src = getSanityImageUrl(brand?.logo, {
     // ratio: 'square',
     crop: 'center',
+    width: 80,
   })
   if (!src) return null
   return (

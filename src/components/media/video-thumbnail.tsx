@@ -10,7 +10,7 @@ type Props = {
 } & Pick<VideoSkeletonProps, 'icon'>
 
 const VideoThumbnail: FC<Props> = ({ video, className, icon }) => {
-  const { thumbnailUrl, title } = video || {}
+  const { thumbnailUrl, description } = video || {}
 
   if (!thumbnailUrl)
     return <VideoSkeleton className={cn(className)} icon={icon} />
@@ -21,11 +21,12 @@ const VideoThumbnail: FC<Props> = ({ video, className, icon }) => {
         'rounded-sm aspect-video w-full contain-content',
         className,
       )}
+      aria-hidden={!description}
     >
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={thumbnailUrl}
-        alt={title}
+        alt={description}
         className='w-full h-auto aspect-video object-cover object-center'
       />
     </div>
