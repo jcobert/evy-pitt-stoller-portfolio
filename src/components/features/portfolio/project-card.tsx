@@ -59,6 +59,7 @@ const ProjectCard: FC<Props> = ({
     >
       <VideoThumbnail
         video={video}
+        icon={false}
         className='group-hover:shadow-md shadow transition animate-none border-secondary/75'
       />
       <div className='flex flex-col items-center text-pretty'>
