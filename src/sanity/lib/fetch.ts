@@ -6,6 +6,7 @@ import {
   PORTFOLIO_PAGE_QUERYResult,
   PRODUCTION_PAGE_QUERYResult,
   PROFILE_QUERYResult,
+  PROJECTS_BY_FEATURED_QUERYResult,
   PROJECTS_BY_SERIES_QUERYResult,
   PROJECTS_BY_TYPE_QUERYResult,
   PROJECTS_QUERYResult,
@@ -40,6 +41,7 @@ import {
   PROJECT_SERIES_QUERY,
 } from './queries/project-series-query'
 import {
+  PROJECTS_BY_FEATURED_QUERY,
   PROJECTS_BY_SERIES_QUERY,
   PROJECTS_BY_TYPE_QUERY,
   PROJECTS_QUERY,
@@ -96,6 +98,21 @@ export const getProjectsBySeries = async (params: {
 
   const projects = await client.fetch<PROJECTS_BY_SERIES_QUERYResult>(
     PROJECTS_BY_SERIES_QUERY,
+    queryParams,
+  )
+  return projects
+}
+
+/** Gets all featured projects. */
+export const getFeaturedProjects = async (params?: {
+  featured?: Project['featured']
+}) => {
+  const { featured = true } = params || {}
+
+  const queryParams = { featured }
+
+  const projects = await client.fetch<PROJECTS_BY_FEATURED_QUERYResult>(
+    PROJECTS_BY_FEATURED_QUERY,
     queryParams,
   )
   return projects

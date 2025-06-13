@@ -146,6 +146,7 @@ export type Project = {
   slug?: Slug
   datePublished?: string
   projectType?: 'production' | 'writing'
+  featured?: boolean
   mainVideo?: VideoGroup
   mainImage?: {
     asset?: {
@@ -867,6 +868,7 @@ export type PROJECT_COLLECTIONS_QUERYResult = Array<{
       slug?: Slug
       datePublished?: string
       projectType?: 'production' | 'writing'
+      featured?: boolean
       mainVideo: {
         _type: 'videoGroup'
         youtube?: YoutubeVideo
@@ -1175,6 +1177,7 @@ export type PROJECT_COLLECTIONS_QUERYResult = Array<{
         slug?: Slug
         datePublished?: string
         projectType?: 'production' | 'writing'
+        featured?: boolean
         mainVideo: {
           _type: 'videoGroup'
           youtube?: YoutubeVideo
@@ -1412,6 +1415,7 @@ export type PROJECT_COLLECTION_BY_ID_QUERYResult = {
       slug?: Slug
       datePublished?: string
       projectType?: 'production' | 'writing'
+      featured?: boolean
       mainVideo: {
         _type: 'videoGroup'
         youtube?: YoutubeVideo
@@ -1720,6 +1724,7 @@ export type PROJECT_COLLECTION_BY_ID_QUERYResult = {
         slug?: Slug
         datePublished?: string
         projectType?: 'production' | 'writing'
+        featured?: boolean
         mainVideo: {
           _type: 'videoGroup'
           youtube?: YoutubeVideo
@@ -1957,6 +1962,7 @@ export type PROJECT_COLLECTION_BY_SLUG_QUERYResult = {
       slug?: Slug
       datePublished?: string
       projectType?: 'production' | 'writing'
+      featured?: boolean
       mainVideo: {
         _type: 'videoGroup'
         youtube?: YoutubeVideo
@@ -2265,6 +2271,7 @@ export type PROJECT_COLLECTION_BY_SLUG_QUERYResult = {
         slug?: Slug
         datePublished?: string
         projectType?: 'production' | 'writing'
+        featured?: boolean
         mainVideo: {
           _type: 'videoGroup'
           youtube?: YoutubeVideo
@@ -2673,6 +2680,7 @@ export type PROJECTS_QUERYResult = Array<{
   slug?: Slug
   datePublished?: string
   projectType?: 'production' | 'writing'
+  featured?: boolean
   mainVideo: {
     _type: 'videoGroup'
     youtube?: YoutubeVideo
@@ -2898,6 +2906,7 @@ export type PROJECTS_BY_TYPE_QUERYResult = Array<{
   slug?: Slug
   datePublished?: string
   projectType?: 'production' | 'writing'
+  featured?: boolean
   mainVideo: {
     _type: 'videoGroup'
     youtube?: YoutubeVideo
@@ -3123,6 +3132,233 @@ export type PROJECTS_BY_SERIES_QUERYResult = Array<{
   slug?: Slug
   datePublished?: string
   projectType?: 'production' | 'writing'
+  featured?: boolean
+  mainVideo: {
+    _type: 'videoGroup'
+    youtube?: YoutubeVideo
+    vimeo?: Vimeo
+    otherLink?: string
+    videoUpload: {
+      _type: 'video'
+      file: {
+        asset: {
+          _id: string
+          _type: 'sanity.fileAsset'
+          _createdAt: string
+          _updatedAt: string
+          _rev: string
+          originalFilename?: string
+          label?: string
+          title?: string
+          description?: string
+          altText?: string
+          sha1hash?: string
+          extension?: string
+          mimeType?: string
+          size?: number
+          assetId?: string
+          uploadId?: string
+          path?: string
+          url?: string
+          source?: SanityAssetSourceData
+        } | null
+        media?: unknown
+        _type: 'file'
+      } | null
+      alt?: string
+    } | null
+  } | null
+  mainImage: {
+    asset: {
+      _id: string
+      _type: 'sanity.imageAsset'
+      _createdAt: string
+      _updatedAt: string
+      _rev: string
+      originalFilename?: string
+      label?: string
+      title?: string
+      description?: string
+      altText?: string
+      sha1hash?: string
+      extension?: string
+      mimeType?: string
+      size?: number
+      assetId?: string
+      uploadId?: string
+      path?: string
+      url?: string
+      metadata?: SanityImageMetadata
+      source?: SanityAssetSourceData
+    } | null
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: string
+    _type: 'image'
+  } | null
+  articleLink?: string
+  articlePreview?: string
+  description: Array<
+    | {
+        children?: Array<{
+          marks?: Array<string>
+          text?: string
+          _type: 'span'
+          _key: string
+        }>
+        style?: 'blockquote' | 'h2' | 'h3' | 'h4' | 'normal'
+        listItem?: 'bullet' | 'number'
+        markDefs?: Array<{
+          url?: string
+          _type: 'link'
+          _key: string
+        }>
+        level?: number
+        _type: 'block'
+        _key: string
+      }
+    | {
+        asset?: {
+          _ref: string
+          _type: 'reference'
+          _weak?: boolean
+          [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+        }
+        media?: unknown
+        hotspot?: SanityImageHotspot
+        crop?: SanityImageCrop
+        alt?: string
+        _type: 'image'
+        _key: string
+      }
+    | {
+        _key: string
+        _type: 'video'
+        file?: {
+          asset?: {
+            _ref: string
+            _type: 'reference'
+            _weak?: boolean
+            [internalGroqTypeReferenceTo]?: 'sanity.fileAsset'
+          }
+          media?: unknown
+          _type: 'file'
+        }
+        alt?: string
+      }
+  > | null
+  roles: Array<{
+    _id: string
+    _type: 'projectRole'
+    _createdAt: string
+    _updatedAt: string
+    _rev: string
+    name?: string
+  }> | null
+  series: {
+    _id: string
+    _type: 'projectSeries'
+    _createdAt: string
+    _updatedAt: string
+    _rev: string
+    title?: string
+    mainImage: {
+      asset: {
+        _id: string
+        _type: 'sanity.imageAsset'
+        _createdAt: string
+        _updatedAt: string
+        _rev: string
+        originalFilename?: string
+        label?: string
+        title?: string
+        description?: string
+        altText?: string
+        sha1hash?: string
+        extension?: string
+        mimeType?: string
+        size?: number
+        assetId?: string
+        uploadId?: string
+        path?: string
+        url?: string
+        metadata?: SanityImageMetadata
+        source?: SanityAssetSourceData
+      } | null
+      media?: unknown
+      hotspot?: SanityImageHotspot
+      crop?: SanityImageCrop
+      alt?: string
+      _type: 'image'
+    } | null
+    description: Array<
+      | {
+          children?: Array<{
+            marks?: Array<string>
+            text?: string
+            _type: 'span'
+            _key: string
+          }>
+          style?: 'blockquote' | 'h2' | 'h3' | 'h4' | 'normal'
+          listItem?: 'bullet' | 'number'
+          markDefs?: Array<{
+            url?: string
+            _type: 'link'
+            _key: string
+          }>
+          level?: number
+          _type: 'block'
+          _key: string
+        }
+      | {
+          asset?: {
+            _ref: string
+            _type: 'reference'
+            _weak?: boolean
+            [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+          }
+          media?: unknown
+          hotspot?: SanityImageHotspot
+          crop?: SanityImageCrop
+          alt?: string
+          _type: 'image'
+          _key: string
+        }
+      | {
+          _key: string
+          _type: 'video'
+          file?: {
+            asset?: {
+              _ref: string
+              _type: 'reference'
+              _weak?: boolean
+              [internalGroqTypeReferenceTo]?: 'sanity.fileAsset'
+            }
+            media?: unknown
+            _type: 'file'
+          }
+          alt?: string
+        }
+    > | null
+  } | null
+  tags: Array<string> | Array<never>
+  seo?: Seo
+  category: null
+}>
+// Variable: PROJECTS_BY_FEATURED_QUERY
+// Query: *[_type=='project' && featured==$featured]{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ ..., videoUpload{ ..., file{ ..., asset-> } } }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } }, series->{ ..., mainImage{ ..., asset-> }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } } }, roles[]->, category-> }
+export type PROJECTS_BY_FEATURED_QUERYResult = Array<{
+  _id: string
+  _type: 'project'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  title?: string
+  slug?: Slug
+  datePublished?: string
+  projectType?: 'production' | 'writing'
+  featured?: boolean
   mainVideo: {
     _type: 'videoGroup'
     youtube?: YoutubeVideo
@@ -3348,6 +3584,7 @@ export type PROJECT_BY_SLUG_QUERYResult = {
   slug?: Slug
   datePublished?: string
   projectType?: 'production' | 'writing'
+  featured?: boolean
   mainVideo: {
     _type: 'videoGroup'
     youtube?: YoutubeVideo
@@ -3586,6 +3823,7 @@ declare module '@sanity/client' {
     '*[_type==\'project\' && defined(slug)]{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ ..., videoUpload{ ..., file{ ..., asset-> } } }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } }, series->{ ..., mainImage{ ..., asset-> }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } } }, roles[]->, category-> }': PROJECTS_QUERYResult
     '*[_type==\'project\' && projectType==$projectType && defined(slug)]{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ ..., videoUpload{ ..., file{ ..., asset-> } } }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } }, series->{ ..., mainImage{ ..., asset-> }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } } }, roles[]->, category-> }': PROJECTS_BY_TYPE_QUERYResult
     '*[_type==\'project\' && series._ref==$seriesId]{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ ..., videoUpload{ ..., file{ ..., asset-> } } }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } }, series->{ ..., mainImage{ ..., asset-> }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } } }, roles[]->, category-> }': PROJECTS_BY_SERIES_QUERYResult
+    '*[_type==\'project\' && featured==$featured]{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ ..., videoUpload{ ..., file{ ..., asset-> } } }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } }, series->{ ..., mainImage{ ..., asset-> }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } } }, roles[]->, category-> }': PROJECTS_BY_FEATURED_QUERYResult
     '*[_type==\'project\' && slug.current==$slug]{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ ..., videoUpload{ ..., file{ ..., asset-> } } }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } }, series->{ ..., mainImage{ ..., asset-> }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } } }, roles[]->, "category": *[_type == "projectCollection" && references(^._id)]{ _id, title, "subcategory": *[_type == "projectCollection" && references(^.^._id)][0].sections[]{_key, title, "projects": projects[^.^.^._id == _ref]}[length(projects) > 0][0].title }[0] }[0]': PROJECT_BY_SLUG_QUERYResult
   }
 }
