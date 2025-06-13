@@ -1,11 +1,11 @@
-import { BsCollectionPlay } from 'react-icons/bs'
+import { MdOutlineCollectionsBookmark } from 'react-icons/md'
 import { defineField, defineType } from 'sanity'
 
 export const projectSeriesType = defineType({
   name: 'projectSeries',
   title: 'Project Series',
   type: 'document',
-  icon: BsCollectionPlay,
+  icon: MdOutlineCollectionsBookmark,
   fields: [
     defineField({
       name: 'title',
