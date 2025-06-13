@@ -64,7 +64,13 @@ export const projectType = defineType({
         'Just click "Generate" after entering something in the Title field above, to automatically fill this in.',
     }),
     // date published
-    defineField({ name: 'datePublished', type: 'date' }),
+    defineField({
+      name: 'datePublished',
+      type: 'date',
+      title: 'Date of Work',
+      description: 'When you completed work on this project.',
+      group: ['classification'],
+    }),
     // project type
     defineField({
       name: 'projectType',
@@ -79,6 +85,17 @@ export const projectType = defineType({
       },
       initialValue: 'production',
       validation: (rules) => rules?.required(),
+    }),
+    // featured
+    defineField({
+      name: 'featured',
+      type: 'boolean',
+      title: 'Featured',
+      description:
+        'Featured projects will be showcased on home page and select other locations. Recommended to feature 4 production and 2 writing projects.',
+      options: { layout: 'switch' },
+      initialValue: false,
+      // components: { field: FeaturedBooleanField },
     }),
     // video
     defineField({
@@ -253,14 +270,20 @@ export const projectType = defineType({
       projectType: 'projectType',
       media: 'mainImage',
       video: 'mainVideo',
+      featured: 'featured',
     },
-    prepare: ({ title, projectType, media, video }) => {
+    prepare: ({ title, projectType, media, video, featured }) => {
       const img = getSanityImageUrl(media)
       const videoThumbnail = getSanityVideo(video)?.thumbnailUrl
 
+      // const projectTypeSymbol = projectType === 'production' ? '🎬' : '✏️'
+      const featuredSymbol = featured ? '⭐️ ' : ''
+
       return {
-        title,
+        // title,
+        title: `${featuredSymbol}${title}`,
         subtitle: upperFirst((projectType as string) || ''),
+        // subtitle: `${featuredSymbol}${upperFirst((projectType as string) || '')}`,
         imageUrl: img || videoThumbnail || undefined,
       }
     },

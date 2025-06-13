@@ -37,8 +37,12 @@ const loadContent = async () => {
     getAllProjectCollections(),
   ])
 
-  const productions = projects?.filter((p) => p?.projectType === 'production')
-  const writing = projects?.filter((p) => p?.projectType === 'writing')
+  const productions = projects?.filter(
+    (p) => p?.projectType === 'production' && p?.featured,
+  )
+  const writing = projects?.filter(
+    (p) => p?.projectType === 'writing' && p?.featured,
+  )
 
   return {
     profile,

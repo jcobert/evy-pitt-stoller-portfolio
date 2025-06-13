@@ -6,6 +6,7 @@ import { formatDate } from '@/utils/date'
 import { getSanityVideo } from '@/utils/media'
 import { cn } from '@/utils/style'
 
+import Logo from '@/components/general/logo'
 import PortableBlockContent from '@/components/general/portable/portable-block-content'
 import Separator from '@/components/general/separator'
 import Tag from '@/components/general/tag'
@@ -68,7 +69,24 @@ const ProductionPost: FC<Props> = ({ production, seriesProjects }) => {
           </div>
           <VideoPlayer video={video} className='animate-fade-in' />
         </div>
-      ) : null}
+      ) : (
+        <div
+          className={cn(
+            'w-full flex items-center max-w-lg mx-auto py-2 bg-no-repeat bg-cover h-full bg-center aspect-video rounded-sm',
+            'relative',
+          )}
+        >
+          <div
+            className={cn(
+              'absolute aspect-video size-full',
+              'rounded-sm',
+              'flex justify-center items-center bg-secondary-light/10',
+            )}
+          >
+            <Logo className='opacity-70 size-24 text-3xl' />
+          </div>
+        </div>
+      )}
 
       {datePublished ? (
         <span className='text-sm text-muted-foreground'>

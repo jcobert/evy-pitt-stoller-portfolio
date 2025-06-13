@@ -823,6 +823,13 @@
         },
         "optional": true
       },
+      "featured": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "boolean"
+        },
+        "optional": true
+      },
       "mainVideo": {
         "type": "objectAttribute",
         "value": {

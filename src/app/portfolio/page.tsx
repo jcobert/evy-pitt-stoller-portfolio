@@ -17,17 +17,22 @@ import { Button } from '@/components/ui/button'
 
 import { PageParams } from '@/types/general'
 
-import { getPage, getProjects } from '@/sanity/lib/fetch'
+import { getFeaturedProjects, getPage } from '@/sanity/lib/fetch'
 
 const loadContent = async () => {
-  const [portfolioPage, productionPage, writingPage, productions, writing] =
+  const [portfolioPage, productionPage, writingPage, projects] =
     await Promise.all([
       getPage('portfolioPage'),
       getPage('productionPage'),
       getPage('writingPage'),
-      getProjects({ projectType: 'production' }),
-      getProjects({ projectType: 'writing' }),
+      getFeaturedProjects(),
     ])
+
+  const productions = projects?.filter(
+    (proj) => proj?.projectType === 'production',
+  )
+  const writing = projects?.filter((proj) => proj?.projectType === 'writing')
+
   return { portfolioPage, productionPage, writingPage, productions, writing }
 }
 
