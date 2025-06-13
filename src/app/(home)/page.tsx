@@ -61,8 +61,20 @@ const Page: FC = async () => {
 
   return (
     <Main className='bg-gradient-to-br from-primary/90 from-20% to-primary pb-0'>
-      <PageLayout wrapperClassName='max-sm:w-full' className='max-md:px-0'>
+      <PageLayout
+        wrapperClassName='max-sm:w-full'
+        className={cn(
+          'max-md:px-0',
+          // 'xl:flex'
+        )}
+      >
         <HereoSection profile={profile} welcomeBlurb={welcomeBlurb} />
+
+        {/* <ProductionsSection
+          productions={productions}
+          heading={productionPage?.heading}
+          className='max-xl:hidden'
+        /> */}
       </PageLayout>
 
       {profile?.companies?.length ? (
@@ -93,6 +105,7 @@ const Page: FC = async () => {
       <ProductionsSection
         productions={productions}
         heading={productionPage?.heading}
+        // className='xl:hidden'
       />
       <WritingSection writing={writing} heading={writingPage?.heading} />
 

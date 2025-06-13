@@ -13,9 +13,10 @@ import { HomePage, PROFILE_QUERYResult } from '@/sanity/types/generated/types'
 type Props = {
   profile: PROFILE_QUERYResult | undefined
   welcomeBlurb: HomePage['welcomeBlurb']
+  className?: string
 }
 
-const HereoSection: FC<Props> = ({ profile, welcomeBlurb }) => {
+const HereoSection: FC<Props> = ({ profile, welcomeBlurb, className }) => {
   const firstName = profile?.firstName || 'Evy'
   const lastName = profile?.lastName || 'Pitt-Stoller'
   const fullName = getFullName(firstName, lastName)
@@ -31,7 +32,7 @@ const HereoSection: FC<Props> = ({ profile, welcomeBlurb }) => {
   })
 
   return (
-    <section className='flex flex-col justify-between gap-16'>
+    <section className={cn('flex flex-col justify-between gap-16', className)}>
       <div className='flex flex-col gap-2 sm:gap-6 mt-8 md:mt-20 max-md:px-4 max-md:items-center'>
         <h1
           className={cn(
@@ -94,19 +95,21 @@ const HereoSection: FC<Props> = ({ profile, welcomeBlurb }) => {
         {!!welcomeBlurb || !!profile?.contactInfo ? (
           <CardStack
             className={cn(
-              'max-sm:w-full max-sm:overflow-x-clip max-sm:bottom-16 max-sm:-mb-12',
+              'max-sm:w-full max-sm:overflow-x-clip max-sm:bottom-8 max-sm:-mb-4',
               'sm:max-md:top-8 sm:right-8',
               'md:right-8',
             )}
           >
             <div
               className={cn(
-                'p-4 md:p-6 text-pretty flex flex-col gap-8 pb-8',
+                'p-4 md:p-6 text-pretty flex flex-col gap-6 sm:gap-8 pb-8',
                 'justify-center mx-auto',
               )}
             >
               {welcomeBlurb ? (
-                <p className='text-primary-foreground max-w-prose mx-auto'>{welcomeBlurb}</p>
+                <p className='text-primary-foreground max-w-prose mx-auto'>
+                  {welcomeBlurb}
+                </p>
               ) : null}
               <ContactLinks
                 className='mx-auto'
