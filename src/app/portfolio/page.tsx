@@ -75,13 +75,13 @@ const Page: FC<Props> = async () => {
             <div className='flex flex-col gap-12 items-center'>
               <div
                 className={cn(
-                  'grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3__ lg:grid-cols-4__ grid-flow-row',
+                  'grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 grid-flow-row',
                   'gap-x-6 lg:gap-x-10 xl:gap-x-16 gap-y-10',
                   'px-4 sm:px-16__',
                 )}
               >
                 {productions
-                  ?.slice(0, 2)
+                  ?.slice(0, 4)
                   ?.map((prod) => (
                     <ProductionCard
                       key={prod?._id}

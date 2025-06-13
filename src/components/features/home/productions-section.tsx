@@ -16,15 +16,21 @@ import {
 type Props = {
   productions: PROJECTS_BY_TYPE_QUERYResult
   heading: Omit<PageHeading, '_type'> | undefined
+  className?: string
 }
 
-const ProductionsSection: FC<Props> = ({ productions, heading }) => {
+const ProductionsSection: FC<Props> = ({ productions, heading, className }) => {
   const projects = (productions || [])?.slice(0, 4)
 
   const noProjects = !projects?.length
 
   return (
-    <section className='bg-gradient-to-br from-secondary/90 to-secondary-light relative max-sm:z-50__ py-16'>
+    <section
+      className={cn(
+        'bg-gradient-to-br from-secondary/90 to-secondary-light relative max-sm:z-50__ py-16',
+        className,
+      )}
+    >
       <div className='layout px-4 md:px-12 flex flex-col gap-12'>
         {heading ? (
           <AnimateOnScroll animations={['fadeIn', 'blurIn', 'slideInFromLeft']}>

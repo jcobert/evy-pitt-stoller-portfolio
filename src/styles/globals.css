@@ -211,7 +211,7 @@
   }
   .fade-out-r {
     mask-mode: luminance;
-    mask-image: linear-gradient(to right, white 95%, transparent);
+    mask-image: linear-gradient(to right, white 90%, transparent 100%);
   }
   .fade-out-x {
     mask-mode: luminance;

@@ -13,17 +13,29 @@ import Ticker from '@/components/general/ticker'
 import Main from '@/components/layout/main'
 import PageLayout from '@/components/layout/page-layout'
 
-import { getPage, getProfile, getProjects } from '@/sanity/lib/fetch'
+import {
+  getAllProjectCollections,
+  getPage,
+  getProfile,
+  getProjects,
+} from '@/sanity/lib/fetch'
 
 const loadContent = async () => {
-  const [homePage, profile, projects, productionPage, writingPage] =
-    await Promise.all([
-      getPage('homePage'),
-      getProfile(),
-      getProjects(),
-      getPage('productionPage'),
-      getPage('writingPage'),
-    ])
+  const [
+    homePage,
+    profile,
+    projects,
+    productionPage,
+    writingPage,
+    collections,
+  ] = await Promise.all([
+    getPage('homePage'),
+    getProfile(),
+    getProjects(),
+    getPage('productionPage'),
+    getPage('writingPage'),
+    getAllProjectCollections(),
+  ])
 
   const productions = projects?.filter((p) => p?.projectType === 'production')
   const writing = projects?.filter((p) => p?.projectType === 'writing')
@@ -35,6 +47,7 @@ const loadContent = async () => {
     homePage,
     productionPage,
     writingPage,
+    collections,
   }
 }
 
@@ -51,6 +64,7 @@ const Page: FC = async () => {
     writing,
     productionPage,
     writingPage,
+    collections,
   } = await loadContent()
 
   const { welcomeBlurb } = homePage || {}
@@ -61,8 +75,24 @@ const Page: FC = async () => {
 
   return (
     <Main className='bg-gradient-to-br from-primary/90 from-20% to-primary pb-0'>
-      <PageLayout wrapperClassName='max-sm:w-full' className='max-md:px-0'>
-        <HereoSection profile={profile} welcomeBlurb={welcomeBlurb} />
+      <PageLayout
+        wrapperClassName='max-sm:w-full'
+        className={cn(
+          'max-md:px-0',
+          // 'xl:flex'
+        )}
+      >
+        <HereoSection
+          profile={profile}
+          welcomeBlurb={welcomeBlurb}
+          collections={collections}
+        />
+
+        {/* <ProductionsSection
+          productions={productions}
+          heading={productionPage?.heading}
+          className='max-xl:hidden'
+        /> */}
       </PageLayout>
 
       {profile?.companies?.length ? (
@@ -93,6 +123,7 @@ const Page: FC = async () => {
       <ProductionsSection
         productions={productions}
         heading={productionPage?.heading}
+        // className='xl:hidden'
       />
       <WritingSection writing={writing} heading={writingPage?.heading} />
 

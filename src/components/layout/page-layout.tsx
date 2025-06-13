@@ -36,7 +36,7 @@ const PageLayout: FC<PageLayoutProps> = ({
         className={cn('h-full px-4 md:px-12 xl:px-24__ sm:pb-8__', className)}
       >
         {back?.href ? (
-          <Back className='mt-4 md:mt-6 -mb-2 md:-mb-4' {...back} />
+          <Back className='mt-4 md:mt-6 -mb-2 md:-mb-4 max-md:!px-0' {...back} />
         ) : null}
         {children}
       </div>
