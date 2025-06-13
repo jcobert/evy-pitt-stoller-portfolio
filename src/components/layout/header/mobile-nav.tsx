@@ -81,6 +81,7 @@ const MobileNav: FC<Props> = ({ className }) => {
           onClick={() => {
             setIsMenuOpen(true)
           }}
+          aria-label='Navigation menu'
         >
           <HiOutlineMenu className='text-4xl text-secondary' />
         </SheetTrigger>
