@@ -41,7 +41,7 @@ const WritingCard: FC<Props> = ({ writing, className, titleClassName }) => {
         className,
       )}
     >
-      {mainImage ? (
+      {mainImage?.asset ? (
         <div
           className={cn(
             'rounded-sm border-4 border-white/80',

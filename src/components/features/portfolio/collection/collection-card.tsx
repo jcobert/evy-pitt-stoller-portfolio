@@ -61,7 +61,7 @@ const CollectionCard: FC<Props> = ({
       >
         <div className='p-2 w-full bg-gradient-to-tl from-secondary to-secondary-light rounded-t-lg'>
           <div
-            className='w-full rounded-t-md overflow-hidden relative aspect-video flex items-center justify-center'
+            className='w-full rounded-t-md overflow-hidden relative aspect-video flex items-center justify-center bg-white/95'
             aria-hidden={!imageAsset?.alt}
           >
             {imageUrl ? (
