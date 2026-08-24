@@ -31,6 +31,7 @@ const BrandLogo: FC<{ brand: Brand; className?: string }> = ({
       alt={brand?.name}
       className={cn(
         'rounded-full__ object-center object-contain max-w-16 p-2__ border__',
+        'select-none',
         className,
       )}
     />
