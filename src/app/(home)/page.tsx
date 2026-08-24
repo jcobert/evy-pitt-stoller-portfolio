@@ -112,13 +112,13 @@ const Page: FC = async () => {
             'border-y-3 border-secondary-light/80',
           )}
         >
-          <Ticker itemCount={brandRow1.length} itemDuration={3}>
+          <Ticker itemCount={brandRow1.length} itemDuration={4.5}>
             <BrandsList
               brands={brandRow1}
               className='grid-rows-1 !gap-0 -mr-10'
             />
           </Ticker>
-          <Ticker itemCount={brandRow2.length} itemDuration={3.5}>
+          <Ticker itemCount={brandRow2.length} itemDuration={5}>
             <BrandsList
               brands={brandRow2}
               className='grid-rows-1 !gap-0 -mr-10'
