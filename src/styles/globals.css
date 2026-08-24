@@ -57,7 +57,7 @@
 
 @theme {
   --animate-fade-in: fadeIn 2000ms ease;
-  --animate-infinite-scroll: infiniteScroll 30s linear infinite;
+  --animate-infinite-scroll: infiniteScroll3d 30s linear infinite;
   --animate-shimmer: shimmer 3s ease;
 
   @keyframes fadeIn {
@@ -75,6 +75,16 @@
     }
     100% {
       transform: translateX(-100%);
+    }
+  }
+
+  @keyframes infiniteScroll3d {
+    0% {
+      transform: translate3d(0, 0, 0);
+    }
+    100% {
+      /* transform: translate3d(-33.3333%, 0, 0); */
+      transform: translate3d(-100%, 0, 0);
     }
   }
 

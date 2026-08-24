@@ -77,6 +77,9 @@ const Page: FC = async () => {
 
   const brandRowCutoff = (profile?.companies?.length || 0) / 2
 
+  const brandRow1 = profile?.companies?.slice(0, brandRowCutoff) || []
+  const brandRow2 = profile?.companies?.slice(brandRowCutoff) || []
+
   return (
     <Main className='bg-gradient-to-br from-primary/90 from-20% to-primary pb-0'>
       <PageLayout
@@ -109,15 +112,15 @@ const Page: FC = async () => {
             'border-y-3 border-secondary-light/80',
           )}
         >
-          <Ticker duration={18}>
+          <Ticker itemCount={brandRow1.length} itemDuration={4.5}>
             <BrandsList
-              brands={profile?.companies?.slice(0, brandRowCutoff)}
+              brands={brandRow1}
               className='grid-rows-1 !gap-0 -mr-10'
             />
           </Ticker>
-          <Ticker duration={22}>
+          <Ticker itemCount={brandRow2.length} itemDuration={5}>
             <BrandsList
-              brands={profile?.companies?.slice(brandRowCutoff)}
+              brands={brandRow2}
               className='grid-rows-1 !gap-0 -mr-10'
             />
           </Ticker>

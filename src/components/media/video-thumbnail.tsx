@@ -19,6 +19,7 @@ const VideoThumbnail: FC<Props> = ({ video, className, icon }) => {
     <div
       className={cn(
         'rounded-sm aspect-video w-full contain-content',
+        'bg-white/95',
         className,
       )}
       aria-hidden={!description}
