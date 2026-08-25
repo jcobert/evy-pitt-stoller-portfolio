@@ -4,6 +4,7 @@ import { pageHeadingType } from './general/page-heading-type'
 import { seoType } from './general/seo-type'
 import { videoGroupType } from './general/video-group-type'
 import { videoType } from './general/video-type'
+import { vimeoVideoType } from './general/vimeo-video'
 import { aboutPageType } from './pages/about-page-type'
 import { contactPageType } from './pages/contact-page-type'
 import { homePageType } from './pages/home-page-type'
@@ -28,6 +29,7 @@ export const schemaTypes: SchemaTypeDefinition[] = [
   videoGroupType,
   pageHeadingType,
   seoType,
+  vimeoVideoType,
   // Profile
   contactInfoType,
   socialLinksType,

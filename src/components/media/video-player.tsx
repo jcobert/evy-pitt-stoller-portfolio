@@ -2,13 +2,15 @@
 
 import { Button } from '../ui/button'
 import VideoThumbnail from './video-thumbnail'
-import { FC, HTMLProps, useEffect, useState } from 'react'
+import { ComponentProps, FC, HTMLProps, useEffect, useState } from 'react'
 import { FaRegCirclePlay } from 'react-icons/fa6'
 import { ImSpinner8 } from 'react-icons/im'
-import ReactPlayer, { type ReactPlayerProps } from 'react-player/lazy'
+import ReactPlayer from 'react-player'
 
 import { SanityVideo } from '@/utils/media'
 import { cn } from '@/utils/style'
+
+type ReactPlayerProps = ComponentProps<typeof ReactPlayer>
 
 type Props = Partial<ReactPlayerProps> & {
   video: SanityVideo | undefined
@@ -113,7 +115,7 @@ const VideoPlayer: FC<Props> = ({ video, className, ...props }) => {
         height='auto'
         wrapper={(p) => <Wrapper {...p} className={className} />}
         fallback={<VideoThumbnail video={video} />}
-        url={video?.url}
+        src={video?.url}
         onError={() => {
           setIsError(true)
         }}

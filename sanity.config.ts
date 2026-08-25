@@ -11,7 +11,6 @@ import { dashboardTool } from '@sanity/dashboard'
 import { visionTool } from '@sanity/vision'
 import { DocumentActionComponent, defineConfig, isDev } from 'sanity'
 import { vercelWidget } from 'sanity-plugin-dashboard-widget-vercel'
-import { vimeoField } from 'sanity-plugin-vimeo-field'
 import { youtubeInput } from 'sanity-plugin-youtube-input'
 import { structureTool } from 'sanity/structure'
 
@@ -65,9 +64,6 @@ export default defineConfig({
     ...(isDev ? [visionTool({ defaultApiVersion: apiVersion })] : []),
     youtubeInput({
       apiKey: process.env.NEXT_PUBLIC_SANITY_STUDIO_YOUTUBE_DATA_API_KEY || '',
-    }),
-    vimeoField({
-      accessToken: process.env.NEXT_PUBLIC_SANITY_STUDIO_VIMEO_API_KEY,
     }),
   ],
   document: {

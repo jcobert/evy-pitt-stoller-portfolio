@@ -22,8 +22,6 @@ type Props = {
 }
 
 const ProjectCarousel: FC<Props> = ({ collections, className }) => {
-  const plugin = useRef(Autoplay({ delay: 8000, stopOnInteraction: true }))
-
   if (!collections?.length) return null
 
   return (
@@ -31,7 +29,7 @@ const ProjectCarousel: FC<Props> = ({ collections, className }) => {
       className={cn('px-4 py-1 mx-auto', className)}
       orientation='horizontal'
       opts={{ loop: true, align: 'center' }}
-      plugins={[plugin?.current]}
+      autoplay
     >
       <CarouselPrevious />
       <CarouselContent className='px-12'>

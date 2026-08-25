@@ -1,10 +1,8 @@
-import {
-  InfoFilledIcon,
-  ProjectsIcon,
-  SearchIcon,
-  TagsIcon,
-  VideoIcon,
-} from '@sanity/icons'
+import { InfoFilledIcon } from '@sanity/icons/InfoFilled'
+import { ProjectsIcon } from '@sanity/icons/Projects'
+import { SearchIcon } from '@sanity/icons/Search'
+import { TagsIcon } from '@sanity/icons/Tags'
+import { VideoIcon } from '@sanity/icons/Video'
 import { upperFirst } from 'lodash'
 import { defineField, defineType } from 'sanity'
 

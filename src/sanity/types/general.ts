@@ -63,10 +63,24 @@ export type VimeoPictures = {
   uri?: string
 }
 
+// export type VimeoData = {
+//   id?: string
+//   link?: string
+//   name?: string
+//   description?: string
+//   pictures?: VimeoPictures
+// }
+
 export type VimeoData = {
+  _type?: string
   id?: string
+  // Legacy plugin fields
   link?: string
   name?: string
   description?: string
   pictures?: VimeoPictures
+  // New custom object fields
+  url?: string
+  title?: string
+  thumbnailUrl?: string
 }

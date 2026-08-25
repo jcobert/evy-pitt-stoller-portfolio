@@ -81,14 +81,44 @@ const findVimeoThumbnail = (
   return thumb
 }
 
+// export const getVimeoData = (
+//   video: VimeoData | undefined,
+//   options?: { thumbnail?: keyof typeof VimeoThumbnailSize },
+// ) => {
+//   const { thumbnail = 'sm' } = options || {}
+//   const { id, name = '', description = '', link = '', pictures } = video || {}
+//   const thumbnailUrl = findVimeoThumbnail(pictures, thumbnail)?.link
+//   return { id, title: name, description, url: link, thumbnailUrl }
+// }
+
 export const getVimeoData = (
   video: VimeoData | undefined,
   options?: { thumbnail?: keyof typeof VimeoThumbnailSize },
 ) => {
   const { thumbnail = 'sm' } = options || {}
-  const { id, name = '', description = '', link = '', pictures } = video || {}
-  const thumbnailUrl = findVimeoThumbnail(pictures, thumbnail)?.link
-  return { id, title: name, description, url: link, thumbnailUrl }
+
+  // Destructure both legacy and new fields
+  const {
+    id,
+    name = '',
+    description = '',
+    link = '',
+    pictures,
+    url,
+    title,
+    thumbnailUrl: newThumbnailUrl,
+  } = video || {}
+
+  // Fallback: If it's an old plugin object, this extracts the old thumbnail
+  const legacyThumbnailUrl = findVimeoThumbnail(pictures, thumbnail)?.link
+
+  return {
+    id,
+    title: title || name,
+    description,
+    url: url || link,
+    thumbnailUrl: newThumbnailUrl || legacyThumbnailUrl || '',
+  }
 }
 
 export const getSanityVideo = (
