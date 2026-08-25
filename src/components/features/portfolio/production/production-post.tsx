@@ -15,13 +15,13 @@ import VideoThumbnail from '@/components/media/video-thumbnail'
 import { Button } from '@/components/ui/button'
 
 import {
-  PROJECTS_BY_SERIES_QUERYResult,
-  PROJECT_BY_SLUG_QUERYResult,
+  PROJECTS_BY_SERIES_QUERY_RESULT,
+  PROJECT_BY_SLUG_QUERY_RESULT,
 } from '@/sanity/types/generated/types'
 
 type Props = {
-  production: PROJECT_BY_SLUG_QUERYResult | undefined
-  seriesProjects: PROJECTS_BY_SERIES_QUERYResult | null | undefined
+  production: PROJECT_BY_SLUG_QUERY_RESULT | undefined
+  seriesProjects: PROJECTS_BY_SERIES_QUERY_RESULT | null | undefined
 }
 
 const ProductionPost: FC<Props> = ({ production, seriesProjects }) => {

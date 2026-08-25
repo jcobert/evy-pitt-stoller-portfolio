@@ -1,25 +1,25 @@
 import { PageDocumentType } from '../types/general'
 import {
-  ABOUT_PAGE_QUERYResult,
-  CONTACT_PAGE_QUERYResult,
-  HOME_PAGE_QUERYResult,
-  PORTFOLIO_PAGE_QUERYResult,
-  PRODUCTION_PAGE_QUERYResult,
-  PROFILE_QUERYResult,
-  PROJECTS_BY_FEATURED_QUERYResult,
-  PROJECTS_BY_SERIES_QUERYResult,
-  PROJECTS_BY_TYPE_QUERYResult,
-  PROJECTS_QUERYResult,
-  PROJECT_BY_SLUG_QUERYResult,
-  PROJECT_COLLECTIONS_QUERYResult,
-  PROJECT_COLLECTION_BY_ID_QUERYResult,
-  PROJECT_SERIES_BY_ID_QUERYResult,
-  PROJECT_SERIES_QUERYResult,
+  ABOUT_PAGE_QUERY_RESULT,
+  CONTACT_PAGE_QUERY_RESULT,
+  HOME_PAGE_QUERY_RESULT,
+  PORTFOLIO_PAGE_QUERY_RESULT,
+  PRODUCTION_PAGE_QUERY_RESULT,
+  PROFILE_QUERY_RESULT,
+  PROJECTS_BY_FEATURED_QUERY_RESULT,
+  PROJECTS_BY_SERIES_QUERY_RESULT,
+  PROJECTS_BY_TYPE_QUERY_RESULT,
+  PROJECTS_QUERY_RESULT,
+  PROJECT_BY_SLUG_QUERY_RESULT,
+  PROJECT_COLLECTIONS_QUERY_RESULT,
+  PROJECT_COLLECTION_BY_ID_QUERY_RESULT,
+  PROJECT_SERIES_BY_ID_QUERY_RESULT,
+  PROJECT_SERIES_QUERY_RESULT,
   Project,
   ProjectCollection,
   ProjectSeries,
   Slug,
-  WRITING_PAGE_QUERYResult,
+  WRITING_PAGE_QUERY_RESULT,
 } from '../types/generated/types'
 import { client } from './client'
 import {
@@ -64,8 +64,8 @@ export const getProjects = async <
 
   const projects = await client.fetch<
     TProjectType extends undefined
-      ? PROJECTS_QUERYResult
-      : PROJECTS_BY_TYPE_QUERYResult
+      ? PROJECTS_QUERY_RESULT
+      : PROJECTS_BY_TYPE_QUERY_RESULT
   >(query, withoutBlanks(queryParams))
 
   return sortBy(projects, (proj) => proj?.datePublished)?.reverse()
@@ -79,7 +79,7 @@ export const getProject = async (params: { slug: Slug['current'] }) => {
 
   const queryParams = { slug }
 
-  const project = await client.fetch<PROJECT_BY_SLUG_QUERYResult>(
+  const project = await client.fetch<PROJECT_BY_SLUG_QUERY_RESULT>(
     PROJECT_BY_SLUG_QUERY,
     queryParams,
   )
@@ -96,7 +96,7 @@ export const getProjectsBySeries = async (params: {
 
   const queryParams = { seriesId }
 
-  const projects = await client.fetch<PROJECTS_BY_SERIES_QUERYResult>(
+  const projects = await client.fetch<PROJECTS_BY_SERIES_QUERY_RESULT>(
     PROJECTS_BY_SERIES_QUERY,
     queryParams,
   )
@@ -111,7 +111,7 @@ export const getFeaturedProjects = async (params?: {
 
   const queryParams = { featured }
 
-  const projects = await client.fetch<PROJECTS_BY_FEATURED_QUERYResult>(
+  const projects = await client.fetch<PROJECTS_BY_FEATURED_QUERY_RESULT>(
     PROJECTS_BY_FEATURED_QUERY,
     queryParams,
   )
@@ -121,7 +121,7 @@ export const getFeaturedProjects = async (params?: {
 /** Gets all project series. */
 export const getAllProjectSeries = async () => {
   const series =
-    await client.fetch<PROJECT_SERIES_QUERYResult>(PROJECT_SERIES_QUERY)
+    await client.fetch<PROJECT_SERIES_QUERY_RESULT>(PROJECT_SERIES_QUERY)
   return series
 }
 
@@ -136,7 +136,7 @@ export const getProjectSeriesById = async (params: {
 
   const queryParams = { id }
 
-  const series = await client.fetch<PROJECT_SERIES_BY_ID_QUERYResult>(
+  const series = await client.fetch<PROJECT_SERIES_BY_ID_QUERY_RESULT>(
     PROJECT_SERIES_BY_ID_QUERY,
     queryParams,
   )
@@ -145,7 +145,7 @@ export const getProjectSeriesById = async (params: {
 
 /** Gets all project collections. */
 export const getAllProjectCollections = async () => {
-  const collections = await client.fetch<PROJECT_COLLECTIONS_QUERYResult>(
+  const collections = await client.fetch<PROJECT_COLLECTIONS_QUERY_RESULT>(
     PROJECT_COLLECTIONS_QUERY,
   )
   return collections
@@ -160,7 +160,7 @@ export const getProjectCollection = async (params: {
 
   if (!id && !slug) return null
 
-  const collection = await client.fetch<PROJECT_COLLECTION_BY_ID_QUERYResult>(
+  const collection = await client.fetch<PROJECT_COLLECTION_BY_ID_QUERY_RESULT>(
     slug ? PROJECT_COLLECTION_BY_SLUG_QUERY : PROJECT_COLLECTION_BY_ID_QUERY,
     slug ? { slug } : { id },
   )
@@ -169,7 +169,7 @@ export const getProjectCollection = async (params: {
 
 /** Gets profile. */
 export const getProfile = async () => {
-  const profile = await client.fetch<PROFILE_QUERYResult>(PROFILE_QUERY)
+  const profile = await client.fetch<PROFILE_QUERY_RESULT>(PROFILE_QUERY)
   return profile
 }
 
@@ -194,17 +194,17 @@ export const getPage = async <TPage extends PageDocumentType>(page: TPage) => {
   const res =
     await client.fetch<
       TPage extends 'aboutPage'
-        ? ABOUT_PAGE_QUERYResult
+        ? ABOUT_PAGE_QUERY_RESULT
         : TPage extends 'contactPage'
-          ? CONTACT_PAGE_QUERYResult
+          ? CONTACT_PAGE_QUERY_RESULT
           : TPage extends 'homePage'
-            ? HOME_PAGE_QUERYResult
+            ? HOME_PAGE_QUERY_RESULT
             : TPage extends 'productionPage'
-              ? PRODUCTION_PAGE_QUERYResult
+              ? PRODUCTION_PAGE_QUERY_RESULT
               : TPage extends 'writingPage'
-                ? WRITING_PAGE_QUERYResult
+                ? WRITING_PAGE_QUERY_RESULT
                 : TPage extends 'portfolioPage'
-                  ? PORTFOLIO_PAGE_QUERYResult
+                  ? PORTFOLIO_PAGE_QUERY_RESULT
                   : null
     >(query)
   return res

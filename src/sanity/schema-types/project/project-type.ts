@@ -12,7 +12,7 @@ import {
   SanityTextAreaInput,
   SanityTextField,
 } from '@/sanity/components/sanity-text-input'
-import { PROJECT_BY_SLUG_QUERYResult } from '@/sanity/types/generated/types'
+import { PROJECT_BY_SLUG_QUERY_RESULT } from '@/sanity/types/generated/types'
 
 export const projectType = defineType({
   name: 'project',
@@ -102,7 +102,7 @@ export const projectType = defineType({
       type: 'videoGroup',
       group: 'media',
       hidden: (props) => {
-        const values = props?.parent as PROJECT_BY_SLUG_QUERYResult
+        const values = props?.parent as PROJECT_BY_SLUG_QUERY_RESULT
         return values?.projectType === 'writing'
       },
     }),
@@ -126,7 +126,7 @@ export const projectType = defineType({
       group: 'media',
       validation: (rule) => {
         return rule.custom((val, ctx) => {
-          const values = ctx?.parent as PROJECT_BY_SLUG_QUERYResult
+          const values = ctx?.parent as PROJECT_BY_SLUG_QUERY_RESULT
           if (
             values?.projectType === 'production' &&
             (!!values?.mainVideo?.videoUpload?.file ||
@@ -139,7 +139,7 @@ export const projectType = defineType({
         })
       },
       hidden: (props) => {
-        const values = props?.parent as PROJECT_BY_SLUG_QUERYResult
+        const values = props?.parent as PROJECT_BY_SLUG_QUERY_RESULT
         return (
           values?.projectType === 'production' &&
           !values?.mainVideo?.videoUpload?.file &&
@@ -156,7 +156,7 @@ export const projectType = defineType({
       fieldset: 'article',
       validation: (rule) => {
         return rule.custom((val, ctx) => {
-          const values = ctx?.parent as PROJECT_BY_SLUG_QUERYResult
+          const values = ctx?.parent as PROJECT_BY_SLUG_QUERY_RESULT
           if (values?.projectType === 'writing' && !val) {
             return { message: 'Required.' }
           }
@@ -164,7 +164,7 @@ export const projectType = defineType({
         })
       },
       hidden: (props) => {
-        const values = props?.parent as PROJECT_BY_SLUG_QUERYResult
+        const values = props?.parent as PROJECT_BY_SLUG_QUERY_RESULT
         return values?.projectType !== 'writing'
       },
     }),
@@ -177,7 +177,7 @@ export const projectType = defineType({
       fieldset: 'article',
       components: { input: SanityTextAreaInput, field: SanityTextField },
       hidden: (props) => {
-        const values = props?.parent as PROJECT_BY_SLUG_QUERYResult
+        const values = props?.parent as PROJECT_BY_SLUG_QUERY_RESULT
         return values?.projectType !== 'writing'
       },
     }),

@@ -210,48 +210,45 @@ export const GET = async (request: Request) => {
     )
 
     return new ImageResponse(
-      (
-        <div
-          style={{
-            // backgroundImage:
-            //   'linear-gradient(to bottom right, #c98a92, #874b57)',
-            backgroundImage:
-              'linear-gradient(to bottom right, #d7c4b9, #c98a92)',
-          }}
-          tw='flex items-end h-full w-full'
-        >
-          {/* Profile photo */}
-          {profile?.photo ? (
-            <div
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                justifyItems: 'center',
-              }}
-            >
-              <img
-                alt={profile?.photo?.alt}
-                src={profile?.photo?.url}
-                width={(profile?.photo?.dimensions?.width || 0) * 0.75}
-                height={(profile?.photo?.dimensions?.height || 0) * 0.75}
-                style={{
-                  objectFit: 'contain',
-                }}
-              />
-            </div>
-          ) : null}
+      <div
+        style={{
+          // backgroundImage:
+          //   'linear-gradient(to bottom right, #c98a92, #874b57)',
+          backgroundImage: 'linear-gradient(to bottom right, #d7c4b9, #c98a92)',
+        }}
+        tw='flex items-end h-full w-full'
+      >
+        {/* Profile photo */}
+        {profile?.photo ? (
           <div
             style={{
-              backgroundImage:
-                'linear-gradient(to bottom right, #c98a92, #874b57)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              justifyItems: 'center',
             }}
-            tw='flex items-center justify-center flex-auto h-full'
           >
-            {base}
+            <img
+              alt={profile?.photo?.alt}
+              src={profile?.photo?.url}
+              width={(profile?.photo?.dimensions?.width || 0) * 0.75}
+              height={(profile?.photo?.dimensions?.height || 0) * 0.75}
+              style={{
+                objectFit: 'contain',
+              }}
+            />
           </div>
+        ) : null}
+        <div
+          style={{
+            backgroundImage:
+              'linear-gradient(to bottom right, #c98a92, #874b57)',
+          }}
+          tw='flex items-center justify-center flex-auto h-full'
+        >
+          {base}
         </div>
-      ),
+      </div>,
       {
         width: 1200,
         height: 630,

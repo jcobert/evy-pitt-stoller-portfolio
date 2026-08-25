@@ -8,9 +8,7 @@ type Props = {
 
 const ProjectsToolbar: FC<Props> = () => {
   //
-  return <div>
-    
-  </div>
+  return <div></div>
 }
 
 export default ProjectsToolbar

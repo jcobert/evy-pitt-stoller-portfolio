@@ -15,38 +15,28 @@ import '@sanity/client'
  * ---------------------------------------------------------------------------------
  */
 
-// Source: schema.json
-export type SanityImagePaletteSwatch = {
-  _type: 'sanity.imagePaletteSwatch'
-  background?: string
-  foreground?: string
-  population?: number
-  title?: string
+export declare const internalGroqTypeReferenceTo: unique symbol
+
+// Source: src/sanity/extract.json
+export type ProjectReference = {
+  _ref: string
+  _type: 'reference'
+  _weak?: boolean
+  [internalGroqTypeReferenceTo]?: 'project'
 }
 
-export type SanityImagePalette = {
-  _type: 'sanity.imagePalette'
-  darkMuted?: SanityImagePaletteSwatch
-  lightVibrant?: SanityImagePaletteSwatch
-  darkVibrant?: SanityImagePaletteSwatch
-  vibrant?: SanityImagePaletteSwatch
-  dominant?: SanityImagePaletteSwatch
-  lightMuted?: SanityImagePaletteSwatch
-  muted?: SanityImagePaletteSwatch
+export type ProjectSeriesReference = {
+  _ref: string
+  _type: 'reference'
+  _weak?: boolean
+  [internalGroqTypeReferenceTo]?: 'projectSeries'
 }
 
-export type SanityImageDimensions = {
-  _type: 'sanity.imageDimensions'
-  height?: number
-  width?: number
-  aspectRatio?: number
-}
-
-export type Geopoint = {
-  _type: 'geopoint'
-  lat?: number
-  lng?: number
-  alt?: number
+export type SanityImageAssetReference = {
+  _ref: string
+  _type: 'reference'
+  _weak?: boolean
+  [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
 }
 
 export type ProjectCollection = {
@@ -58,73 +48,85 @@ export type ProjectCollection = {
   title?: string
   sections?: Array<{
     title?: string
-    projects?: Array<{
-      _ref: string
-      _type: 'reference'
-      _weak?: boolean
-      _key: string
-      [internalGroqTypeReferenceTo]?: 'project'
-    }>
-    series?: Array<{
-      _ref: string
-      _type: 'reference'
-      _weak?: boolean
-      _key: string
-      [internalGroqTypeReferenceTo]?: 'projectSeries'
-    }>
+    projects?: Array<
+      {
+        _key: string
+      } & ProjectReference
+    >
+    series?: Array<
+      {
+        _key: string
+      } & ProjectSeriesReference
+    >
     _key: string
   }>
   slug?: Slug
   mainImage?: {
-    asset?: {
-      _ref: string
-      _type: 'reference'
-      _weak?: boolean
-      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
-    }
+    asset?: SanityImageAssetReference
     media?: unknown
     hotspot?: SanityImageHotspot
     crop?: SanityImageCrop
-    alt?: string
+    alt?: ImageAltText
     _type: 'image'
   }
-  description?: Array<
-    | {
-        children?: Array<{
-          marks?: Array<string>
-          text?: string
-          _type: 'span'
-          _key: string
-        }>
-        style?: 'normal' | 'h2' | 'h3' | 'h4' | 'blockquote'
-        listItem?: 'bullet' | 'number'
-        markDefs?: Array<{
-          url?: string
-          _type: 'link'
-          _key: string
-        }>
-        level?: number
-        _type: 'block'
+  description?: BlockContent
+}
+
+export type BlockContent = Array<
+  | {
+      children?: Array<{
+        marks?: Array<string>
+        text?: string
+        _type: 'span'
         _key: string
-      }
-    | {
-        asset?: {
-          _ref: string
-          _type: 'reference'
-          _weak?: boolean
-          [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
-        }
-        media?: unknown
-        hotspot?: SanityImageHotspot
-        crop?: SanityImageCrop
-        alt?: string
-        _type: 'image'
+      }>
+      style?: 'normal' | 'h2' | 'h3' | 'h4' | 'blockquote'
+      listItem?: 'bullet' | 'number'
+      markDefs?: Array<{
+        url?: string
+        _type: 'link'
         _key: string
-      }
-    | ({
-        _key: string
-      } & Video)
-  >
+      }>
+      level?: number
+      _type: 'block'
+      _key: string
+    }
+  | {
+      asset?: SanityImageAssetReference
+      media?: unknown
+      hotspot?: SanityImageHotspot
+      crop?: SanityImageCrop
+      alt?: ImageAltText
+      _type: 'image'
+      _key: string
+    }
+  | ({
+      _key: string
+    } & Video)
+>
+
+export type ImageAltText = string
+
+export type SanityImageCrop = {
+  _type: 'sanity.imageCrop'
+  top?: number
+  bottom?: number
+  left?: number
+  right?: number
+}
+
+export type SanityImageHotspot = {
+  _type: 'sanity.imageHotspot'
+  x?: number
+  y?: number
+  height?: number
+  width?: number
+}
+
+export type Slug = {
+  _type: 'slug'
+  current?: string
+  source?: string
 }
 
 export type ProjectRole = {
@@ -134,6 +136,13 @@ export type ProjectRole = {
   _updatedAt: string
   _rev: string
   name?: string
+}
+
+export type ProjectRoleReference = {
+  _ref: string
+  _type: 'reference'
+  _weak?: boolean
+  [internalGroqTypeReferenceTo]?: 'projectRole'
 }
 
 export type Project = {
@@ -149,72 +158,29 @@ export type Project = {
   featured?: boolean
   mainVideo?: VideoGroup
   mainImage?: {
-    asset?: {
-      _ref: string
-      _type: 'reference'
-      _weak?: boolean
-      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
-    }
+    asset?: SanityImageAssetReference
     media?: unknown
     hotspot?: SanityImageHotspot
     crop?: SanityImageCrop
-    alt?: string
+    alt?: ImageAltText
     _type: 'image'
   }
   articleLink?: string
   articlePreview?: string
-  description?: Array<
-    | {
-        children?: Array<{
-          marks?: Array<string>
-          text?: string
-          _type: 'span'
-          _key: string
-        }>
-        style?: 'normal' | 'h2' | 'h3' | 'h4' | 'blockquote'
-        listItem?: 'bullet' | 'number'
-        markDefs?: Array<{
-          url?: string
-          _type: 'link'
-          _key: string
-        }>
-        level?: number
-        _type: 'block'
-        _key: string
-      }
-    | {
-        asset?: {
-          _ref: string
-          _type: 'reference'
-          _weak?: boolean
-          [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
-        }
-        media?: unknown
-        hotspot?: SanityImageHotspot
-        crop?: SanityImageCrop
-        alt?: string
-        _type: 'image'
-        _key: string
-      }
-    | ({
-        _key: string
-      } & Video)
+  description?: BlockContent
+  roles?: Array<
+    {
+      _key: string
+    } & ProjectRoleReference
   >
-  roles?: Array<{
-    _ref: string
-    _type: 'reference'
-    _weak?: boolean
-    _key: string
-    [internalGroqTypeReferenceTo]?: 'projectRole'
-  }>
-  series?: {
-    _ref: string
-    _type: 'reference'
-    _weak?: boolean
-    [internalGroqTypeReferenceTo]?: 'projectSeries'
-  }
+  series?: ProjectSeriesReference
   tags?: Array<string>
   seo?: Seo
+}
+
+export type Seo = {
+  _type: 'seo'
+  description?: string
 }
 
 export type ProjectSeries = {
@@ -225,61 +191,22 @@ export type ProjectSeries = {
   _rev: string
   title?: string
   mainImage?: {
-    asset?: {
-      _ref: string
-      _type: 'reference'
-      _weak?: boolean
-      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
-    }
+    asset?: SanityImageAssetReference
     media?: unknown
     hotspot?: SanityImageHotspot
     crop?: SanityImageCrop
-    alt?: string
+    alt?: ImageAltText
     _type: 'image'
   }
-  description?: Array<
-    | {
-        children?: Array<{
-          marks?: Array<string>
-          text?: string
-          _type: 'span'
-          _key: string
-        }>
-        style?: 'normal' | 'h2' | 'h3' | 'h4' | 'blockquote'
-        listItem?: 'bullet' | 'number'
-        markDefs?: Array<{
-          url?: string
-          _type: 'link'
-          _key: string
-        }>
-        level?: number
-        _type: 'block'
-        _key: string
-      }
-    | {
-        asset?: {
-          _ref: string
-          _type: 'reference'
-          _weak?: boolean
-          [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
-        }
-        media?: unknown
-        hotspot?: SanityImageHotspot
-        crop?: SanityImageCrop
-        alt?: string
-        _type: 'image'
-        _key: string
-      }
-    | ({
-        _key: string
-      } & Video)
-  >
+  description?: BlockContent
 }
 
-export type Slug = {
-  _type: 'slug'
-  current?: string
-  source?: string
+export type VideoGroup = {
+  _type: 'videoGroup'
+  youtube?: YoutubeVideo
+  vimeo?: VimeoVideo
+  otherLink?: string
+  videoUpload?: Video
 }
 
 export type WritingPage = {
@@ -290,6 +217,12 @@ export type WritingPage = {
   _rev: string
   heading?: PageHeading
   seo?: Seo
+}
+
+export type PageHeading = {
+  _type: 'pageHeading'
+  mainHeading?: string
+  subheading?: string
 }
 
 export type ProductionPage = {
@@ -354,64 +287,18 @@ export type Profile = {
   titles?: Array<string>
   locations?: Array<string>
   photo?: {
-    asset?: {
-      _ref: string
-      _type: 'reference'
-      _weak?: boolean
-      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
-    }
+    asset?: SanityImageAssetReference
     media?: unknown
     hotspot?: SanityImageHotspot
     crop?: SanityImageCrop
     _type: 'image'
   }
   contactInfo?: ContactInfo
-  bio?: Array<
-    | {
-        children?: Array<{
-          marks?: Array<string>
-          text?: string
-          _type: 'span'
-          _key: string
-        }>
-        style?: 'normal' | 'h2' | 'h3' | 'h4' | 'blockquote'
-        listItem?: 'bullet' | 'number'
-        markDefs?: Array<{
-          url?: string
-          _type: 'link'
-          _key: string
-        }>
-        level?: number
-        _type: 'block'
-        _key: string
-      }
-    | {
-        asset?: {
-          _ref: string
-          _type: 'reference'
-          _weak?: boolean
-          [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
-        }
-        media?: unknown
-        hotspot?: SanityImageHotspot
-        crop?: SanityImageCrop
-        alt?: string
-        _type: 'image'
-        _key: string
-      }
-    | ({
-        _key: string
-      } & Video)
-  >
+  bio?: BlockContent
   companies?: Array<{
     name?: string
     logo?: {
-      asset?: {
-        _ref: string
-        _type: 'reference'
-        _weak?: boolean
-        [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
-      }
+      asset?: SanityImageAssetReference
       media?: unknown
       hotspot?: SanityImageHotspot
       crop?: SanityImageCrop
@@ -419,16 +306,6 @@ export type Profile = {
     }
     _key: string
   }>
-}
-
-export type SocialLinks = {
-  _type: 'socialLinks'
-  linkedIn?: string
-  twitter?: string
-  facebook?: string
-  instagram?: string
-  tiktok?: string
-  pinterest?: string
 }
 
 export type ContactInfo = {
@@ -443,81 +320,89 @@ export type ContactInfo = {
   pinterest?: string
 }
 
-export type Seo = {
-  _type: 'seo'
-  description?: string
+export type SocialLinks = {
+  _type: 'socialLinks'
+  linkedIn?: string
+  twitter?: string
+  facebook?: string
+  instagram?: string
+  tiktok?: string
+  pinterest?: string
 }
 
-export type PageHeading = {
-  _type: 'pageHeading'
-  mainHeading?: string
-  subheading?: string
+export type VimeoVideo = {
+  _type: 'vimeoVideo'
+  id?: string
+  url?: string
+  title?: string
+  thumbnailUrl?: string
 }
 
-export type VideoGroup = {
-  _type: 'videoGroup'
-  youtube?: YoutubeVideo
-  vimeo?: Vimeo
-  otherLink?: string
-  videoUpload?: Video
+export type SanityFileAssetReference = {
+  _ref: string
+  _type: 'reference'
+  _weak?: boolean
+  [internalGroqTypeReferenceTo]?: 'sanity.fileAsset'
 }
 
 export type Video = {
   _type: 'video'
   file?: {
-    asset?: {
-      _ref: string
-      _type: 'reference'
-      _weak?: boolean
-      [internalGroqTypeReferenceTo]?: 'sanity.fileAsset'
-    }
+    asset?: SanityFileAssetReference
     media?: unknown
     _type: 'file'
   }
-  alt?: string
+  alt?: VideoAltText
+}
+
+export type YoutubeVideo = {
+  _type: 'youtubeVideo'
+  id?: string
+  title?: string
+  description?: string
+  publishedAt?: string
+  thumbnails?: Array<string>
 }
 
 export type VideoAltText = string
 
-export type ImageAltText = string
+export type SanityImagePaletteSwatch = {
+  _type: 'sanity.imagePaletteSwatch'
+  background?: string
+  foreground?: string
+  population?: number
+  title?: string
+}
 
-export type BlockContent = Array<
-  | {
-      children?: Array<{
-        marks?: Array<string>
-        text?: string
-        _type: 'span'
-        _key: string
-      }>
-      style?: 'normal' | 'h2' | 'h3' | 'h4' | 'blockquote'
-      listItem?: 'bullet' | 'number'
-      markDefs?: Array<{
-        url?: string
-        _type: 'link'
-        _key: string
-      }>
-      level?: number
-      _type: 'block'
-      _key: string
-    }
-  | {
-      asset?: {
-        _ref: string
-        _type: 'reference'
-        _weak?: boolean
-        [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
-      }
-      media?: unknown
-      hotspot?: SanityImageHotspot
-      crop?: SanityImageCrop
-      alt?: ImageAltText
-      _type: 'image'
-      _key: string
-    }
-  | ({
-      _key: string
-    } & Video)
->
+export type SanityImagePalette = {
+  _type: 'sanity.imagePalette'
+  darkMuted?: SanityImagePaletteSwatch
+  lightVibrant?: SanityImagePaletteSwatch
+  darkVibrant?: SanityImagePaletteSwatch
+  vibrant?: SanityImagePaletteSwatch
+  dominant?: SanityImagePaletteSwatch
+  lightMuted?: SanityImagePaletteSwatch
+  muted?: SanityImagePaletteSwatch
+}
+
+export type SanityImageDimensions = {
+  _type: 'sanity.imageDimensions'
+  height?: number
+  width?: number
+  aspectRatio?: number
+}
+
+export type SanityImageMetadata = {
+  _type: 'sanity.imageMetadata'
+  location?: Geopoint
+  dimensions?: SanityImageDimensions
+  palette?: SanityImagePalette
+  lqip?: string
+  blurHash?: string
+  thumbHash?: string
+  hasAlpha?: boolean
+  isOpaque?: boolean
+}
 
 export type SanityFileAsset = {
   _id: string
@@ -541,20 +426,11 @@ export type SanityFileAsset = {
   source?: SanityAssetSourceData
 }
 
-export type SanityImageCrop = {
-  _type: 'sanity.imageCrop'
-  top?: number
-  bottom?: number
-  left?: number
-  right?: number
-}
-
-export type SanityImageHotspot = {
-  _type: 'sanity.imageHotspot'
-  x?: number
-  y?: number
-  height?: number
-  width?: number
+export type SanityAssetSourceData = {
+  _type: 'sanity.assetSourceData'
+  name?: string
+  id?: string
+  url?: string
 }
 
 export type SanityImageAsset = {
@@ -580,82 +456,64 @@ export type SanityImageAsset = {
   source?: SanityAssetSourceData
 }
 
-export type SanityAssetSourceData = {
-  _type: 'sanity.assetSourceData'
-  name?: string
-  id?: string
-  url?: string
-}
-
-export type SanityImageMetadata = {
-  _type: 'sanity.imageMetadata'
-  location?: Geopoint
-  dimensions?: SanityImageDimensions
-  palette?: SanityImagePalette
-  lqip?: string
-  blurHash?: string
-  hasAlpha?: boolean
-  isOpaque?: boolean
-}
-
-export type Vimeo = {
-  _type: 'vimeo'
-  vimeoData?: {
-    id?: string
-  }
-}
-
-export type YoutubeVideo = {
-  _type: 'youtubeVideo'
-  id?: string
-  title?: string
-  description?: string
-  publishedAt?: string
-  thumbnails?: Array<string>
+export type Geopoint = {
+  _type: 'geopoint'
+  lat?: number
+  lng?: number
+  alt?: number
 }
 
 export type AllSanitySchemaTypes =
-  | SanityImagePaletteSwatch
-  | SanityImagePalette
-  | SanityImageDimensions
-  | Geopoint
+  | ProjectReference
+  | ProjectSeriesReference
+  | SanityImageAssetReference
   | ProjectCollection
-  | ProjectRole
-  | Project
-  | ProjectSeries
+  | BlockContent
+  | ImageAltText
+  | SanityImageCrop
+  | SanityImageHotspot
   | Slug
+  | ProjectRole
+  | ProjectRoleReference
+  | Project
+  | Seo
+  | ProjectSeries
+  | VideoGroup
   | WritingPage
+  | PageHeading
   | ProductionPage
   | PortfolioPage
   | ContactPage
   | HomePage
   | AboutPage
   | Profile
-  | SocialLinks
   | ContactInfo
-  | Seo
-  | PageHeading
-  | VideoGroup
+  | SocialLinks
+  | VimeoVideo
+  | SanityFileAssetReference
   | Video
-  | VideoAltText
-  | ImageAltText
-  | BlockContent
-  | SanityFileAsset
-  | SanityImageCrop
-  | SanityImageHotspot
-  | SanityImageAsset
-  | SanityAssetSourceData
-  | SanityImageMetadata
-  | Vimeo
   | YoutubeVideo
-export declare const internalGroqTypeReferenceTo: unique symbol
-// Source: ./src/sanity/lib/queries/fragments.ts
+  | VideoAltText
+  | SanityImagePaletteSwatch
+  | SanityImagePalette
+  | SanityImageDimensions
+  | SanityImageMetadata
+  | SanityFileAsset
+  | SanityAssetSourceData
+  | SanityImageAsset
+  | Geopoint
+
+// Source: src/sanity/lib/queries/fragments.ts
 // Variable: image
 // Query: { ..., asset-> }
 export type ImageResult = never
+
+// Source: src/sanity/lib/queries/fragments.ts
 // Variable: file
 // Query: { ..., file{ ..., asset-> } }
 export type FileResult = never
+
+// Source: src/sanity/lib/queries/fragments.ts
 // Variable: videoGroup
 // Query: { "youtube": coalesce(youtube, ''), "vimeo": coalesce(vimeo, ''), videoUpload{ ..., file{ ..., asset-> } } }
 export type VideoGroupResult = {
@@ -664,11 +522,11 @@ export type VideoGroupResult = {
   videoUpload: never
 }
 
-// Source: ./src/sanity/lib/queries/page-query.ts
+// Source: src/sanity/lib/queries/page-query.ts
 // Variable: HOME_PAGE_QUERY
 // Query: *[_type=='homePage' && _id=="homePage"]{ ... }[0]
-export type HOME_PAGE_QUERYResult = {
-  _id: string
+export type HOME_PAGE_QUERY_RESULT = {
+  _id: 'homePage'
   _type: 'homePage'
   _createdAt: string
   _updatedAt: string
@@ -676,10 +534,12 @@ export type HOME_PAGE_QUERYResult = {
   welcomeBlurb?: string
   seo?: Seo
 } | null
+
+// Source: src/sanity/lib/queries/page-query.ts
 // Variable: ABOUT_PAGE_QUERY
 // Query: *[_type=='aboutPage' && _id=="aboutPage"]{ ... }[0]
-export type ABOUT_PAGE_QUERYResult = {
-  _id: string
+export type ABOUT_PAGE_QUERY_RESULT = {
+  _id: 'aboutPage'
   _type: 'aboutPage'
   _createdAt: string
   _updatedAt: string
@@ -687,10 +547,12 @@ export type ABOUT_PAGE_QUERYResult = {
   heading?: PageHeading
   seo?: Seo
 } | null
+
+// Source: src/sanity/lib/queries/page-query.ts
 // Variable: CONTACT_PAGE_QUERY
 // Query: *[_type=='contactPage' && _id=="contactPage"]{ ... }[0]
-export type CONTACT_PAGE_QUERYResult = {
-  _id: string
+export type CONTACT_PAGE_QUERY_RESULT = {
+  _id: 'contactPage'
   _type: 'contactPage'
   _createdAt: string
   _updatedAt: string
@@ -698,10 +560,12 @@ export type CONTACT_PAGE_QUERYResult = {
   heading?: PageHeading
   seo?: Seo
 } | null
+
+// Source: src/sanity/lib/queries/page-query.ts
 // Variable: PORTFOLIO_PAGE_QUERY
 // Query: *[_type=='portfolioPage' && _id=="portfolioPage"]{ ... }[0]
-export type PORTFOLIO_PAGE_QUERYResult = {
-  _id: string
+export type PORTFOLIO_PAGE_QUERY_RESULT = {
+  _id: 'portfolioPage'
   _type: 'portfolioPage'
   _createdAt: string
   _updatedAt: string
@@ -709,10 +573,12 @@ export type PORTFOLIO_PAGE_QUERYResult = {
   heading?: PageHeading
   seo?: Seo
 } | null
+
+// Source: src/sanity/lib/queries/page-query.ts
 // Variable: PRODUCTION_PAGE_QUERY
 // Query: *[_type=='productionPage' && _id=="productionPage"]{ ... }[0]
-export type PRODUCTION_PAGE_QUERYResult = {
-  _id: string
+export type PRODUCTION_PAGE_QUERY_RESULT = {
+  _id: 'productionPage'
   _type: 'productionPage'
   _createdAt: string
   _updatedAt: string
@@ -720,10 +586,12 @@ export type PRODUCTION_PAGE_QUERYResult = {
   heading?: PageHeading
   seo?: Seo
 } | null
+
+// Source: src/sanity/lib/queries/page-query.ts
 // Variable: WRITING_PAGE_QUERY
 // Query: *[_type=='writingPage' && _id=="writingPage"]{ ... }[0]
-export type WRITING_PAGE_QUERYResult = {
-  _id: string
+export type WRITING_PAGE_QUERY_RESULT = {
+  _id: 'writingPage'
   _type: 'writingPage'
   _createdAt: string
   _updatedAt: string
@@ -732,11 +600,11 @@ export type WRITING_PAGE_QUERYResult = {
   seo?: Seo
 } | null
 
-// Source: ./src/sanity/lib/queries/profile-query.ts
+// Source: src/sanity/lib/queries/profile-query.ts
 // Variable: PROFILE_QUERY
 // Query: *[_type=='profile' && _id=="profile"]{ ..., photo{ ..., asset-> }, companies[]{ ..., logo{ ..., asset-> } } }[0]
-export type PROFILE_QUERYResult = {
-  _id: string
+export type PROFILE_QUERY_RESULT = {
+  _id: 'profile'
   _type: 'profile'
   _createdAt: string
   _updatedAt: string
@@ -775,43 +643,7 @@ export type PROFILE_QUERYResult = {
     _type: 'image'
   } | null
   contactInfo?: ContactInfo
-  bio?: Array<
-    | ({
-        _key: string
-      } & Video)
-    | {
-        children?: Array<{
-          marks?: Array<string>
-          text?: string
-          _type: 'span'
-          _key: string
-        }>
-        style?: 'blockquote' | 'h2' | 'h3' | 'h4' | 'normal'
-        listItem?: 'bullet' | 'number'
-        markDefs?: Array<{
-          url?: string
-          _type: 'link'
-          _key: string
-        }>
-        level?: number
-        _type: 'block'
-        _key: string
-      }
-    | {
-        asset?: {
-          _ref: string
-          _type: 'reference'
-          _weak?: boolean
-          [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
-        }
-        media?: unknown
-        hotspot?: SanityImageHotspot
-        crop?: SanityImageCrop
-        alt?: string
-        _type: 'image'
-        _key: string
-      }
-  >
+  bio?: BlockContent
   companies: Array<{
     name?: string
     logo: {
@@ -846,10 +678,10 @@ export type PROFILE_QUERYResult = {
   }> | null
 } | null
 
-// Source: ./src/sanity/lib/queries/project-collection-query.ts
+// Source: src/sanity/lib/queries/project-collection-query.ts
 // Variable: PROJECT_COLLECTIONS_QUERY
 // Query: *[_type=='projectCollection']{ ..., slug, mainImage{ ..., asset-> }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } }, sections[]{ ..., projects[]->{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ ..., videoUpload{ ..., file{ ..., asset-> } } }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } }, series->{ ..., mainImage{ ..., asset-> }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } } }, roles[]->, category-> }, series[]->{ ..., mainImage{ ..., asset-> }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } }, "projects": *[_type == "project" && series._ref == ^._id]{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ ..., videoUpload{ ..., file{ ..., asset-> } } }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } }, roles[]->, category-> } } } }
-export type PROJECT_COLLECTIONS_QUERYResult = Array<{
+export type PROJECT_COLLECTIONS_QUERY_RESULT = Array<{
   _id: string
   _type: 'projectCollection'
   _createdAt: string
@@ -872,7 +704,7 @@ export type PROJECT_COLLECTIONS_QUERYResult = Array<{
       mainVideo: {
         _type: 'videoGroup'
         youtube?: YoutubeVideo
-        vimeo?: Vimeo
+        vimeo?: VimeoVideo
         otherLink?: string
         videoUpload: {
           _type: 'video'
@@ -901,7 +733,7 @@ export type PROJECT_COLLECTIONS_QUERYResult = Array<{
             media?: unknown
             _type: 'file'
           } | null
-          alt?: string
+          alt?: VideoAltText
         } | null
       } | null
       mainImage: {
@@ -930,7 +762,7 @@ export type PROJECT_COLLECTIONS_QUERYResult = Array<{
         media?: unknown
         hotspot?: SanityImageHotspot
         crop?: SanityImageCrop
-        alt?: string
+        alt?: ImageAltText
         _type: 'image'
       } | null
       articleLink?: string
@@ -955,16 +787,11 @@ export type PROJECT_COLLECTIONS_QUERYResult = Array<{
             _key: string
           }
         | {
-            asset?: {
-              _ref: string
-              _type: 'reference'
-              _weak?: boolean
-              [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
-            }
+            asset?: SanityImageAssetReference
             media?: unknown
             hotspot?: SanityImageHotspot
             crop?: SanityImageCrop
-            alt?: string
+            alt?: ImageAltText
             _type: 'image'
             _key: string
           }
@@ -972,16 +799,11 @@ export type PROJECT_COLLECTIONS_QUERYResult = Array<{
             _key: string
             _type: 'video'
             file?: {
-              asset?: {
-                _ref: string
-                _type: 'reference'
-                _weak?: boolean
-                [internalGroqTypeReferenceTo]?: 'sanity.fileAsset'
-              }
+              asset?: SanityFileAssetReference
               media?: unknown
               _type: 'file'
             }
-            alt?: string
+            alt?: VideoAltText
           }
       > | null
       roles: Array<{
@@ -1025,7 +847,7 @@ export type PROJECT_COLLECTIONS_QUERYResult = Array<{
           media?: unknown
           hotspot?: SanityImageHotspot
           crop?: SanityImageCrop
-          alt?: string
+          alt?: ImageAltText
           _type: 'image'
         } | null
         description: Array<
@@ -1048,16 +870,11 @@ export type PROJECT_COLLECTIONS_QUERYResult = Array<{
               _key: string
             }
           | {
-              asset?: {
-                _ref: string
-                _type: 'reference'
-                _weak?: boolean
-                [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
-              }
+              asset?: SanityImageAssetReference
               media?: unknown
               hotspot?: SanityImageHotspot
               crop?: SanityImageCrop
-              alt?: string
+              alt?: ImageAltText
               _type: 'image'
               _key: string
             }
@@ -1065,16 +882,11 @@ export type PROJECT_COLLECTIONS_QUERYResult = Array<{
               _key: string
               _type: 'video'
               file?: {
-                asset?: {
-                  _ref: string
-                  _type: 'reference'
-                  _weak?: boolean
-                  [internalGroqTypeReferenceTo]?: 'sanity.fileAsset'
-                }
+                asset?: SanityFileAssetReference
                 media?: unknown
                 _type: 'file'
               }
-              alt?: string
+              alt?: VideoAltText
             }
         > | null
       } | null
@@ -1115,7 +927,7 @@ export type PROJECT_COLLECTIONS_QUERYResult = Array<{
         media?: unknown
         hotspot?: SanityImageHotspot
         crop?: SanityImageCrop
-        alt?: string
+        alt?: ImageAltText
         _type: 'image'
       } | null
       description: Array<
@@ -1138,16 +950,11 @@ export type PROJECT_COLLECTIONS_QUERYResult = Array<{
             _key: string
           }
         | {
-            asset?: {
-              _ref: string
-              _type: 'reference'
-              _weak?: boolean
-              [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
-            }
+            asset?: SanityImageAssetReference
             media?: unknown
             hotspot?: SanityImageHotspot
             crop?: SanityImageCrop
-            alt?: string
+            alt?: ImageAltText
             _type: 'image'
             _key: string
           }
@@ -1155,16 +962,11 @@ export type PROJECT_COLLECTIONS_QUERYResult = Array<{
             _key: string
             _type: 'video'
             file?: {
-              asset?: {
-                _ref: string
-                _type: 'reference'
-                _weak?: boolean
-                [internalGroqTypeReferenceTo]?: 'sanity.fileAsset'
-              }
+              asset?: SanityFileAssetReference
               media?: unknown
               _type: 'file'
             }
-            alt?: string
+            alt?: VideoAltText
           }
       > | null
       projects: Array<{
@@ -1181,7 +983,7 @@ export type PROJECT_COLLECTIONS_QUERYResult = Array<{
         mainVideo: {
           _type: 'videoGroup'
           youtube?: YoutubeVideo
-          vimeo?: Vimeo
+          vimeo?: VimeoVideo
           otherLink?: string
           videoUpload: {
             _type: 'video'
@@ -1210,7 +1012,7 @@ export type PROJECT_COLLECTIONS_QUERYResult = Array<{
               media?: unknown
               _type: 'file'
             } | null
-            alt?: string
+            alt?: VideoAltText
           } | null
         } | null
         mainImage: {
@@ -1239,7 +1041,7 @@ export type PROJECT_COLLECTIONS_QUERYResult = Array<{
           media?: unknown
           hotspot?: SanityImageHotspot
           crop?: SanityImageCrop
-          alt?: string
+          alt?: ImageAltText
           _type: 'image'
         } | null
         articleLink?: string
@@ -1264,16 +1066,11 @@ export type PROJECT_COLLECTIONS_QUERYResult = Array<{
               _key: string
             }
           | {
-              asset?: {
-                _ref: string
-                _type: 'reference'
-                _weak?: boolean
-                [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
-              }
+              asset?: SanityImageAssetReference
               media?: unknown
               hotspot?: SanityImageHotspot
               crop?: SanityImageCrop
-              alt?: string
+              alt?: ImageAltText
               _type: 'image'
               _key: string
             }
@@ -1281,16 +1078,11 @@ export type PROJECT_COLLECTIONS_QUERYResult = Array<{
               _key: string
               _type: 'video'
               file?: {
-                asset?: {
-                  _ref: string
-                  _type: 'reference'
-                  _weak?: boolean
-                  [internalGroqTypeReferenceTo]?: 'sanity.fileAsset'
-                }
+                asset?: SanityFileAssetReference
                 media?: unknown
                 _type: 'file'
               }
-              alt?: string
+              alt?: VideoAltText
             }
         > | null
         roles: Array<{
@@ -1301,12 +1093,7 @@ export type PROJECT_COLLECTIONS_QUERYResult = Array<{
           _rev: string
           name?: string
         }> | null
-        series?: {
-          _ref: string
-          _type: 'reference'
-          _weak?: boolean
-          [internalGroqTypeReferenceTo]?: 'projectSeries'
-        }
+        series?: ProjectSeriesReference
         tags: Array<string> | Array<never>
         seo?: Seo
         category: null
@@ -1341,7 +1128,7 @@ export type PROJECT_COLLECTIONS_QUERYResult = Array<{
     media?: unknown
     hotspot?: SanityImageHotspot
     crop?: SanityImageCrop
-    alt?: string
+    alt?: ImageAltText
     _type: 'image'
   } | null
   description: Array<
@@ -1364,16 +1151,11 @@ export type PROJECT_COLLECTIONS_QUERYResult = Array<{
         _key: string
       }
     | {
-        asset?: {
-          _ref: string
-          _type: 'reference'
-          _weak?: boolean
-          [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
-        }
+        asset?: SanityImageAssetReference
         media?: unknown
         hotspot?: SanityImageHotspot
         crop?: SanityImageCrop
-        alt?: string
+        alt?: ImageAltText
         _type: 'image'
         _key: string
       }
@@ -1381,22 +1163,19 @@ export type PROJECT_COLLECTIONS_QUERYResult = Array<{
         _key: string
         _type: 'video'
         file?: {
-          asset?: {
-            _ref: string
-            _type: 'reference'
-            _weak?: boolean
-            [internalGroqTypeReferenceTo]?: 'sanity.fileAsset'
-          }
+          asset?: SanityFileAssetReference
           media?: unknown
           _type: 'file'
         }
-        alt?: string
+        alt?: VideoAltText
       }
   > | null
 }>
+
+// Source: src/sanity/lib/queries/project-collection-query.ts
 // Variable: PROJECT_COLLECTION_BY_ID_QUERY
 // Query: *[_type=='projectCollection' && _id==$id]{ ..., mainImage{ ..., asset-> }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } }, sections[]{ ..., projects[]->{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ ..., videoUpload{ ..., file{ ..., asset-> } } }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } }, series->{ ..., mainImage{ ..., asset-> }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } } }, roles[]->, category-> }, series[]->{ ..., mainImage{ ..., asset-> }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } }, "projects": *[_type == "project" && series._ref == ^._id]{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ ..., videoUpload{ ..., file{ ..., asset-> } } }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } }, roles[]->, category-> } } } }[0]
-export type PROJECT_COLLECTION_BY_ID_QUERYResult = {
+export type PROJECT_COLLECTION_BY_ID_QUERY_RESULT = {
   _id: string
   _type: 'projectCollection'
   _createdAt: string
@@ -1419,7 +1198,7 @@ export type PROJECT_COLLECTION_BY_ID_QUERYResult = {
       mainVideo: {
         _type: 'videoGroup'
         youtube?: YoutubeVideo
-        vimeo?: Vimeo
+        vimeo?: VimeoVideo
         otherLink?: string
         videoUpload: {
           _type: 'video'
@@ -1448,7 +1227,7 @@ export type PROJECT_COLLECTION_BY_ID_QUERYResult = {
             media?: unknown
             _type: 'file'
           } | null
-          alt?: string
+          alt?: VideoAltText
         } | null
       } | null
       mainImage: {
@@ -1477,7 +1256,7 @@ export type PROJECT_COLLECTION_BY_ID_QUERYResult = {
         media?: unknown
         hotspot?: SanityImageHotspot
         crop?: SanityImageCrop
-        alt?: string
+        alt?: ImageAltText
         _type: 'image'
       } | null
       articleLink?: string
@@ -1502,16 +1281,11 @@ export type PROJECT_COLLECTION_BY_ID_QUERYResult = {
             _key: string
           }
         | {
-            asset?: {
-              _ref: string
-              _type: 'reference'
-              _weak?: boolean
-              [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
-            }
+            asset?: SanityImageAssetReference
             media?: unknown
             hotspot?: SanityImageHotspot
             crop?: SanityImageCrop
-            alt?: string
+            alt?: ImageAltText
             _type: 'image'
             _key: string
           }
@@ -1519,16 +1293,11 @@ export type PROJECT_COLLECTION_BY_ID_QUERYResult = {
             _key: string
             _type: 'video'
             file?: {
-              asset?: {
-                _ref: string
-                _type: 'reference'
-                _weak?: boolean
-                [internalGroqTypeReferenceTo]?: 'sanity.fileAsset'
-              }
+              asset?: SanityFileAssetReference
               media?: unknown
               _type: 'file'
             }
-            alt?: string
+            alt?: VideoAltText
           }
       > | null
       roles: Array<{
@@ -1572,7 +1341,7 @@ export type PROJECT_COLLECTION_BY_ID_QUERYResult = {
           media?: unknown
           hotspot?: SanityImageHotspot
           crop?: SanityImageCrop
-          alt?: string
+          alt?: ImageAltText
           _type: 'image'
         } | null
         description: Array<
@@ -1595,16 +1364,11 @@ export type PROJECT_COLLECTION_BY_ID_QUERYResult = {
               _key: string
             }
           | {
-              asset?: {
-                _ref: string
-                _type: 'reference'
-                _weak?: boolean
-                [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
-              }
+              asset?: SanityImageAssetReference
               media?: unknown
               hotspot?: SanityImageHotspot
               crop?: SanityImageCrop
-              alt?: string
+              alt?: ImageAltText
               _type: 'image'
               _key: string
             }
@@ -1612,16 +1376,11 @@ export type PROJECT_COLLECTION_BY_ID_QUERYResult = {
               _key: string
               _type: 'video'
               file?: {
-                asset?: {
-                  _ref: string
-                  _type: 'reference'
-                  _weak?: boolean
-                  [internalGroqTypeReferenceTo]?: 'sanity.fileAsset'
-                }
+                asset?: SanityFileAssetReference
                 media?: unknown
                 _type: 'file'
               }
-              alt?: string
+              alt?: VideoAltText
             }
         > | null
       } | null
@@ -1662,7 +1421,7 @@ export type PROJECT_COLLECTION_BY_ID_QUERYResult = {
         media?: unknown
         hotspot?: SanityImageHotspot
         crop?: SanityImageCrop
-        alt?: string
+        alt?: ImageAltText
         _type: 'image'
       } | null
       description: Array<
@@ -1685,16 +1444,11 @@ export type PROJECT_COLLECTION_BY_ID_QUERYResult = {
             _key: string
           }
         | {
-            asset?: {
-              _ref: string
-              _type: 'reference'
-              _weak?: boolean
-              [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
-            }
+            asset?: SanityImageAssetReference
             media?: unknown
             hotspot?: SanityImageHotspot
             crop?: SanityImageCrop
-            alt?: string
+            alt?: ImageAltText
             _type: 'image'
             _key: string
           }
@@ -1702,16 +1456,11 @@ export type PROJECT_COLLECTION_BY_ID_QUERYResult = {
             _key: string
             _type: 'video'
             file?: {
-              asset?: {
-                _ref: string
-                _type: 'reference'
-                _weak?: boolean
-                [internalGroqTypeReferenceTo]?: 'sanity.fileAsset'
-              }
+              asset?: SanityFileAssetReference
               media?: unknown
               _type: 'file'
             }
-            alt?: string
+            alt?: VideoAltText
           }
       > | null
       projects: Array<{
@@ -1728,7 +1477,7 @@ export type PROJECT_COLLECTION_BY_ID_QUERYResult = {
         mainVideo: {
           _type: 'videoGroup'
           youtube?: YoutubeVideo
-          vimeo?: Vimeo
+          vimeo?: VimeoVideo
           otherLink?: string
           videoUpload: {
             _type: 'video'
@@ -1757,7 +1506,7 @@ export type PROJECT_COLLECTION_BY_ID_QUERYResult = {
               media?: unknown
               _type: 'file'
             } | null
-            alt?: string
+            alt?: VideoAltText
           } | null
         } | null
         mainImage: {
@@ -1786,7 +1535,7 @@ export type PROJECT_COLLECTION_BY_ID_QUERYResult = {
           media?: unknown
           hotspot?: SanityImageHotspot
           crop?: SanityImageCrop
-          alt?: string
+          alt?: ImageAltText
           _type: 'image'
         } | null
         articleLink?: string
@@ -1811,16 +1560,11 @@ export type PROJECT_COLLECTION_BY_ID_QUERYResult = {
               _key: string
             }
           | {
-              asset?: {
-                _ref: string
-                _type: 'reference'
-                _weak?: boolean
-                [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
-              }
+              asset?: SanityImageAssetReference
               media?: unknown
               hotspot?: SanityImageHotspot
               crop?: SanityImageCrop
-              alt?: string
+              alt?: ImageAltText
               _type: 'image'
               _key: string
             }
@@ -1828,16 +1572,11 @@ export type PROJECT_COLLECTION_BY_ID_QUERYResult = {
               _key: string
               _type: 'video'
               file?: {
-                asset?: {
-                  _ref: string
-                  _type: 'reference'
-                  _weak?: boolean
-                  [internalGroqTypeReferenceTo]?: 'sanity.fileAsset'
-                }
+                asset?: SanityFileAssetReference
                 media?: unknown
                 _type: 'file'
               }
-              alt?: string
+              alt?: VideoAltText
             }
         > | null
         roles: Array<{
@@ -1848,12 +1587,7 @@ export type PROJECT_COLLECTION_BY_ID_QUERYResult = {
           _rev: string
           name?: string
         }> | null
-        series?: {
-          _ref: string
-          _type: 'reference'
-          _weak?: boolean
-          [internalGroqTypeReferenceTo]?: 'projectSeries'
-        }
+        series?: ProjectSeriesReference
         tags: Array<string> | Array<never>
         seo?: Seo
         category: null
@@ -1888,7 +1622,7 @@ export type PROJECT_COLLECTION_BY_ID_QUERYResult = {
     media?: unknown
     hotspot?: SanityImageHotspot
     crop?: SanityImageCrop
-    alt?: string
+    alt?: ImageAltText
     _type: 'image'
   } | null
   description: Array<
@@ -1911,16 +1645,11 @@ export type PROJECT_COLLECTION_BY_ID_QUERYResult = {
         _key: string
       }
     | {
-        asset?: {
-          _ref: string
-          _type: 'reference'
-          _weak?: boolean
-          [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
-        }
+        asset?: SanityImageAssetReference
         media?: unknown
         hotspot?: SanityImageHotspot
         crop?: SanityImageCrop
-        alt?: string
+        alt?: ImageAltText
         _type: 'image'
         _key: string
       }
@@ -1928,22 +1657,19 @@ export type PROJECT_COLLECTION_BY_ID_QUERYResult = {
         _key: string
         _type: 'video'
         file?: {
-          asset?: {
-            _ref: string
-            _type: 'reference'
-            _weak?: boolean
-            [internalGroqTypeReferenceTo]?: 'sanity.fileAsset'
-          }
+          asset?: SanityFileAssetReference
           media?: unknown
           _type: 'file'
         }
-        alt?: string
+        alt?: VideoAltText
       }
   > | null
 } | null
+
+// Source: src/sanity/lib/queries/project-collection-query.ts
 // Variable: PROJECT_COLLECTION_BY_SLUG_QUERY
 // Query: *[_type=='projectCollection' && slug.current==$slug]{ ..., mainImage{ ..., asset-> }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } }, sections[]{ ..., projects[]->{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ ..., videoUpload{ ..., file{ ..., asset-> } } }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } }, series->{ ..., mainImage{ ..., asset-> }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } } }, roles[]->, category-> }, series[]->{ ..., mainImage{ ..., asset-> }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } }, "projects": *[_type == "project" && series._ref == ^._id]{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ ..., videoUpload{ ..., file{ ..., asset-> } } }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } }, roles[]->, category-> } } } }[0]
-export type PROJECT_COLLECTION_BY_SLUG_QUERYResult = {
+export type PROJECT_COLLECTION_BY_SLUG_QUERY_RESULT = {
   _id: string
   _type: 'projectCollection'
   _createdAt: string
@@ -1966,7 +1692,7 @@ export type PROJECT_COLLECTION_BY_SLUG_QUERYResult = {
       mainVideo: {
         _type: 'videoGroup'
         youtube?: YoutubeVideo
-        vimeo?: Vimeo
+        vimeo?: VimeoVideo
         otherLink?: string
         videoUpload: {
           _type: 'video'
@@ -1995,7 +1721,7 @@ export type PROJECT_COLLECTION_BY_SLUG_QUERYResult = {
             media?: unknown
             _type: 'file'
           } | null
-          alt?: string
+          alt?: VideoAltText
         } | null
       } | null
       mainImage: {
@@ -2024,7 +1750,7 @@ export type PROJECT_COLLECTION_BY_SLUG_QUERYResult = {
         media?: unknown
         hotspot?: SanityImageHotspot
         crop?: SanityImageCrop
-        alt?: string
+        alt?: ImageAltText
         _type: 'image'
       } | null
       articleLink?: string
@@ -2049,16 +1775,11 @@ export type PROJECT_COLLECTION_BY_SLUG_QUERYResult = {
             _key: string
           }
         | {
-            asset?: {
-              _ref: string
-              _type: 'reference'
-              _weak?: boolean
-              [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
-            }
+            asset?: SanityImageAssetReference
             media?: unknown
             hotspot?: SanityImageHotspot
             crop?: SanityImageCrop
-            alt?: string
+            alt?: ImageAltText
             _type: 'image'
             _key: string
           }
@@ -2066,16 +1787,11 @@ export type PROJECT_COLLECTION_BY_SLUG_QUERYResult = {
             _key: string
             _type: 'video'
             file?: {
-              asset?: {
-                _ref: string
-                _type: 'reference'
-                _weak?: boolean
-                [internalGroqTypeReferenceTo]?: 'sanity.fileAsset'
-              }
+              asset?: SanityFileAssetReference
               media?: unknown
               _type: 'file'
             }
-            alt?: string
+            alt?: VideoAltText
           }
       > | null
       roles: Array<{
@@ -2119,7 +1835,7 @@ export type PROJECT_COLLECTION_BY_SLUG_QUERYResult = {
           media?: unknown
           hotspot?: SanityImageHotspot
           crop?: SanityImageCrop
-          alt?: string
+          alt?: ImageAltText
           _type: 'image'
         } | null
         description: Array<
@@ -2142,16 +1858,11 @@ export type PROJECT_COLLECTION_BY_SLUG_QUERYResult = {
               _key: string
             }
           | {
-              asset?: {
-                _ref: string
-                _type: 'reference'
-                _weak?: boolean
-                [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
-              }
+              asset?: SanityImageAssetReference
               media?: unknown
               hotspot?: SanityImageHotspot
               crop?: SanityImageCrop
-              alt?: string
+              alt?: ImageAltText
               _type: 'image'
               _key: string
             }
@@ -2159,16 +1870,11 @@ export type PROJECT_COLLECTION_BY_SLUG_QUERYResult = {
               _key: string
               _type: 'video'
               file?: {
-                asset?: {
-                  _ref: string
-                  _type: 'reference'
-                  _weak?: boolean
-                  [internalGroqTypeReferenceTo]?: 'sanity.fileAsset'
-                }
+                asset?: SanityFileAssetReference
                 media?: unknown
                 _type: 'file'
               }
-              alt?: string
+              alt?: VideoAltText
             }
         > | null
       } | null
@@ -2209,7 +1915,7 @@ export type PROJECT_COLLECTION_BY_SLUG_QUERYResult = {
         media?: unknown
         hotspot?: SanityImageHotspot
         crop?: SanityImageCrop
-        alt?: string
+        alt?: ImageAltText
         _type: 'image'
       } | null
       description: Array<
@@ -2232,16 +1938,11 @@ export type PROJECT_COLLECTION_BY_SLUG_QUERYResult = {
             _key: string
           }
         | {
-            asset?: {
-              _ref: string
-              _type: 'reference'
-              _weak?: boolean
-              [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
-            }
+            asset?: SanityImageAssetReference
             media?: unknown
             hotspot?: SanityImageHotspot
             crop?: SanityImageCrop
-            alt?: string
+            alt?: ImageAltText
             _type: 'image'
             _key: string
           }
@@ -2249,16 +1950,11 @@ export type PROJECT_COLLECTION_BY_SLUG_QUERYResult = {
             _key: string
             _type: 'video'
             file?: {
-              asset?: {
-                _ref: string
-                _type: 'reference'
-                _weak?: boolean
-                [internalGroqTypeReferenceTo]?: 'sanity.fileAsset'
-              }
+              asset?: SanityFileAssetReference
               media?: unknown
               _type: 'file'
             }
-            alt?: string
+            alt?: VideoAltText
           }
       > | null
       projects: Array<{
@@ -2275,7 +1971,7 @@ export type PROJECT_COLLECTION_BY_SLUG_QUERYResult = {
         mainVideo: {
           _type: 'videoGroup'
           youtube?: YoutubeVideo
-          vimeo?: Vimeo
+          vimeo?: VimeoVideo
           otherLink?: string
           videoUpload: {
             _type: 'video'
@@ -2304,7 +2000,7 @@ export type PROJECT_COLLECTION_BY_SLUG_QUERYResult = {
               media?: unknown
               _type: 'file'
             } | null
-            alt?: string
+            alt?: VideoAltText
           } | null
         } | null
         mainImage: {
@@ -2333,7 +2029,7 @@ export type PROJECT_COLLECTION_BY_SLUG_QUERYResult = {
           media?: unknown
           hotspot?: SanityImageHotspot
           crop?: SanityImageCrop
-          alt?: string
+          alt?: ImageAltText
           _type: 'image'
         } | null
         articleLink?: string
@@ -2358,16 +2054,11 @@ export type PROJECT_COLLECTION_BY_SLUG_QUERYResult = {
               _key: string
             }
           | {
-              asset?: {
-                _ref: string
-                _type: 'reference'
-                _weak?: boolean
-                [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
-              }
+              asset?: SanityImageAssetReference
               media?: unknown
               hotspot?: SanityImageHotspot
               crop?: SanityImageCrop
-              alt?: string
+              alt?: ImageAltText
               _type: 'image'
               _key: string
             }
@@ -2375,16 +2066,11 @@ export type PROJECT_COLLECTION_BY_SLUG_QUERYResult = {
               _key: string
               _type: 'video'
               file?: {
-                asset?: {
-                  _ref: string
-                  _type: 'reference'
-                  _weak?: boolean
-                  [internalGroqTypeReferenceTo]?: 'sanity.fileAsset'
-                }
+                asset?: SanityFileAssetReference
                 media?: unknown
                 _type: 'file'
               }
-              alt?: string
+              alt?: VideoAltText
             }
         > | null
         roles: Array<{
@@ -2395,12 +2081,7 @@ export type PROJECT_COLLECTION_BY_SLUG_QUERYResult = {
           _rev: string
           name?: string
         }> | null
-        series?: {
-          _ref: string
-          _type: 'reference'
-          _weak?: boolean
-          [internalGroqTypeReferenceTo]?: 'projectSeries'
-        }
+        series?: ProjectSeriesReference
         tags: Array<string> | Array<never>
         seo?: Seo
         category: null
@@ -2435,7 +2116,7 @@ export type PROJECT_COLLECTION_BY_SLUG_QUERYResult = {
     media?: unknown
     hotspot?: SanityImageHotspot
     crop?: SanityImageCrop
-    alt?: string
+    alt?: ImageAltText
     _type: 'image'
   } | null
   description: Array<
@@ -2458,16 +2139,11 @@ export type PROJECT_COLLECTION_BY_SLUG_QUERYResult = {
         _key: string
       }
     | {
-        asset?: {
-          _ref: string
-          _type: 'reference'
-          _weak?: boolean
-          [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
-        }
+        asset?: SanityImageAssetReference
         media?: unknown
         hotspot?: SanityImageHotspot
         crop?: SanityImageCrop
-        alt?: string
+        alt?: ImageAltText
         _type: 'image'
         _key: string
       }
@@ -2475,24 +2151,19 @@ export type PROJECT_COLLECTION_BY_SLUG_QUERYResult = {
         _key: string
         _type: 'video'
         file?: {
-          asset?: {
-            _ref: string
-            _type: 'reference'
-            _weak?: boolean
-            [internalGroqTypeReferenceTo]?: 'sanity.fileAsset'
-          }
+          asset?: SanityFileAssetReference
           media?: unknown
           _type: 'file'
         }
-        alt?: string
+        alt?: VideoAltText
       }
   > | null
 } | null
 
-// Source: ./src/sanity/lib/queries/project-series-query.ts
+// Source: src/sanity/lib/queries/project-series-query.ts
 // Variable: PROJECT_SERIES_QUERY
 // Query: *[_type=='projectSeries']{ ..., mainImage{ ..., asset-> }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } } }
-export type PROJECT_SERIES_QUERYResult = Array<{
+export type PROJECT_SERIES_QUERY_RESULT = Array<{
   _id: string
   _type: 'projectSeries'
   _createdAt: string
@@ -2525,7 +2196,7 @@ export type PROJECT_SERIES_QUERYResult = Array<{
     media?: unknown
     hotspot?: SanityImageHotspot
     crop?: SanityImageCrop
-    alt?: string
+    alt?: ImageAltText
     _type: 'image'
   } | null
   description: Array<
@@ -2548,16 +2219,11 @@ export type PROJECT_SERIES_QUERYResult = Array<{
         _key: string
       }
     | {
-        asset?: {
-          _ref: string
-          _type: 'reference'
-          _weak?: boolean
-          [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
-        }
+        asset?: SanityImageAssetReference
         media?: unknown
         hotspot?: SanityImageHotspot
         crop?: SanityImageCrop
-        alt?: string
+        alt?: ImageAltText
         _type: 'image'
         _key: string
       }
@@ -2565,22 +2231,19 @@ export type PROJECT_SERIES_QUERYResult = Array<{
         _key: string
         _type: 'video'
         file?: {
-          asset?: {
-            _ref: string
-            _type: 'reference'
-            _weak?: boolean
-            [internalGroqTypeReferenceTo]?: 'sanity.fileAsset'
-          }
+          asset?: SanityFileAssetReference
           media?: unknown
           _type: 'file'
         }
-        alt?: string
+        alt?: VideoAltText
       }
   > | null
 }>
+
+// Source: src/sanity/lib/queries/project-series-query.ts
 // Variable: PROJECT_SERIES_BY_ID_QUERY
 // Query: *[_type=='projectSeries' && _id==$id]{ ..., mainImage{ ..., asset-> }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } } }[0]
-export type PROJECT_SERIES_BY_ID_QUERYResult = {
+export type PROJECT_SERIES_BY_ID_QUERY_RESULT = {
   _id: string
   _type: 'projectSeries'
   _createdAt: string
@@ -2613,7 +2276,7 @@ export type PROJECT_SERIES_BY_ID_QUERYResult = {
     media?: unknown
     hotspot?: SanityImageHotspot
     crop?: SanityImageCrop
-    alt?: string
+    alt?: ImageAltText
     _type: 'image'
   } | null
   description: Array<
@@ -2636,16 +2299,11 @@ export type PROJECT_SERIES_BY_ID_QUERYResult = {
         _key: string
       }
     | {
-        asset?: {
-          _ref: string
-          _type: 'reference'
-          _weak?: boolean
-          [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
-        }
+        asset?: SanityImageAssetReference
         media?: unknown
         hotspot?: SanityImageHotspot
         crop?: SanityImageCrop
-        alt?: string
+        alt?: ImageAltText
         _type: 'image'
         _key: string
       }
@@ -2653,38 +2311,33 @@ export type PROJECT_SERIES_BY_ID_QUERYResult = {
         _key: string
         _type: 'video'
         file?: {
-          asset?: {
-            _ref: string
-            _type: 'reference'
-            _weak?: boolean
-            [internalGroqTypeReferenceTo]?: 'sanity.fileAsset'
-          }
+          asset?: SanityFileAssetReference
           media?: unknown
           _type: 'file'
         }
-        alt?: string
+        alt?: VideoAltText
       }
   > | null
 } | null
 
-// Source: ./src/sanity/lib/queries/projects-query.ts
+// Source: src/sanity/lib/queries/projects-query.ts
 // Variable: PROJECTS_QUERY
 // Query: *[_type=='project' && defined(slug)]{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ ..., videoUpload{ ..., file{ ..., asset-> } } }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } }, series->{ ..., mainImage{ ..., asset-> }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } } }, roles[]->, category-> }
-export type PROJECTS_QUERYResult = Array<{
+export type PROJECTS_QUERY_RESULT = Array<{
   _id: string
   _type: 'project'
   _createdAt: string
   _updatedAt: string
   _rev: string
   title?: string
-  slug?: Slug
+  slug: Slug
   datePublished?: string
   projectType?: 'production' | 'writing'
   featured?: boolean
   mainVideo: {
     _type: 'videoGroup'
     youtube?: YoutubeVideo
-    vimeo?: Vimeo
+    vimeo?: VimeoVideo
     otherLink?: string
     videoUpload: {
       _type: 'video'
@@ -2713,7 +2366,7 @@ export type PROJECTS_QUERYResult = Array<{
         media?: unknown
         _type: 'file'
       } | null
-      alt?: string
+      alt?: VideoAltText
     } | null
   } | null
   mainImage: {
@@ -2742,7 +2395,7 @@ export type PROJECTS_QUERYResult = Array<{
     media?: unknown
     hotspot?: SanityImageHotspot
     crop?: SanityImageCrop
-    alt?: string
+    alt?: ImageAltText
     _type: 'image'
   } | null
   articleLink?: string
@@ -2767,16 +2420,11 @@ export type PROJECTS_QUERYResult = Array<{
         _key: string
       }
     | {
-        asset?: {
-          _ref: string
-          _type: 'reference'
-          _weak?: boolean
-          [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
-        }
+        asset?: SanityImageAssetReference
         media?: unknown
         hotspot?: SanityImageHotspot
         crop?: SanityImageCrop
-        alt?: string
+        alt?: ImageAltText
         _type: 'image'
         _key: string
       }
@@ -2784,16 +2432,11 @@ export type PROJECTS_QUERYResult = Array<{
         _key: string
         _type: 'video'
         file?: {
-          asset?: {
-            _ref: string
-            _type: 'reference'
-            _weak?: boolean
-            [internalGroqTypeReferenceTo]?: 'sanity.fileAsset'
-          }
+          asset?: SanityFileAssetReference
           media?: unknown
           _type: 'file'
         }
-        alt?: string
+        alt?: VideoAltText
       }
   > | null
   roles: Array<{
@@ -2837,7 +2480,7 @@ export type PROJECTS_QUERYResult = Array<{
       media?: unknown
       hotspot?: SanityImageHotspot
       crop?: SanityImageCrop
-      alt?: string
+      alt?: ImageAltText
       _type: 'image'
     } | null
     description: Array<
@@ -2860,16 +2503,11 @@ export type PROJECTS_QUERYResult = Array<{
           _key: string
         }
       | {
-          asset?: {
-            _ref: string
-            _type: 'reference'
-            _weak?: boolean
-            [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
-          }
+          asset?: SanityImageAssetReference
           media?: unknown
           hotspot?: SanityImageHotspot
           crop?: SanityImageCrop
-          alt?: string
+          alt?: ImageAltText
           _type: 'image'
           _key: string
         }
@@ -2877,16 +2515,11 @@ export type PROJECTS_QUERYResult = Array<{
           _key: string
           _type: 'video'
           file?: {
-            asset?: {
-              _ref: string
-              _type: 'reference'
-              _weak?: boolean
-              [internalGroqTypeReferenceTo]?: 'sanity.fileAsset'
-            }
+            asset?: SanityFileAssetReference
             media?: unknown
             _type: 'file'
           }
-          alt?: string
+          alt?: VideoAltText
         }
     > | null
   } | null
@@ -2894,9 +2527,11 @@ export type PROJECTS_QUERYResult = Array<{
   seo?: Seo
   category: null
 }>
+
+// Source: src/sanity/lib/queries/projects-query.ts
 // Variable: PROJECTS_BY_TYPE_QUERY
 // Query: *[_type=='project' && projectType==$projectType && defined(slug)]{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ ..., videoUpload{ ..., file{ ..., asset-> } } }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } }, series->{ ..., mainImage{ ..., asset-> }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } } }, roles[]->, category-> }
-export type PROJECTS_BY_TYPE_QUERYResult = Array<{
+export type PROJECTS_BY_TYPE_QUERY_RESULT = Array<{
   _id: string
   _type: 'project'
   _createdAt: string
@@ -2910,7 +2545,7 @@ export type PROJECTS_BY_TYPE_QUERYResult = Array<{
   mainVideo: {
     _type: 'videoGroup'
     youtube?: YoutubeVideo
-    vimeo?: Vimeo
+    vimeo?: VimeoVideo
     otherLink?: string
     videoUpload: {
       _type: 'video'
@@ -2939,7 +2574,7 @@ export type PROJECTS_BY_TYPE_QUERYResult = Array<{
         media?: unknown
         _type: 'file'
       } | null
-      alt?: string
+      alt?: VideoAltText
     } | null
   } | null
   mainImage: {
@@ -2968,7 +2603,7 @@ export type PROJECTS_BY_TYPE_QUERYResult = Array<{
     media?: unknown
     hotspot?: SanityImageHotspot
     crop?: SanityImageCrop
-    alt?: string
+    alt?: ImageAltText
     _type: 'image'
   } | null
   articleLink?: string
@@ -2993,16 +2628,11 @@ export type PROJECTS_BY_TYPE_QUERYResult = Array<{
         _key: string
       }
     | {
-        asset?: {
-          _ref: string
-          _type: 'reference'
-          _weak?: boolean
-          [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
-        }
+        asset?: SanityImageAssetReference
         media?: unknown
         hotspot?: SanityImageHotspot
         crop?: SanityImageCrop
-        alt?: string
+        alt?: ImageAltText
         _type: 'image'
         _key: string
       }
@@ -3010,16 +2640,11 @@ export type PROJECTS_BY_TYPE_QUERYResult = Array<{
         _key: string
         _type: 'video'
         file?: {
-          asset?: {
-            _ref: string
-            _type: 'reference'
-            _weak?: boolean
-            [internalGroqTypeReferenceTo]?: 'sanity.fileAsset'
-          }
+          asset?: SanityFileAssetReference
           media?: unknown
           _type: 'file'
         }
-        alt?: string
+        alt?: VideoAltText
       }
   > | null
   roles: Array<{
@@ -3063,7 +2688,7 @@ export type PROJECTS_BY_TYPE_QUERYResult = Array<{
       media?: unknown
       hotspot?: SanityImageHotspot
       crop?: SanityImageCrop
-      alt?: string
+      alt?: ImageAltText
       _type: 'image'
     } | null
     description: Array<
@@ -3086,16 +2711,11 @@ export type PROJECTS_BY_TYPE_QUERYResult = Array<{
           _key: string
         }
       | {
-          asset?: {
-            _ref: string
-            _type: 'reference'
-            _weak?: boolean
-            [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
-          }
+          asset?: SanityImageAssetReference
           media?: unknown
           hotspot?: SanityImageHotspot
           crop?: SanityImageCrop
-          alt?: string
+          alt?: ImageAltText
           _type: 'image'
           _key: string
         }
@@ -3103,16 +2723,11 @@ export type PROJECTS_BY_TYPE_QUERYResult = Array<{
           _key: string
           _type: 'video'
           file?: {
-            asset?: {
-              _ref: string
-              _type: 'reference'
-              _weak?: boolean
-              [internalGroqTypeReferenceTo]?: 'sanity.fileAsset'
-            }
+            asset?: SanityFileAssetReference
             media?: unknown
             _type: 'file'
           }
-          alt?: string
+          alt?: VideoAltText
         }
     > | null
   } | null
@@ -3120,9 +2735,11 @@ export type PROJECTS_BY_TYPE_QUERYResult = Array<{
   seo?: Seo
   category: null
 }>
+
+// Source: src/sanity/lib/queries/projects-query.ts
 // Variable: PROJECTS_BY_SERIES_QUERY
 // Query: *[_type=='project' && series._ref==$seriesId]{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ ..., videoUpload{ ..., file{ ..., asset-> } } }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } }, series->{ ..., mainImage{ ..., asset-> }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } } }, roles[]->, category-> }
-export type PROJECTS_BY_SERIES_QUERYResult = Array<{
+export type PROJECTS_BY_SERIES_QUERY_RESULT = Array<{
   _id: string
   _type: 'project'
   _createdAt: string
@@ -3136,7 +2753,7 @@ export type PROJECTS_BY_SERIES_QUERYResult = Array<{
   mainVideo: {
     _type: 'videoGroup'
     youtube?: YoutubeVideo
-    vimeo?: Vimeo
+    vimeo?: VimeoVideo
     otherLink?: string
     videoUpload: {
       _type: 'video'
@@ -3165,7 +2782,7 @@ export type PROJECTS_BY_SERIES_QUERYResult = Array<{
         media?: unknown
         _type: 'file'
       } | null
-      alt?: string
+      alt?: VideoAltText
     } | null
   } | null
   mainImage: {
@@ -3194,7 +2811,7 @@ export type PROJECTS_BY_SERIES_QUERYResult = Array<{
     media?: unknown
     hotspot?: SanityImageHotspot
     crop?: SanityImageCrop
-    alt?: string
+    alt?: ImageAltText
     _type: 'image'
   } | null
   articleLink?: string
@@ -3219,16 +2836,11 @@ export type PROJECTS_BY_SERIES_QUERYResult = Array<{
         _key: string
       }
     | {
-        asset?: {
-          _ref: string
-          _type: 'reference'
-          _weak?: boolean
-          [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
-        }
+        asset?: SanityImageAssetReference
         media?: unknown
         hotspot?: SanityImageHotspot
         crop?: SanityImageCrop
-        alt?: string
+        alt?: ImageAltText
         _type: 'image'
         _key: string
       }
@@ -3236,16 +2848,11 @@ export type PROJECTS_BY_SERIES_QUERYResult = Array<{
         _key: string
         _type: 'video'
         file?: {
-          asset?: {
-            _ref: string
-            _type: 'reference'
-            _weak?: boolean
-            [internalGroqTypeReferenceTo]?: 'sanity.fileAsset'
-          }
+          asset?: SanityFileAssetReference
           media?: unknown
           _type: 'file'
         }
-        alt?: string
+        alt?: VideoAltText
       }
   > | null
   roles: Array<{
@@ -3289,7 +2896,7 @@ export type PROJECTS_BY_SERIES_QUERYResult = Array<{
       media?: unknown
       hotspot?: SanityImageHotspot
       crop?: SanityImageCrop
-      alt?: string
+      alt?: ImageAltText
       _type: 'image'
     } | null
     description: Array<
@@ -3312,16 +2919,11 @@ export type PROJECTS_BY_SERIES_QUERYResult = Array<{
           _key: string
         }
       | {
-          asset?: {
-            _ref: string
-            _type: 'reference'
-            _weak?: boolean
-            [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
-          }
+          asset?: SanityImageAssetReference
           media?: unknown
           hotspot?: SanityImageHotspot
           crop?: SanityImageCrop
-          alt?: string
+          alt?: ImageAltText
           _type: 'image'
           _key: string
         }
@@ -3329,16 +2931,11 @@ export type PROJECTS_BY_SERIES_QUERYResult = Array<{
           _key: string
           _type: 'video'
           file?: {
-            asset?: {
-              _ref: string
-              _type: 'reference'
-              _weak?: boolean
-              [internalGroqTypeReferenceTo]?: 'sanity.fileAsset'
-            }
+            asset?: SanityFileAssetReference
             media?: unknown
             _type: 'file'
           }
-          alt?: string
+          alt?: VideoAltText
         }
     > | null
   } | null
@@ -3346,9 +2943,11 @@ export type PROJECTS_BY_SERIES_QUERYResult = Array<{
   seo?: Seo
   category: null
 }>
+
+// Source: src/sanity/lib/queries/projects-query.ts
 // Variable: PROJECTS_BY_FEATURED_QUERY
 // Query: *[_type=='project' && featured==$featured]{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ ..., videoUpload{ ..., file{ ..., asset-> } } }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } }, series->{ ..., mainImage{ ..., asset-> }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } } }, roles[]->, category-> }
-export type PROJECTS_BY_FEATURED_QUERYResult = Array<{
+export type PROJECTS_BY_FEATURED_QUERY_RESULT = Array<{
   _id: string
   _type: 'project'
   _createdAt: string
@@ -3362,7 +2961,7 @@ export type PROJECTS_BY_FEATURED_QUERYResult = Array<{
   mainVideo: {
     _type: 'videoGroup'
     youtube?: YoutubeVideo
-    vimeo?: Vimeo
+    vimeo?: VimeoVideo
     otherLink?: string
     videoUpload: {
       _type: 'video'
@@ -3391,7 +2990,7 @@ export type PROJECTS_BY_FEATURED_QUERYResult = Array<{
         media?: unknown
         _type: 'file'
       } | null
-      alt?: string
+      alt?: VideoAltText
     } | null
   } | null
   mainImage: {
@@ -3420,7 +3019,7 @@ export type PROJECTS_BY_FEATURED_QUERYResult = Array<{
     media?: unknown
     hotspot?: SanityImageHotspot
     crop?: SanityImageCrop
-    alt?: string
+    alt?: ImageAltText
     _type: 'image'
   } | null
   articleLink?: string
@@ -3445,16 +3044,11 @@ export type PROJECTS_BY_FEATURED_QUERYResult = Array<{
         _key: string
       }
     | {
-        asset?: {
-          _ref: string
-          _type: 'reference'
-          _weak?: boolean
-          [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
-        }
+        asset?: SanityImageAssetReference
         media?: unknown
         hotspot?: SanityImageHotspot
         crop?: SanityImageCrop
-        alt?: string
+        alt?: ImageAltText
         _type: 'image'
         _key: string
       }
@@ -3462,16 +3056,11 @@ export type PROJECTS_BY_FEATURED_QUERYResult = Array<{
         _key: string
         _type: 'video'
         file?: {
-          asset?: {
-            _ref: string
-            _type: 'reference'
-            _weak?: boolean
-            [internalGroqTypeReferenceTo]?: 'sanity.fileAsset'
-          }
+          asset?: SanityFileAssetReference
           media?: unknown
           _type: 'file'
         }
-        alt?: string
+        alt?: VideoAltText
       }
   > | null
   roles: Array<{
@@ -3515,7 +3104,7 @@ export type PROJECTS_BY_FEATURED_QUERYResult = Array<{
       media?: unknown
       hotspot?: SanityImageHotspot
       crop?: SanityImageCrop
-      alt?: string
+      alt?: ImageAltText
       _type: 'image'
     } | null
     description: Array<
@@ -3538,16 +3127,11 @@ export type PROJECTS_BY_FEATURED_QUERYResult = Array<{
           _key: string
         }
       | {
-          asset?: {
-            _ref: string
-            _type: 'reference'
-            _weak?: boolean
-            [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
-          }
+          asset?: SanityImageAssetReference
           media?: unknown
           hotspot?: SanityImageHotspot
           crop?: SanityImageCrop
-          alt?: string
+          alt?: ImageAltText
           _type: 'image'
           _key: string
         }
@@ -3555,16 +3139,11 @@ export type PROJECTS_BY_FEATURED_QUERYResult = Array<{
           _key: string
           _type: 'video'
           file?: {
-            asset?: {
-              _ref: string
-              _type: 'reference'
-              _weak?: boolean
-              [internalGroqTypeReferenceTo]?: 'sanity.fileAsset'
-            }
+            asset?: SanityFileAssetReference
             media?: unknown
             _type: 'file'
           }
-          alt?: string
+          alt?: VideoAltText
         }
     > | null
   } | null
@@ -3572,9 +3151,11 @@ export type PROJECTS_BY_FEATURED_QUERYResult = Array<{
   seo?: Seo
   category: null
 }>
+
+// Source: src/sanity/lib/queries/projects-query.ts
 // Variable: PROJECT_BY_SLUG_QUERY
 // Query: *[_type=='project' && slug.current==$slug]{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ ..., videoUpload{ ..., file{ ..., asset-> } } }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } }, series->{ ..., mainImage{ ..., asset-> }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } } }, roles[]->, "category": *[_type == "projectCollection" && references(^._id)]{ _id, title, "subcategory": *[_type == "projectCollection" && references(^.^._id)][0].sections[]{_key, title, "projects": projects[^.^.^._id == _ref]}[length(projects) > 0][0].title }[0] }[0]
-export type PROJECT_BY_SLUG_QUERYResult = {
+export type PROJECT_BY_SLUG_QUERY_RESULT = {
   _id: string
   _type: 'project'
   _createdAt: string
@@ -3588,7 +3169,7 @@ export type PROJECT_BY_SLUG_QUERYResult = {
   mainVideo: {
     _type: 'videoGroup'
     youtube?: YoutubeVideo
-    vimeo?: Vimeo
+    vimeo?: VimeoVideo
     otherLink?: string
     videoUpload: {
       _type: 'video'
@@ -3617,7 +3198,7 @@ export type PROJECT_BY_SLUG_QUERYResult = {
         media?: unknown
         _type: 'file'
       } | null
-      alt?: string
+      alt?: VideoAltText
     } | null
   } | null
   mainImage: {
@@ -3646,7 +3227,7 @@ export type PROJECT_BY_SLUG_QUERYResult = {
     media?: unknown
     hotspot?: SanityImageHotspot
     crop?: SanityImageCrop
-    alt?: string
+    alt?: ImageAltText
     _type: 'image'
   } | null
   articleLink?: string
@@ -3671,16 +3252,11 @@ export type PROJECT_BY_SLUG_QUERYResult = {
         _key: string
       }
     | {
-        asset?: {
-          _ref: string
-          _type: 'reference'
-          _weak?: boolean
-          [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
-        }
+        asset?: SanityImageAssetReference
         media?: unknown
         hotspot?: SanityImageHotspot
         crop?: SanityImageCrop
-        alt?: string
+        alt?: ImageAltText
         _type: 'image'
         _key: string
       }
@@ -3688,16 +3264,11 @@ export type PROJECT_BY_SLUG_QUERYResult = {
         _key: string
         _type: 'video'
         file?: {
-          asset?: {
-            _ref: string
-            _type: 'reference'
-            _weak?: boolean
-            [internalGroqTypeReferenceTo]?: 'sanity.fileAsset'
-          }
+          asset?: SanityFileAssetReference
           media?: unknown
           _type: 'file'
         }
-        alt?: string
+        alt?: VideoAltText
       }
   > | null
   roles: Array<{
@@ -3741,7 +3312,7 @@ export type PROJECT_BY_SLUG_QUERYResult = {
       media?: unknown
       hotspot?: SanityImageHotspot
       crop?: SanityImageCrop
-      alt?: string
+      alt?: ImageAltText
       _type: 'image'
     } | null
     description: Array<
@@ -3764,16 +3335,11 @@ export type PROJECT_BY_SLUG_QUERYResult = {
           _key: string
         }
       | {
-          asset?: {
-            _ref: string
-            _type: 'reference'
-            _weak?: boolean
-            [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
-          }
+          asset?: SanityImageAssetReference
           media?: unknown
           hotspot?: SanityImageHotspot
           crop?: SanityImageCrop
-          alt?: string
+          alt?: ImageAltText
           _type: 'image'
           _key: string
         }
@@ -3781,16 +3347,11 @@ export type PROJECT_BY_SLUG_QUERYResult = {
           _key: string
           _type: 'video'
           file?: {
-            asset?: {
-              _ref: string
-              _type: 'reference'
-              _weak?: boolean
-              [internalGroqTypeReferenceTo]?: 'sanity.fileAsset'
-            }
+            asset?: SanityFileAssetReference
             media?: unknown
             _type: 'file'
           }
-          alt?: string
+          alt?: VideoAltText
         }
     > | null
   } | null
@@ -3808,22 +3369,22 @@ declare module '@sanity/client' {
     '{ ..., asset-> }': ImageResult
     '{ ..., file{ ..., asset-> } }': FileResult
     '{ "youtube": coalesce(youtube, \'\'), "vimeo": coalesce(vimeo, \'\'), videoUpload{ ..., file{ ..., asset-> } } }': VideoGroupResult
-    '*[_type==\'homePage\' && _id=="homePage"]{ ... }[0]': HOME_PAGE_QUERYResult
-    '*[_type==\'aboutPage\' && _id=="aboutPage"]{ ... }[0]': ABOUT_PAGE_QUERYResult
-    '*[_type==\'contactPage\' && _id=="contactPage"]{ ... }[0]': CONTACT_PAGE_QUERYResult
-    '*[_type==\'portfolioPage\' && _id=="portfolioPage"]{ ... }[0]': PORTFOLIO_PAGE_QUERYResult
-    '*[_type==\'productionPage\' && _id=="productionPage"]{ ... }[0]': PRODUCTION_PAGE_QUERYResult
-    '*[_type==\'writingPage\' && _id=="writingPage"]{ ... }[0]': WRITING_PAGE_QUERYResult
-    '*[_type==\'profile\' && _id=="profile"]{ ..., photo{ ..., asset-> }, companies[]{ ..., logo{ ..., asset-> } } }[0]': PROFILE_QUERYResult
-    '*[_type==\'projectCollection\']{ ..., slug, mainImage{ ..., asset-> }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } }, sections[]{ ..., projects[]->{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ ..., videoUpload{ ..., file{ ..., asset-> } } }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } }, series->{ ..., mainImage{ ..., asset-> }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } } }, roles[]->, category-> }, series[]->{ ..., mainImage{ ..., asset-> }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } }, "projects": *[_type == "project" && series._ref == ^._id]{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ ..., videoUpload{ ..., file{ ..., asset-> } } }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } }, roles[]->, category-> } } } }': PROJECT_COLLECTIONS_QUERYResult
-    '*[_type==\'projectCollection\' && _id==$id]{ ..., mainImage{ ..., asset-> }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } }, sections[]{ ..., projects[]->{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ ..., videoUpload{ ..., file{ ..., asset-> } } }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } }, series->{ ..., mainImage{ ..., asset-> }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } } }, roles[]->, category-> }, series[]->{ ..., mainImage{ ..., asset-> }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } }, "projects": *[_type == "project" && series._ref == ^._id]{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ ..., videoUpload{ ..., file{ ..., asset-> } } }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } }, roles[]->, category-> } } } }[0]': PROJECT_COLLECTION_BY_ID_QUERYResult
-    '*[_type==\'projectCollection\' && slug.current==$slug]{ ..., mainImage{ ..., asset-> }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } }, sections[]{ ..., projects[]->{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ ..., videoUpload{ ..., file{ ..., asset-> } } }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } }, series->{ ..., mainImage{ ..., asset-> }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } } }, roles[]->, category-> }, series[]->{ ..., mainImage{ ..., asset-> }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } }, "projects": *[_type == "project" && series._ref == ^._id]{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ ..., videoUpload{ ..., file{ ..., asset-> } } }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } }, roles[]->, category-> } } } }[0]': PROJECT_COLLECTION_BY_SLUG_QUERYResult
-    '*[_type==\'projectSeries\']{ ..., mainImage{ ..., asset-> }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } } }': PROJECT_SERIES_QUERYResult
-    '*[_type==\'projectSeries\' && _id==$id]{ ..., mainImage{ ..., asset-> }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } } }[0]': PROJECT_SERIES_BY_ID_QUERYResult
-    '*[_type==\'project\' && defined(slug)]{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ ..., videoUpload{ ..., file{ ..., asset-> } } }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } }, series->{ ..., mainImage{ ..., asset-> }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } } }, roles[]->, category-> }': PROJECTS_QUERYResult
-    '*[_type==\'project\' && projectType==$projectType && defined(slug)]{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ ..., videoUpload{ ..., file{ ..., asset-> } } }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } }, series->{ ..., mainImage{ ..., asset-> }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } } }, roles[]->, category-> }': PROJECTS_BY_TYPE_QUERYResult
-    '*[_type==\'project\' && series._ref==$seriesId]{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ ..., videoUpload{ ..., file{ ..., asset-> } } }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } }, series->{ ..., mainImage{ ..., asset-> }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } } }, roles[]->, category-> }': PROJECTS_BY_SERIES_QUERYResult
-    '*[_type==\'project\' && featured==$featured]{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ ..., videoUpload{ ..., file{ ..., asset-> } } }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } }, series->{ ..., mainImage{ ..., asset-> }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } } }, roles[]->, category-> }': PROJECTS_BY_FEATURED_QUERYResult
-    '*[_type==\'project\' && slug.current==$slug]{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ ..., videoUpload{ ..., file{ ..., asset-> } } }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } }, series->{ ..., mainImage{ ..., asset-> }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } } }, roles[]->, "category": *[_type == "projectCollection" && references(^._id)]{ _id, title, "subcategory": *[_type == "projectCollection" && references(^.^._id)][0].sections[]{_key, title, "projects": projects[^.^.^._id == _ref]}[length(projects) > 0][0].title }[0] }[0]': PROJECT_BY_SLUG_QUERYResult
+    '*[_type==\'homePage\' && _id=="homePage"]{ ... }[0]': HOME_PAGE_QUERY_RESULT
+    '*[_type==\'aboutPage\' && _id=="aboutPage"]{ ... }[0]': ABOUT_PAGE_QUERY_RESULT
+    '*[_type==\'contactPage\' && _id=="contactPage"]{ ... }[0]': CONTACT_PAGE_QUERY_RESULT
+    '*[_type==\'portfolioPage\' && _id=="portfolioPage"]{ ... }[0]': PORTFOLIO_PAGE_QUERY_RESULT
+    '*[_type==\'productionPage\' && _id=="productionPage"]{ ... }[0]': PRODUCTION_PAGE_QUERY_RESULT
+    '*[_type==\'writingPage\' && _id=="writingPage"]{ ... }[0]': WRITING_PAGE_QUERY_RESULT
+    '*[_type==\'profile\' && _id=="profile"]{ ..., photo{ ..., asset-> }, companies[]{ ..., logo{ ..., asset-> } } }[0]': PROFILE_QUERY_RESULT
+    '*[_type==\'projectCollection\']{ ..., slug, mainImage{ ..., asset-> }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } }, sections[]{ ..., projects[]->{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ ..., videoUpload{ ..., file{ ..., asset-> } } }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } }, series->{ ..., mainImage{ ..., asset-> }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } } }, roles[]->, category-> }, series[]->{ ..., mainImage{ ..., asset-> }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } }, "projects": *[_type == "project" && series._ref == ^._id]{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ ..., videoUpload{ ..., file{ ..., asset-> } } }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } }, roles[]->, category-> } } } }': PROJECT_COLLECTIONS_QUERY_RESULT
+    '*[_type==\'projectCollection\' && _id==$id]{ ..., mainImage{ ..., asset-> }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } }, sections[]{ ..., projects[]->{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ ..., videoUpload{ ..., file{ ..., asset-> } } }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } }, series->{ ..., mainImage{ ..., asset-> }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } } }, roles[]->, category-> }, series[]->{ ..., mainImage{ ..., asset-> }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } }, "projects": *[_type == "project" && series._ref == ^._id]{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ ..., videoUpload{ ..., file{ ..., asset-> } } }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } }, roles[]->, category-> } } } }[0]': PROJECT_COLLECTION_BY_ID_QUERY_RESULT
+    '*[_type==\'projectCollection\' && slug.current==$slug]{ ..., mainImage{ ..., asset-> }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } }, sections[]{ ..., projects[]->{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ ..., videoUpload{ ..., file{ ..., asset-> } } }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } }, series->{ ..., mainImage{ ..., asset-> }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } } }, roles[]->, category-> }, series[]->{ ..., mainImage{ ..., asset-> }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } }, "projects": *[_type == "project" && series._ref == ^._id]{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ ..., videoUpload{ ..., file{ ..., asset-> } } }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } }, roles[]->, category-> } } } }[0]': PROJECT_COLLECTION_BY_SLUG_QUERY_RESULT
+    '*[_type==\'projectSeries\']{ ..., mainImage{ ..., asset-> }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } } }': PROJECT_SERIES_QUERY_RESULT
+    '*[_type==\'projectSeries\' && _id==$id]{ ..., mainImage{ ..., asset-> }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } } }[0]': PROJECT_SERIES_BY_ID_QUERY_RESULT
+    '*[_type==\'project\' && defined(slug)]{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ ..., videoUpload{ ..., file{ ..., asset-> } } }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } }, series->{ ..., mainImage{ ..., asset-> }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } } }, roles[]->, category-> }': PROJECTS_QUERY_RESULT
+    '*[_type==\'project\' && projectType==$projectType && defined(slug)]{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ ..., videoUpload{ ..., file{ ..., asset-> } } }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } }, series->{ ..., mainImage{ ..., asset-> }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } } }, roles[]->, category-> }': PROJECTS_BY_TYPE_QUERY_RESULT
+    '*[_type==\'project\' && series._ref==$seriesId]{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ ..., videoUpload{ ..., file{ ..., asset-> } } }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } }, series->{ ..., mainImage{ ..., asset-> }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } } }, roles[]->, category-> }': PROJECTS_BY_SERIES_QUERY_RESULT
+    '*[_type==\'project\' && featured==$featured]{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ ..., videoUpload{ ..., file{ ..., asset-> } } }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } }, series->{ ..., mainImage{ ..., asset-> }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } } }, roles[]->, category-> }': PROJECTS_BY_FEATURED_QUERY_RESULT
+    '*[_type==\'project\' && slug.current==$slug]{ ..., "tags": coalesce(tags, []), mainImage{ ..., asset-> }, mainVideo{ ..., videoUpload{ ..., file{ ..., asset-> } } }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } }, series->{ ..., mainImage{ ..., asset-> }, description[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } } }, roles[]->, "category": *[_type == "projectCollection" && references(^._id)]{ _id, title, "subcategory": *[_type == "projectCollection" && references(^.^._id)][0].sections[]{_key, title, "projects": projects[^.^.^._id == _ref]}[length(projects) > 0][0].title }[0] }[0]': PROJECT_BY_SLUG_QUERY_RESULT
   }
 }

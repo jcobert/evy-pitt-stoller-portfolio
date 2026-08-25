@@ -85,17 +85,15 @@ const Page: FC<Props> = async () => {
                   'px-4 sm:px-16__',
                 )}
               >
-                {productions
-                  ?.slice(0, 4)
-                  ?.map((prod) => (
-                    <ProductionCard
-                      key={prod?._id}
-                      production={prod}
-                      className=''
-                      showDescription={false}
-                      showDate={false}
-                    />
-                  ))}
+                {productions?.slice(0, 4)?.map((prod) => (
+                  <ProductionCard
+                    key={prod?._id}
+                    production={prod}
+                    className=''
+                    showDescription={false}
+                    showDate={false}
+                  />
+                ))}
               </div>
 
               <Button asChild className='w-fit' variant='outline'>
@@ -132,11 +130,9 @@ const Page: FC<Props> = async () => {
                   'w-full px-4 lg:px-10__',
                 )}
               >
-                {writing
-                  ?.slice(0, 2)
-                  ?.map((prod) => (
-                    <WritingCard key={prod?._id} writing={prod} className='' />
-                  ))}
+                {writing?.slice(0, 2)?.map((prod) => (
+                  <WritingCard key={prod?._id} writing={prod} className='' />
+                ))}
               </div>
 
               <Button asChild className='w-fit' variant='outline'>

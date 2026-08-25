@@ -11,10 +11,10 @@ import {
   AccordionTrigger,
 } from '@/components/ui/accordion'
 
-import { PROJECT_COLLECTION_BY_SLUG_QUERYResult } from '@/sanity/types/generated/types'
+import { PROJECT_COLLECTION_BY_SLUG_QUERY_RESULT } from '@/sanity/types/generated/types'
 
 type Props = {
-  collection: PROJECT_COLLECTION_BY_SLUG_QUERYResult | undefined
+  collection: PROJECT_COLLECTION_BY_SLUG_QUERY_RESULT | undefined
 }
 
 const CollectionPage: FC<Props> = async ({ collection }) => {

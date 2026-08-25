@@ -9,12 +9,12 @@ import NoResults from '@/components/general/no-results'
 import { Button } from '@/components/ui/button'
 
 import {
-  PROJECTS_BY_TYPE_QUERYResult,
+  PROJECTS_BY_TYPE_QUERY_RESULT,
   PageHeading,
 } from '@/sanity/types/generated/types'
 
 type Props = {
-  productions: PROJECTS_BY_TYPE_QUERYResult
+  productions: PROJECTS_BY_TYPE_QUERY_RESULT
   heading: Omit<PageHeading, '_type'> | undefined
   className?: string
 }

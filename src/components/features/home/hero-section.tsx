@@ -12,15 +12,15 @@ import Separator from '@/components/general/separator'
 
 import {
   HomePage,
-  PROFILE_QUERYResult,
-  PROJECT_COLLECTIONS_QUERYResult,
+  PROFILE_QUERY_RESULT,
+  PROJECT_COLLECTIONS_QUERY_RESULT,
 } from '@/sanity/types/generated/types'
 
 type Props = {
-  profile: PROFILE_QUERYResult | undefined
+  profile: PROFILE_QUERY_RESULT | undefined
   welcomeBlurb: HomePage['welcomeBlurb']
   className?: string
-  collections: PROJECT_COLLECTIONS_QUERYResult | undefined | null
+  collections: PROJECT_COLLECTIONS_QUERY_RESULT | undefined | null
 }
 
 const HereoSection: FC<Props> = ({

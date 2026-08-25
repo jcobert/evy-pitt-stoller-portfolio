@@ -11,13 +11,13 @@ import Separator from '@/components/general/separator'
 import { Button } from '@/components/ui/button'
 
 import {
-  PROJECTS_BY_SERIES_QUERYResult,
-  PROJECT_BY_SLUG_QUERYResult,
+  PROJECTS_BY_SERIES_QUERY_RESULT,
+  PROJECT_BY_SLUG_QUERY_RESULT,
 } from '@/sanity/types/generated/types'
 
 type Props = {
-  writing: PROJECT_BY_SLUG_QUERYResult | undefined
-  seriesProjects: PROJECTS_BY_SERIES_QUERYResult | null | undefined
+  writing: PROJECT_BY_SLUG_QUERY_RESULT | undefined
+  seriesProjects: PROJECTS_BY_SERIES_QUERY_RESULT | null | undefined
 }
 
 const WritingPost: FC<Props> = ({ writing, seriesProjects }) => {

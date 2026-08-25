@@ -7,10 +7,10 @@ import { cn } from '@/utils/style'
 import AnimateOnScroll from '@/components/animation/animate-on-scroll'
 import Logo from '@/components/general/logo'
 
-import { PROJECT_COLLECTIONS_QUERYResult } from '@/sanity/types/generated/types'
+import { PROJECT_COLLECTIONS_QUERY_RESULT } from '@/sanity/types/generated/types'
 
 type Props = {
-  collection: PROJECT_COLLECTIONS_QUERYResult[number]
+  collection: PROJECT_COLLECTIONS_QUERY_RESULT[number]
   className?: string
   animate?: boolean
 }

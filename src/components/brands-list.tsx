@@ -3,9 +3,9 @@ import { FC } from 'react'
 import { getSanityImageUrl } from '@/utils/media'
 import { cn } from '@/utils/style'
 
-import { PROFILE_QUERYResult } from '@/sanity/types/generated/types'
+import { PROFILE_QUERY_RESULT } from '@/sanity/types/generated/types'
 
-type Brand = NonNullable<NonNullable<PROFILE_QUERYResult>['companies']>[number]
+type Brand = NonNullable<NonNullable<PROFILE_QUERY_RESULT>['companies']>[number]
 
 type Props = {
   brands: Brand[] | null | undefined

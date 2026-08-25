@@ -3,8 +3,8 @@ import { ImageUrlBuilder } from 'sanity'
 import { urlFor } from '@/sanity/lib/image'
 import { VimeoData, VimeoThumbnailSize } from '@/sanity/types/general'
 import {
-  type PROJECTS_BY_TYPE_QUERYResult,
-  PROJECT_BY_SLUG_QUERYResult,
+  type PROJECTS_BY_TYPE_QUERY_RESULT,
+  PROJECT_BY_SLUG_QUERY_RESULT,
   type YoutubeVideo,
 } from '@/sanity/types/generated/types'
 
@@ -122,9 +122,9 @@ export const getVimeoData = (
 }
 
 export const getSanityVideo = (
-  video: PROJECTS_BY_TYPE_QUERYResult[number]['mainVideo'] | undefined,
+  video: PROJECTS_BY_TYPE_QUERY_RESULT[number]['mainVideo'] | undefined,
   options?: {
-    thumbnailImage?: PROJECTS_BY_TYPE_QUERYResult[number]['mainImage'] | string
+    thumbnailImage?: PROJECTS_BY_TYPE_QUERY_RESULT[number]['mainImage'] | string
     youtube?: Parameters<typeof getYoutubeData>['1']
     vimeo?: Parameters<typeof getVimeoData>['1']
   },
@@ -184,7 +184,7 @@ const buildDimensions = (ratio: ImageRatio, width: number = 800) => {
 }
 
 export const getSanityImageUrl = (
-  image: NonNullable<PROJECT_BY_SLUG_QUERYResult>['mainImage'] | undefined,
+  image: NonNullable<PROJECT_BY_SLUG_QUERY_RESULT>['mainImage'] | undefined,
   options?: {
     ratio?: ImageRatio
     width?: number

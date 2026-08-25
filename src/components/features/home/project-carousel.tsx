@@ -14,10 +14,10 @@ import {
   CarouselPrevious,
 } from '@/components/ui/carousel'
 
-import { PROJECT_COLLECTIONS_QUERYResult } from '@/sanity/types/generated/types'
+import { PROJECT_COLLECTIONS_QUERY_RESULT } from '@/sanity/types/generated/types'
 
 type Props = {
-  collections: PROJECT_COLLECTIONS_QUERYResult | undefined | null
+  collections: PROJECT_COLLECTIONS_QUERY_RESULT | undefined | null
   className?: string
 }
 

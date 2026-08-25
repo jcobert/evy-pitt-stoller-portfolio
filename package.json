@@ -4,10 +4,10 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
-    "prebuild": "npm run typegen",
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
+    "format": "prettier \"**/*.{ts,tsx,js,jsx,md,json}\" --write",
     "typecheck": "tsc --noEmit --incremental false",
     "typegen": "sanity schema extract --path=src/sanity/extract.json && sanity typegen generate"
   },

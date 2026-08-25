@@ -17,13 +17,13 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog'
 
-import { PROJECT_COLLECTION_BY_SLUG_QUERYResult } from '@/sanity/types/generated/types'
+import { PROJECT_COLLECTION_BY_SLUG_QUERY_RESULT } from '@/sanity/types/generated/types'
 
 type Props = {
   series:
     | NonNullable<
         NonNullable<
-          NonNullable<PROJECT_COLLECTION_BY_SLUG_QUERYResult>['sections']
+          NonNullable<PROJECT_COLLECTION_BY_SLUG_QUERY_RESULT>['sections']
         >[number]['series']
       >[number]
     | undefined

@@ -8,10 +8,10 @@ import { cn } from '@/utils/style'
 import Logo from '@/components/general/logo'
 import { Button } from '@/components/ui/button'
 
-import { PROJECTS_BY_TYPE_QUERYResult } from '@/sanity/types/generated/types'
+import { PROJECTS_BY_TYPE_QUERY_RESULT } from '@/sanity/types/generated/types'
 
 type Props = {
-  writing: PROJECTS_BY_TYPE_QUERYResult[number]
+  writing: PROJECTS_BY_TYPE_QUERY_RESULT[number]
   className?: string
   titleClassName?: string
 }

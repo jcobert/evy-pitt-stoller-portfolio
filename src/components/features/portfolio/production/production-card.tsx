@@ -9,10 +9,10 @@ import PortableBlockContent from '@/components/general/portable/portable-block-c
 import VideoThumbnail from '@/components/media/video-thumbnail'
 import { Button } from '@/components/ui/button'
 
-import { PROJECTS_BY_TYPE_QUERYResult } from '@/sanity/types/generated/types'
+import { PROJECTS_BY_TYPE_QUERY_RESULT } from '@/sanity/types/generated/types'
 
 type Props = {
-  production: PROJECTS_BY_TYPE_QUERYResult[number]
+  production: PROJECTS_BY_TYPE_QUERY_RESULT[number]
   className?: string
   showDescription?: boolean
   showDate?: boolean

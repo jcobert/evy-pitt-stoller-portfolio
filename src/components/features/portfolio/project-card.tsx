@@ -10,16 +10,16 @@ import VideoThumbnail from '@/components/media/video-thumbnail'
 import { Button } from '@/components/ui/button'
 
 import {
-  PROJECTS_BY_TYPE_QUERYResult,
-  PROJECT_COLLECTION_BY_SLUG_QUERYResult,
+  PROJECTS_BY_TYPE_QUERY_RESULT,
+  PROJECT_COLLECTION_BY_SLUG_QUERY_RESULT,
 } from '@/sanity/types/generated/types'
 
 type Props = {
   project:
-    | PROJECTS_BY_TYPE_QUERYResult[number]
+    | PROJECTS_BY_TYPE_QUERY_RESULT[number]
     | NonNullable<
         NonNullable<
-          NonNullable<PROJECT_COLLECTION_BY_SLUG_QUERYResult>['sections']
+          NonNullable<PROJECT_COLLECTION_BY_SLUG_QUERY_RESULT>['sections']
         >[number]['series']
       >[number]['projects'][number]
   className?: string
